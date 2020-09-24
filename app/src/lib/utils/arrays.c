@@ -6,7 +6,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-void free_array(void **array) {
+void free_array(void **array)
+{
 	if (array == (void *) 0)
 		return;
 	for (int i = 0; array[i] != (void *) 0; i++)
@@ -14,7 +15,8 @@ void free_array(void **array) {
 	free(array);
 }
 
-int my_tablen(char const **tab) {
+int my_tablen(char const **tab)
+{
 	int result = 0;
 
 	if (tab == (void *) 0 || tab[0] == (void *) 0)
@@ -23,7 +25,8 @@ int my_tablen(char const **tab) {
 	return (result);
 }
 
-static int get_nb_cols(const char *str, int n, char separator) {
+static int get_nb_cols(const char *str, int n, char separator)
+{
 	int i = n;
 	int res = 0;
 
@@ -33,7 +36,8 @@ static int get_nb_cols(const char *str, int n, char separator) {
 	return (res);
 }
 
-static int get_nb_rows(const char *str, char separator) {
+static int get_nb_rows(const char *str, char separator)
+{
 	int i;
 	int res = 0;
 
@@ -47,7 +51,8 @@ static int get_nb_rows(const char *str, char separator) {
 	return (res + 1);
 }
 
-char **tabgen(const char *str, char separator) {
+char **tabgen(const char *str, char separator)
+{
 	int i = 0;
 	int mem_size = 0;
 	int index_str = 0;
@@ -58,7 +63,8 @@ char **tabgen(const char *str, char separator) {
 	res = malloc(sizeof(char *) * (get_nb_rows(str, separator) + 1));
 	if (res == NULL)
 		return NULL;
-	for (; i < get_nb_rows(str, separator); i++) {
+	for (; i < get_nb_rows(str, separator); i++)
+	{
 		mem_size = get_nb_cols(str, index_str, separator);
 		res[i] = malloc(sizeof(char) * (mem_size + 1));
 		if (res[i] == NULL)
@@ -70,9 +76,33 @@ char **tabgen(const char *str, char separator) {
 	return (res);
 }
 
-void display_tab(char const **tab) {
+void display_tab(char const **tab)
+{
 	if (tab == NULL || tab[0] == NULL || tab[0][0] == '\0')
 		return;
 	for (int i = 0; tab[i] != NULL; i++)
 		my_putstr(tab[i]);
+}
+
+char **append_line_to_tab(char **tab, char *line)
+{
+	char **new_tab = NULL;
+	int i = 0;
+
+	if (tab == NULL)
+	{
+		if (line == NULL)
+			return NULL;
+		new_tab = malloc(sizeof(char *) * 2);
+		new_tab[0] = my_strdup(line);
+		new_tab[1] = NULL;
+		return new_tab;
+	} else if (line == NULL)
+		return tab;
+	new_tab = malloc(sizeof(char *) * (my_tablen((char const **)tab) + 1));
+	for (; tab[i] != NULL; i++)
+		new_tab[i] = my_strdup(tab[i]);
+	new_tab[i] = my_strdup(line);
+	new_tab[i + 1] = NULL;
+	return new_tab;
 }

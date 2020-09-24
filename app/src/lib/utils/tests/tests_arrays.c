@@ -48,3 +48,21 @@ Test(free_array, test_free_tab)
 	free_array((void **)lol);
 }
 
+Test(append_line_to_tab, appendline)
+{
+	char **example = tabgen("this is an example", ' ');
+	char *line = my_strdup("appended");
+
+	char **normal_case = append_line_to_tab(example, line);
+	cr_assert_eq(my_tablen((char const **)normal_case), 5);
+
+	char **line_empty = append_line_to_tab(example, NULL);
+	cr_assert_eq(my_tablen((char const **)line_empty), 4);
+
+	char **tab_empty = append_line_to_tab(NULL, line);
+	cr_assert_eq(my_tablen((char const **)tab_empty), 1);
+
+	char **both_null = append_line_to_tab(NULL, NULL);
+	cr_assert_eq(both_null, 0);
+
+}

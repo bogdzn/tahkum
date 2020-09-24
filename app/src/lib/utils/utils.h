@@ -79,6 +79,10 @@ char **tabgen(char const *str, char separator);
 
 void display_tab(char const **tab);
 
+char **append_line_to_tab(char **tab, char *line);
+
+int my_tablen(char const **tab);
+
 
 // nums.c
 int do_op(int first_nb, int second_nb, char sign);
