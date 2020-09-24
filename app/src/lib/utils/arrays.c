@@ -60,7 +60,7 @@ char **tabgen(const char *str, char separator) {
 		return NULL;
 	for (; i < get_nb_rows(str, separator); i++) {
 		mem_size = get_nb_cols(str, index_str, separator);
-		memset(&res[i], sizeof(char), mem_size + 1);
+		res[i] = malloc(sizeof(char) * (mem_size + 1));
 		if (res[i] == NULL)
 			return NULL;
 		res[i] = my_strncpy(res[i], &str[index_str], mem_size);

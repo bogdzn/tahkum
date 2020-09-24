@@ -3,7 +3,7 @@
 //
 
 #include "./../utils.h"
-#include <criterion/critetion.h>
+#include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
 void redirect_all(void);
@@ -58,15 +58,6 @@ Test(my_itoa, test_itoa)
     cr_assert_str_eq(my_itoa(0), "0");
     cr_assert_str_eq(my_itoa(-666), "-666");
     cr_assert_str_eq(my_itoa(-7), "-7");
-}
-
-Test(my_strcpy, strcp)
-{
-    char *result = malloc(sizeof(char) * 6);
-
-    cr_assert_str_eq(my_strcpy(result, "hello"), "hello");
-    cr_assert_eq(my_strcpy(result, (void *)0), 0);
-    free(result);
 }
 
 Test(my_strncpy, strncp)

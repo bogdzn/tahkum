@@ -16,7 +16,12 @@ SRC 	=	./arrays.c \
 			./strings.c \
 			swaps.c
 
-SRC_TESTS = ./tests/tests_arrays.c
+SRC_TESTS = ./tests/tests_arrays.c \
+			./tests/tests_nums.c \
+			./tests/tests_swaps.c \
+			./tests/tests_strings.c \
+			./tests/tests_file_handler.c \
+			./tests/tests_get_next_line.c
 
 TEST_BIN = unit_tests
 
@@ -47,20 +52,17 @@ fclean: clean
 re: fclean all
 
 tests:
-	@gcc -c $(SRC) -I $(HEADER)
-	@gcc -c $(SRC_TESTS) --coverage -g3 -I $(HEADER)
+	@gcc -c $(SRC)
+	@gcc -c $(SRC_TESTS) --coverage -g3
 	@mkdir -p objects
 	@mv *.o objects
-	@gcc -o $(TEST_BIN) objects/*.o -lcriterion --coverage -g3 -I $(HEADER)
+	@gcc -o $(TEST_BIN) objects/*.o -lcriterion --coverage -g3
 	@./$(TEST_BIN)
 	@echo "[*** UTILS TESTS OVER ***]"
 
 tests_clean: tests
-	@gcovr *
 	@$(RM) $(TEST_BIN) *gc* $(NAME) objects
 	@echo "[*** CLEAN SUCCESSFUL ***]"
-
-
 
 
 .PHONY: all clean fclean re tests tests_clean

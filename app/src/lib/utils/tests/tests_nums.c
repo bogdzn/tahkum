@@ -3,7 +3,7 @@
 //
 
 #include "./../utils.h"
-#include <criterion/critetion.h>
+#include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
 void redirect_all(void);
