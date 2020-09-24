@@ -23,10 +23,10 @@ file_t get_file(char const *filepath)
 
 	if (filepath == NULL || *filepath == 0)
 		return result;
-	result.name = my_strdup(filepath);
+	result.name = get_last_occurence_of((char *)filepath, '/');
 	else if (stat(filepath, &result.st) == -1 || result.st_size < 1)
 		return result;
-	memset(&result.content, sizeof(char), result.st.st_size);
+	result.content = malloc(sizeof(char) * (result.st.st_size + 1));
 	fd = open(result.path, O_RDONLY);
 	if (result.content == NULL || fd == -1 ||
 		read(fd, result.content) == -1)
