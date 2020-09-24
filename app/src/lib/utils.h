@@ -5,6 +5,10 @@
 #ifndef TELLO_UTILS_H
 #define TELLO_UTILS_H
 
+#ifndef READ_SIZE
+#define READ_SIZE (60)
+#endif
+
 // file_handler.c
 typedef struct file_s
 {
