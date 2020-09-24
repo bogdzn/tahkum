@@ -12,7 +12,6 @@ void redirect_all(void)
 	cr_redirect_stderr();
 }
 
-// todo add more tests
 Test(tabgen, tbgn)
 {
 	char **tab = tabgen((void *) 0, '\n');
