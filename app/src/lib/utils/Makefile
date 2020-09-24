@@ -53,7 +53,7 @@ re: fclean all
 
 tests:
 	@gcc -c $(SRC)
-	@gcc -c $(SRC_TESTS) --coverage -g3
+	@gcc -c $(SRC_TESTS) $(FLAGS) --coverage -g3
 	@mkdir -p objects
 	@mv *.o objects
 	@gcc -o $(TEST_BIN) objects/*.o -lcriterion --coverage -g3
