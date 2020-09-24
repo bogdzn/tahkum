@@ -2,14 +2,17 @@
 // Created by bogdan on 21/09/2020.
 //
 
-#include "../utils.h"
+#include "./utils.h"
+#include <stdlib.h>
+
+typedef int(*ptr)(int, int);
 
 static int mod(int nb1, int nb2)
 {
 	return nb1 % nb2;
 }
 
-static int div(int nb1, int nb2)
+static int _div(int nb1, int nb2)
 {
 	return nb1 / nb2;
 }
@@ -31,8 +34,8 @@ static int add(int nb1, int nb2)
 
 int do_op(int first, int second, char flag)
 {
-	ptr functions[] = { &sub, &mult, &div, &mod, &add, (void *) 0 };
-	char signs[] = { '-', '*', '/', '%', '+' '\0' };
+	ptr functions[] = { &sub, &mult, &_div, &mod, &add, (void *) 0 };
+	char signs[] = { '-', '*', '/', '%', '+', '\0' };
 
 	for (int i = 0; signs[i] != '\0'; i++)
 		if (flag == signs[i])
