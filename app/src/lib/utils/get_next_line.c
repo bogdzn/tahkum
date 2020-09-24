@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdbool.h>
-#include "../utils.h"
+#include "./utils.h"
 
 static int get_size(char *s, char sep)
 {

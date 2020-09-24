@@ -2,16 +2,16 @@
 // Created by bogdan on 21/09/2020.
 //
 
-#include "../utils.h"
+#include "./utils.h"
 #include <string.h>
 #include <stdlib.h>
 
 void free_array(void **array) {
-	if (tab == (void *) 0)
+	if (array == (void *) 0)
 		return;
-	for (int i = 0; tab[i] != (void *) 0; i++)
-		free(tab[i]);
-	free(tab);
+	for (int i = 0; array[i] != (void *) 0; i++)
+		free(array[i]);
+	free(array);
 }
 
 int my_tablen(char const **tab) {

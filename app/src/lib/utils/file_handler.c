@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "../utils.h"
+#include "./utils.h"
 
 file_t get_file(char const *filepath)
 {
@@ -24,12 +24,12 @@ file_t get_file(char const *filepath)
 	if (filepath == NULL || *filepath == 0)
 		return result;
 	result.name = get_last_occurence_of((char *)filepath, '/');
-	else if (stat(filepath, &result.st) == -1 || result.st_size < 1)
+	if (stat(filepath, &result.st) == -1 || result.st.st_size < 1)
 		return result;
 	result.content = malloc(sizeof(char) * (result.st.st_size + 1));
-	fd = open(result.path, O_RDONLY);
+	fd = open(filepath, O_RDONLY);
 	if (result.content == NULL || fd == -1 ||
-		read(fd, result.content) == -1)
+		read(fd, result.content, result.st.st_size) == -1)
 		return result;
 	close(fd);
 	return result;

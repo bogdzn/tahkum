@@ -5,8 +5,6 @@
 
 NAME 	= 	libutils.a
 
-HEADER  =  ../utils.h
-
 FLAGS = -Wall -Werror -Wextra \
 		--pedantic \
 		-Ofast
@@ -22,14 +20,14 @@ SRC_TESTS = ./tests/tests_arrays.c
 
 TEST_BIN = unit_tests
 
-HEADER 	=	../utils.h
+HEADER 	=	./utils.h
 
-LIBPATH = 	./../../includes/
+LIBPATH = 	./../../../includes/
 
 RM 		= rm -rf
 
 all:
-	@gcc -c $(SRC) -I $(HEADER)
+	@gcc -c $(SRC) -I ..
 	@mkdir -p ./objects
 	@mv *.o objects
 	@ar rc $(NAME) ./objects/*.o
