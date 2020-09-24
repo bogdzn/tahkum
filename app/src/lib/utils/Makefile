@@ -61,6 +61,7 @@ tests:
 	@echo "[*** UTILS TESTS OVER ***]"
 
 tests_clean: tests
+	@gcovr --exclude tests/
 	@$(RM) $(TEST_BIN) *gc* $(NAME) objects
 	@echo "[*** CLEAN SUCCESSFUL ***]"
 
