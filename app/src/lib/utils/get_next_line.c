@@ -89,6 +89,6 @@ char *get_next_line(int fd)
 	}
 	free(buffer);
 	res = copy_until(rest, '\n', 0);
-	rest = copy_until(rest, '\0', get_size(res, '\0') + 1);
+	rest = (get_size(res, 0) == get_size(buffer, 0)) ? NULL : copy_until(rest, '\0', get_size(res, '\0') + 1);
 	return (res);
 }
