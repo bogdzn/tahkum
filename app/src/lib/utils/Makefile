@@ -7,7 +7,8 @@ NAME 	= 	libutils.a
 
 FLAGS = -Wall -Werror -Wextra \
 		--pedantic \
-		-Ofast
+		-Ofast \
+		-g3
 
 SRC 	=	./arrays.c \
 			./file_handler.c \

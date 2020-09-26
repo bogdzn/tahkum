@@ -63,8 +63,7 @@ char **tabgen(const char *str, char separator)
 	res = malloc(sizeof(char *) * (get_nb_rows(str, separator) + 1));
 	if (res == NULL)
 		return NULL;
-	for (; i < get_nb_rows(str, separator); i++)
-	{
+	for (; i < get_nb_rows(str, separator); i++) {
 		mem_size = get_nb_cols(str, index_str, separator);
 		res[i] = malloc(sizeof(char) * (mem_size + 1));
 		if (res[i] == NULL)
@@ -89,8 +88,7 @@ char **append_line_to_tab(char **tab, char *line)
 	char **new_tab = NULL;
 	int i = 0;
 
-	if (tab == NULL)
-	{
+	if (tab == NULL) {
 		if (line == NULL)
 			return NULL;
 		new_tab = malloc(sizeof(char *) * 2);
@@ -99,7 +97,7 @@ char **append_line_to_tab(char **tab, char *line)
 		return new_tab;
 	} else if (line == NULL)
 		return tab;
-	new_tab = malloc(sizeof(char *) * (my_tablen((char const **)tab) + 1));
+	new_tab = malloc(sizeof(char *) * (my_tablen((char const **) tab) + 1));
 	for (; tab[i] != NULL; i++)
 		new_tab[i] = my_strdup(tab[i]);
 	new_tab[i] = my_strdup(line);
