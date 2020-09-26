@@ -109,7 +109,7 @@ dl.el {
 a.el {
     padding: 1px;
     text-decoration: none;
-    color: #577E25;
+    color: #869DCA;
 }
 
 a.el:hover {
@@ -197,7 +197,7 @@ div.groupText {
 }
 
 body {
-    background-color: white;
+    background-color: ghostwhite;
     color: black;
     margin: 0;
 }
@@ -271,7 +271,7 @@ img.footer {
 /* @group Code Colorization */
 
 span.keyword {
-    color: #008000
+    color: #e08060
 }
 
 span.keywordtype {
@@ -334,7 +334,7 @@ td.tiny {
 }
 
 th.dirtab {
-    background: #EBEFF6;
+    background:#364D6A;
     font-weight: bold;
 }
 
@@ -794,7 +794,7 @@ div.summary a {
     white-space: nowrap;
     padding: 1px;
     text-decoration: none;
-    color: #577E25;
+    color: #364D6A;
 }
 
 div.summary a:hover {
@@ -1048,7 +1048,7 @@ tr.heading h2 {
     width: 100%;
     z-index: 101;
     font-size: 11pt;
-    background-color: #EAF5DB;
+    background-color: whitesmoke;
     border-left: 1px solid #999;
     border-right: 1px solid #999;
     border-bottom: 1px solid #999;
@@ -1101,7 +1101,7 @@ tr.heading h2 {
 
 /* SFML css */
 body {
-    font-family: 'Ubuntu', 'Arial', sans-serif;
+    font-family: 'Ubuntu', 'Helvetica', sans-serif;
     line-height: 140%;
     margin: 0 0 2em 0;
     padding: 0;
@@ -1112,7 +1112,7 @@ body {
     margin-top: 25px;
     border-top: 2px solid #999;
     border-bottom: 2px solid #999;
-    background-color: rgb(140, 200, 65);
+    background-color:#869DCA;
 }
 
 #banner {
@@ -1150,7 +1150,7 @@ body {
 #footer a {
     padding: 1px;
     text-decoration: none;
-    color: rgb(70, 100, 30);
+    color: #869DCA;
 }
 
 #footer a:hover {
@@ -1194,7 +1194,7 @@ div.contents p {
 div.contents a, #content a {
     padding: 1px;
     text-decoration: none;
-    color: rgb(70, 100, 30);
+    color: #869DCA;
 }
 
 div.contents a:hover, #content a:hover {
@@ -1234,7 +1234,7 @@ div.contents ul li {
     height: 14px;
     width: 16px;
     display: inline-block;
-    background-color: #8cc445;
+    background-color: #869DCA;
     color: white;
     text-align: center;
     border-radius: 4px;
@@ -1319,7 +1319,7 @@ div.contents ul li {
 }
 
 #powerTip div.ttdeci {
-    color: #006318;
+    color: #869DCA;
 }
 
 #powerTip div {
