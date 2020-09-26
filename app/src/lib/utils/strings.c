@@ -222,6 +222,7 @@ char *append_char(char *s, char c)
 		result = my_strcpy(result, s);
 		result[my_strlen(s)] = c;
 		result[my_strlen(s) + 1] = '\0';
+		free(s);
 	}
 	return (result);
 }
@@ -236,4 +237,46 @@ void my_puterr(char const *s)
 {
 	if (!write(2, s, my_strlen(s)))
 		return;
+}
+
+static char *__strip_front(char *line, char to_strip)
+{
+	int i = 0;
+
+	for (; line[i] != 0 && line[i] == to_strip; i++);
+	return &line[i];
+}
+
+static char *__strip_back(char *line, char to_strip)
+{
+	int i = my_strlen(line);
+
+	for (; i != 0 && line[i] == to_strip; i--);
+	if (i > 0 && line[i - 1] == to_strip)
+		line[i - 1] = 0;
+	return line;
+}
+
+char *strip(char *line, char to_strip)
+{
+	if (line == NULL || line[0] == 0 || to_strip == 0)
+		return NULL;
+	return __strip_back(__strip_front(line, to_strip), to_strip);
+}
+
+char *clean_line(char *line)
+{
+	char *stripped = strip(line, ' ');
+	char *result = NULL;
+	char temp = 0;
+
+	if (stripped == NULL)
+		return NULL;
+	for (int i = 0; stripped[i] != 0; i++) {
+		if (temp == 32 && stripped[i] == 32)
+			continue;
+		temp = stripped[i];
+		result = append_char(result, temp);
+	}
+	return strip(result, ' ');
 }

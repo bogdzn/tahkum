@@ -64,6 +64,10 @@ void my_putstr(char const *s);
 
 void my_puterr(char const *s);
 
+char *strip(char *line, char to_strip);
+
+char *clean_line(char *line);
+
 
 // swaps.c
 void swap_array(void **one, void **two);

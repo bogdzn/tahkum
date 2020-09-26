@@ -142,3 +142,19 @@ Test(my_revstr, testrevstr)
     cr_assert_str_eq(my_revstr(f), "etintrof");
     cr_assert_eq(my_revstr((void *)0), 0);
 }
+
+Test(strip, stripstring)
+{
+	char *stripped = strip(my_strdup("  lol "), ' ');
+	char *not_stripped = strip(my_strdup("lol"), ' ');
+
+	cr_assert_str_eq(stripped, "lol");
+	cr_assert_str_eq(not_stripped, "lol");
+}
+
+Test(clean_line, cleanlineofspaces)
+{
+	char *cleaned = clean_line(my_strdup("   this     is    a      line   "));
+
+	cr_assert_str_eq(cleaned, "this is a line");
+}
