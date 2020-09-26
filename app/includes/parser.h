@@ -48,4 +48,21 @@ const cmd_list_t USER_CMD[] = {
     {0, NULL,               0, NULL}
 };
 
+
+// get_instr_queue.c
+instr_t *init_instr(void);
+instr_t *fill_instruction(char *instr);
+instr_t *get_instructions_queue(char *filename);
+
+//get_instr_from_file.c
+input_file_t parse(char const *filepath);
+int get_instr_id(char *instr);
+char **crop_from_start(char **tab);
+char **clean_file(char *file);
+bool check_if_cmd_exists(char **user_instructions);
+bool check_param_type(char **line_instr, int idx);
+bool check_parameters(char **user_instructions);
+bool check_file(char **user_instructions);
+
+
 #endif
