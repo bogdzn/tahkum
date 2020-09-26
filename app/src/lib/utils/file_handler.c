@@ -16,13 +16,6 @@
 
 #include "./utils.h"
 
-/**
- * \fn file_t get_file(char const *filepath);
- * \brief loads file information into memory.
- *
- * \param filepath path of the file you want to read.
- * \return filled file_t structure.
- */
 file_t get_file(char const *filepath)
 {
     int fd = 0;
@@ -45,12 +38,6 @@ file_t get_file(char const *filepath)
     return result;
 }
 
-/**
- * \fn void destroy_file(file_t file);
- * \brief destroys file_t structure.
- *
- * \param file structure you want to erase.
- */
 void destroy_file(file_t file)
 {
     free(file.content);

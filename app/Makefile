@@ -97,8 +97,19 @@ fclean: clean
 
 re: fclean all
 
+
+########################
+###### DOXYGEN  ########
+########################
+
 doc:
 	@make -C  ./doxygen --no-print-directory
+
+docdel:
+	@make del -C ./doxygen --no-print-directory
+
+docre:
+	@make re -C ./doxygen --no-print-directory
 
 ########################
 #### UNIT TESTS ########
