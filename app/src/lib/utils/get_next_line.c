@@ -1,6 +1,9 @@
-//
-// Created by bogdan on 21/09/2020.
-//
+/**
+ * \file get_next_line.c
+ * \brief reads a file's next line.
+ * \author Bogdan G.
+ * \date 21/09/2020
+ */
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -70,11 +73,21 @@ static bool rest_got_a_line(char *rest)
     return (false);
 }
 
+/**
+ * \fn char *get_next_line(int fd)
+ * \brief reads the next line from a file.
+ * the file descriptor needs to be open and closed manually.
+ *
+ * \param fd the file descriptor of the file you want to read.
+ * \return the next line of the file.
+ */
 char *get_next_line(int fd)
 {
     static char *rest = NULL;
     char *buffer = malloc(sizeof(char) * (READ_SIZE + 1));
     char *res = NULL;
+    int res_len = 0;
+    int buff_len = 0;
 
     if (fd == -1 || buffer == NULL)
         return (NULL);
@@ -87,7 +100,9 @@ char *get_next_line(int fd)
         rest = concat_str(rest, buffer);
     }
     free(buffer);
+    res_len = get_size(res, 0);
+    buff_len = get_size(buffer, 0);
     res = copy_until(rest, '\n', 0);
-    rest = (get_size(res, 0) == get_size(buffer, 0)) ? NULL : copy_until(rest, '\0', get_size(res, '\0') + 1);
+    rest = (res_len == buff_len) ? NULL : copy_until(rest, '\0', res_len + 1);
     return (res);
 }

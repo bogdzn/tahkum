@@ -1,6 +1,10 @@
-//
-// Created by bogdan on 26/09/2020.
-//
+/**
+ * \file logifle.h
+ * \brief Handles logifle.
+ * \author Bogdan G.
+ * \version 0.1
+ * \date 26/09/2020
+ */
 
 #ifndef LOGGER_H
 #define LOGGER_H
@@ -27,29 +31,58 @@ char const *LOG_PATH = "/var/log/tello.log";
         S_IRUSR | S_IRGRP | S_IROTH))
 #endif
 
-/// enum defining the type of log we want to print.
+/**
+ * \enum LOG_TYPE
+ * \brief Log messages types.
+ *
+ * Defines which type of log we want to write.
+ */
 typedef enum LOG_TYPE = {
-    INFO, WARNING, ERROR
-};
+    INFO, /*!< used for misc infos. */
+    WARNING, /*!< used for warnings and non-critical errors. */
+    ERROR /*!< used for critical errors. */
+} log_type_e;
 
 // CREATE_LOGFILE.C
-/// creates the log file in /var/log/tello.log. Returns 0 if successful.
+
+/**
+ * \fn int create_logfile(void)
+ * \brief creates log file in LOG_PATH.
+ *
+ * \return 0 if successful, 1 if not.
+ */
 int create_logfile(void);
 
-/*!
- * appends a specific message stored in /var/log/tello.log.
+/**
+ * \fn void log(LOG_TYPE, char *string, ...)
+ * \brief appends a specific message stored in LOG_PATH.
  * You will need to specify wether the LOG_TYPE (INFO, WARNING, ERROR),
  * and then you can just use it as a printf.
+ *
+ * \param type type of log.
+ * \param string complete log messages, including files, as used in printf.
+ * \param ... eventual flags we want to specify.
  */
-void log(LOG_TYPE, char *string, ...);
+void log(LOG_TYPE type, char *string, ...);
 
 
-/// Tests if logfile is present. For debug purposes.
+/**
+ * \fn bool logfile_exists(void)
+ * \brief Tests if the log file has been created.
+ *
+ * \return boolean specifying if logfile exists.
+*/
 bool logfile_exists(void);
 
-/*!
- * Sends a log to /var/log/tello.log, if errno is different that 2 or 0.
-*/
+/**
+ * \fn void log_if_errno(int errno, char *string, ...)
+ * \brief Adds a log to LOG_PATH if errno is different than 2 or 0.
+ * By default, every error triggered by this function is considered
+ * a critical error.
+ *
+ * \param errno ERRNO constant.
+ * \param function_name defining the operation you are currently doing.
+ */
 void log_if_errno(int errno, char *function_name);
 
 #endif
