@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <fcntl.h>
 #include <errno.h>
 #include "../lib/utils/utils.h"
 
