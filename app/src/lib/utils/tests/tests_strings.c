@@ -169,6 +169,9 @@ Test(is_float, testiffloat)
 	cr_assert_eq(is_float("-9.999"), true);
 	cr_assert_eq(is_float("9."), true);
 	cr_assert_eq(is_float("9,"), true);
+	cr_assert_eq(is_float("9"), true);
+	cr_assert_eq(is_float("--9,"), false);
+	cr_assert_eq(is_float("adina"), false);
 	cr_assert_eq(is_float("9.,2"), false);
 	cr_assert_eq(is_float("9.a"), false);
 }

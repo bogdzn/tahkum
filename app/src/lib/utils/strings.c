@@ -264,7 +264,7 @@ char *remove_tabs(char *line)
 	if (line == NULL || *line == 0)
 		return NULL;
 	for (int i = 0; line[i] != 0; i++)
-		line[i] = line[i] == '\t' ? 32 : line[i];
+		line[i] = line[i] == '\t' ? ' ' : line[i];
 	return line;
 }
 
@@ -277,7 +277,7 @@ char *clean_line(char *line)
 	if (stripped == NULL)
 		return NULL;
 	for (int i = 0; stripped[i] != 0; i++) {
-		if (temp == 32 && stripped[i] == 32)
+		if (temp == ' ' && stripped[i] == ' ')
 			continue;
 		temp = stripped[i];
 		result = append_char(result, temp);
