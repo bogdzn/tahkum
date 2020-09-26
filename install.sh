@@ -18,27 +18,12 @@ IFS=' '
 packages="graphviz doxygen"
 
 # functions
-get_os () {
-    which zypper &> /dev/null && os="opensuse"
-    which pacman &> /dev/null && os="archlinux"
-    which dnf &> /dev/null && os="fedora"
-    which apt-get &> /dev/null && os="debian"
-}
-
-get_cmd_install () {
-    os=get_os
-    case "$os" in
-        opensuse) echo "sudo zypper -y install";;
-        archlinux) echo "sudo pacman --noconfirm -S";;
-        fedora) echo "sudo dnf -y install";;
-        debian) echo "sudo apt-get -y install";;
-    esac
-}
-
 install_package () {
-    package_name=$1
-    [[ -z "$cmd_install" ]] && cmd_install=$(get_cmd_install)
-    sudo $cmd_install $package_name
+  package_name="$1"
+  which zypper &> /dev/null && sudo zypper -y install "$package_name"
+  which pacman &> /dev/null && sudo pacman --noconfirm -S "$package_name"
+  which dnf &> /dev/null && sudo dnf -y install "$package_name"
+  which apt-get &> /dev/null && sudo apt-get -y install "$package_name"
 }
 
 install_loop () {
