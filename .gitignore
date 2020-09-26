@@ -1,4 +1,5 @@
 .idea
+./app/doxygen/build
 .pycharm
 venv/
 
