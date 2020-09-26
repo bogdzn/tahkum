@@ -5,7 +5,9 @@
 #include "logger.h"
 #include "utils.h"
 #include <stdlib.h>
+#include <string.h>
 #include <stdarg.h>
+#include <errno.h>
 #include "../lib/utils/utils.h"
 
 bool logfile_exists(void)
@@ -89,4 +91,22 @@ void log(LOGTYPE type, char *string, ...)
     va_end(ap);
     write_logfile(type, msg);
     free(msg);
+}
+
+void log_if_errno(int err, char *function_name)
+{
+    int fd = 0;if (log[my_strlen(log)] != '\n')
+        log = my_strcat(log, "\n");
+    char *err_msg = NULL;
+
+    if (err == 0 || err == 2)
+        return;
+    err_msg = my_strcat("[ERROR] -- ", function_name);
+    err_msg = my_strcat(err_msg, strerror(err));
+    if (err_msg[my_strlen(err_msg)] != '\n')
+        err_msg= my_strcat(err_msg, "\n");
+    fd = OPEN_LOGFILE;
+    write(fd, err_msg, my_strlen(err_msg));
+    close(fd);
+    free(err_msg);
 }

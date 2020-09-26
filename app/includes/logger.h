@@ -28,4 +28,6 @@ void log(LOG_TYPE, char *string, ...);
 
 bool logfile_exists(void);
 
+void log_if_errno(int errno, char *function_name);
+
 #endif
