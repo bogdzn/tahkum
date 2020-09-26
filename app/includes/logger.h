@@ -14,7 +14,7 @@ char const *LOG_PATH = "/var/log/tello.log";
 
 #ifndef OPEN_LOGFILE
 #define OPEN_LOGFILE (open(LOG_PATH, \
-        O_NDELAY | O_CREAT | O_TRUNC | O_RDWR, S_IRUSR | S_IRGRP | S_IROTH))
+        O_NDELAY | O_CREAT | O_APPEND, O_RDWR, S_IRUSR | S_IRGRP | S_IROTH))
 #endif
 
 typedef enum LOG_TYPE = {

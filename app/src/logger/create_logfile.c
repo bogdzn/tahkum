@@ -19,7 +19,8 @@ bool logfile_exists(void)
 
 int create_logfile(void)
 {
-    int fd = OPEN_LOGIFILE;
+    int fd = open(LOG_PATH,
+        O_NDELAY | O_CREAT | O_TRUNC, O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
     close(fd);
 }
 
