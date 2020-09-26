@@ -24,6 +24,7 @@ int create_logfile(void)
 {
     int fd = CREATE_LOGFILE;
     close(fd);
+    return (fd == -1) ? 0 : 1;
 }
 
 static char *switch_case(char flag, va_list ap)
