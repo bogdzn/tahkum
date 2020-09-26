@@ -1,6 +1,9 @@
-//
-// Created by bogdan on 21/09/2020.
-//
+/**
+ * \file file_handler.c
+ * \brief Handles files.
+ * \author Bogdan G.
+ * \date 21/09/2020
+ */
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -13,30 +16,43 @@
 
 #include "./utils.h"
 
+/**
+ * \fn file_t get_file(char const *filepath);
+ * \brief loads file information into memory.
+ *
+ * \param filepath path of the file you want to read.
+ * \return filled file_t structure.
+ */
 file_t get_file(char const *filepath)
 {
-	int fd = 0;
-	file_t result = {
-			.name = NULL,
-			.content = NULL
-	};
+    int fd = 0;
+    file_t result = {
+            .name = NULL,
+            .content = NULL
+    };
 
-	if (filepath == NULL || *filepath == 0)
-		return result;
-	if (stat(filepath, &result.st) == -1 || result.st.st_size < 1)
-		return result;
-	result.name = get_last_occurence_of((char *) filepath, '/');
-	result.content = malloc(sizeof(char) * (result.st.st_size + 1));
-	fd = open(filepath, O_RDONLY);
-	if (result.content == NULL || fd == -1 ||
-		read(fd, result.content, result.st.st_size) == -1)
-		return result;
-	close(fd);
-	return result;
+    if (filepath == NULL || *filepath == 0)
+        return result;
+    if (stat(filepath, &result.st) == -1 || result.st.st_size < 1)
+        return result;
+    result.name = get_last_occurence_of((char *) filepath, '/');
+    result.content = malloc(sizeof(char) * (result.st.st_size + 1));
+    fd = open(filepath, O_RDONLY);
+    if (result.content == NULL || fd == -1 ||
+        read(fd, result.content, result.st.st_size) == -1)
+        return result;
+    close(fd);
+    return result;
 }
 
+/**
+ * \fn void destroy_file(file_t file);
+ * \brief destroys file_t structure.
+ *
+ * \param file structure you want to erase.
+ */
 void destroy_file(file_t file)
 {
-	free(file.content);
-	free(file.name);
+    free(file.content);
+    free(file.name);
 }
