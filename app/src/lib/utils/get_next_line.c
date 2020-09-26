@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <stdbool.h>
-#include "../utils.h"
+#include "./utils.h"
 
 static int get_size(char *s, char sep)
 {
@@ -79,8 +79,7 @@ char *get_next_line(int fd)
 	if (fd == -1 || buffer == NULL)
 		return (NULL);
 	buffer[0] = '\0';
-	for (int bzero = 0; !rest_got_a_line(rest);)
-	{
+	for (int bzero = 0; !rest_got_a_line(rest);) {
 		bzero = read(fd, buffer, READ_SIZE);
 		if (bzero == -1 || bzero == 0)
 			break;
@@ -89,6 +88,6 @@ char *get_next_line(int fd)
 	}
 	free(buffer);
 	res = copy_until(rest, '\n', 0);
-	rest = copy_until(rest, '\0', get_size(res, '\0') + 1);
+	rest = (get_size(res, 0) == get_size(buffer, 0)) ? NULL : copy_until(rest, '\0', get_size(res, '\0') + 1);
 	return (res);
 }

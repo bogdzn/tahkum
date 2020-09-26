@@ -2,7 +2,7 @@
 // Created by bogdan on 21/09/2020.
 //
 
-#include "../utils.h"
+#include "./utils.h"
 
 #include <stdlib.h>
 #include <fcntl.h>
@@ -30,7 +30,7 @@ char *my_strdup(char const *s)
 
 	if (s == NULL || *s == 0)
 		return NULL;
-	memset(&result, sizeof(char), len + 1);
+	result = malloc(sizeof(char) * (len + 1));
 	if (result == NULL)
 		return result;
 	for (int i = 0; s[i] != 0; i++)
@@ -52,7 +52,7 @@ char *my_strcat(const char *s1, const char *s2)
 	len_string = my_strlen(s1) + my_strlen(s2) + 1;
 	if (len_string == 1)
 		return ((void *) 0);
-	memset(&result, sizeof(char), len_string + 1)
+	result = malloc(sizeof(char) * (len_string + 1));
 	for (; s1[ctr] != '\0'; ctr++)
 		result[ctr] = s1[ctr];
 	for (int ctr2 = 0; s2[ctr2] != '\0'; ctr2++)
@@ -69,11 +69,10 @@ char *my_itoa(int nb)
 
 	if (nb == 0)
 		return (my_strdup("0"));
-	memset(&result, sizeof(char), nb_len + 1);
+	result = malloc(sizeof(char) * (nb_len + 1));
 	nb = is_negative == true ? nb * -1 : nb;
 	result[nb_len] = '\0';
-	for (int i = nb_len - 1; i > -1; i--)
-	{
+	for (int i = nb_len - 1; i > -1; i--) {
 		result[i] = (nb % 10) + 48;
 		nb = nb / 10;
 	}
@@ -159,8 +158,7 @@ bool is_num(const char *s)
 {
 	if (s == (void *) 0 || s[0] == '\0')
 		return (false);
-	for (int i = 0; s[i] != '\0'; i++)
-	{
+	for (int i = 0; s[i] != '\0'; i++) {
 		if (s[i] != '-' && (s[i] > '9' || s[i] < '0'))
 			return (false);
 	}
@@ -178,8 +176,7 @@ bool is_alphabetic(char *s)
 {
 	if (s == (void *) 0 || s[0] == '\0')
 		return (false);
-	for (int i = 0; s[i] != '\0'; i++)
-	{
+	for (int i = 0; s[i] != '\0'; i++) {
 		if (!is_a_letter(s[i], false) && !is_a_letter(s[i], true))
 			return (false);
 	}
@@ -190,8 +187,7 @@ int is_in_string(const char *s, char to_find)
 {
 	if (s == (void *) 0 || s[0] == '\0')
 		return (-1);
-	for (int i = 0; s[i] != '\0'; i++)
-	{
+	for (int i = 0; s[i] != '\0'; i++) {
 		if (s[i] == to_find)
 			return (i);
 	}
@@ -211,18 +207,17 @@ char *append_char(char *s, char c)
 {
 	char *result = (void *) 0;
 
-	if (s == (void *) 0)
-	{
+	if (s == (void *) 0) {
 		result = malloc(sizeof(char) * 2);
 		result[0] = c;
 		result[1] = '\0';
 		return (result);
-	} else
-	{
+	} else {
 		result = malloc(sizeof(char) * (my_strlen(s) + 2));
 		result = my_strcpy(result, s);
 		result[my_strlen(s)] = c;
 		result[my_strlen(s) + 1] = '\0';
+		free(s);
 	}
 	return (result);
 }
@@ -237,4 +232,74 @@ void my_puterr(char const *s)
 {
 	if (!write(2, s, my_strlen(s)))
 		return;
+}
+
+static char *__strip_front(char *line, char to_strip)
+{
+	int i = 0;
+
+	for (; line[i] != 0 && line[i] == to_strip; i++);
+	return &line[i];
+}
+
+static char *__strip_back(char *line, char to_strip)
+{
+	int i = my_strlen(line);
+
+	for (; i != 0 && line[i] == to_strip; i--);
+	if (i > 0 && line[i - 1] == to_strip)
+		line[i - 1] = 0;
+	return line;
+}
+
+char *strip(char *line, char to_strip)
+{
+	if (line == NULL || line[0] == 0 || to_strip == 0)
+		return NULL;
+	return __strip_back(__strip_front(line, to_strip), to_strip);
+}
+
+char *remove_tabs(char *line)
+{
+	if (line == NULL || *line == 0)
+		return NULL;
+	for (int i = 0; line[i] != 0; i++)
+		line[i] = line[i] == '\t' ? ' ' : line[i];
+	return line;
+}
+
+char *clean_line(char *line)
+{
+	char *stripped = strip(remove_tabs(line), ' ');
+	char *result = NULL;
+	char temp = 0;
+
+	if (stripped == NULL)
+		return NULL;
+	for (int i = 0; stripped[i] != 0; i++) {
+		if (temp == ' ' && stripped[i] == ' ')
+			continue;
+		temp = stripped[i];
+		result = append_char(result, temp);
+	}
+	return strip(result, ' ');
+}
+
+bool is_float(char const *s)
+{
+	int nb_dots = 0;
+
+	if (s == NULL || *s == 0)
+		return NULL;
+	if (s[0] == '-')
+		s = &s[1];
+	for (int i = 0; s[i] != 0; i++) {
+		if ((s[i] == '.' || s[i] == ',') && nb_dots == 0) {
+			nb_dots++;
+			continue;
+		} else if (s[i] >= '0' && s[i] <= '9')
+			continue;
+		else return false;
+	}
+	return true;
 }

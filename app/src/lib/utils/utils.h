@@ -5,6 +5,15 @@
 #ifndef TELLO_UTILS_H
 #define TELLO_UTILS_H
 
+#ifndef READ_SIZE
+#define READ_SIZE (60)
+#endif
+
+#include <stdbool.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 // file_handler.c
 typedef struct file_s
 {
@@ -31,7 +40,7 @@ char *set_to_lowercase(char *s);
 
 char *set_to_uppercase(char *s);
 
-char *my_revstr(char *dest, char const *src);
+char *my_revstr(char *s);
 
 char *my_strncpy(char *dest, char const *src, int n);
 
@@ -45,7 +54,7 @@ bool is_a_letter(char c, bool is_lower);
 
 bool is_alphabetic(char *s);
 
-bool is_in_string(char const *s, char to_find);
+int is_in_string(char const *s, char to_find);
 
 char *get_last_occurence_of(char *s, char to_find);
 
@@ -55,13 +64,21 @@ void my_putstr(char const *s);
 
 void my_puterr(char const *s);
 
+char *strip(char *line, char to_strip);
+
+char *clean_line(char *line);
+
+char *remove_tabs(char *line);
+
+bool is_float(char const *s);
+
 
 // swaps.c
 void swap_array(void **one, void **two);
 
 void swapc(char *one, char *two);
 
-char swap(int *one, int *two);
+void swap(int *one, int *two);
 
 // arrays.c
 void free_array(void **array);
@@ -69,6 +86,10 @@ void free_array(void **array);
 char **tabgen(char const *str, char separator);
 
 void display_tab(char const **tab);
+
+char **append_line_to_tab(char **tab, char *line);
+
+int my_tablen(char const **tab);
 
 
 // nums.c
