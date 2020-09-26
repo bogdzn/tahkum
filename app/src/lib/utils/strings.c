@@ -264,9 +264,18 @@ char *strip(char *line, char to_strip)
 	return __strip_back(__strip_front(line, to_strip), to_strip);
 }
 
+char *remove_tabs(char *line)
+{
+	if (line == NULL || *line == 0)
+		return NULL;
+	for (int i = 0; line[i] != 0; i++)
+		line[i] = line[i] == '\t' ? 32 : line[i]
+	return line;
+}
+
 char *clean_line(char *line)
 {
-	char *stripped = strip(line, ' ');
+	char *stripped = strip(remove_tabs(line), ' ');
 	char *result = NULL;
 	char temp = 0;
 

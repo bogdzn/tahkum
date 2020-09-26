@@ -68,6 +68,9 @@ char *strip(char *line, char to_strip);
 
 char *clean_line(char *line);
 
+char *remove_tabs(char *line);
+
+
 
 // swaps.c
 void swap_array(void **one, void **two);
