@@ -21,8 +21,7 @@ bool logfile_exists(void)
 
 int create_logfile(void)
 {
-    int fd = open(LOG_PATH,
-        O_NDELAY | O_CREAT | O_TRUNC, O_RDWR, S_IRUSR | S_IRGRP | S_IROTH);
+    int fd = CREATE_LOGFILE;
     close(fd);
 }
 
