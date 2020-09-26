@@ -1,6 +1,9 @@
-//
-// Created by bogdan on 26/09/2020.
-//
+/**
+ * \file create_logifle.c
+ * \brief Handles logifle creation and updating.
+ * \author Bogdan G.
+ * \date 26/09/2020
+ */
 
 #include "logger.h"
 #include "utils.h"
@@ -11,6 +14,12 @@
 #include <errno.h>
 #include "../lib/utils/utils.h"
 
+/**
+ * \fn bool logfile_exists(void)
+ * \brief Tests if the log file has been created.
+ *
+ * \return boolean specifying if logfile exists.
+*/
 bool logfile_exists(void)
 {
     int fd = open(LOG_PATH, O_RDWR);
@@ -20,10 +29,17 @@ bool logfile_exists(void)
     return result;
 }
 
+/**
+ * \fn int create_logfile(void)
+ * \brief creates log file in LOG_PATH.
+ *
+ * \return 0 if successful, 1 if not.
+ */
 int create_logfile(void)
 {
     int fd = CREATE_LOGFILE;
     close(fd);
+    return (fd == -1) ? 0 : 1;
 }
 
 static char *switch_case(char flag, va_list ap)
@@ -74,6 +90,16 @@ static void write_logfile(LOGTYPE type, char *log)
     close(fd);
 }
 
+/**
+ * \fn void log(LOG_TYPE, char *string, ...)
+ * \brief appends a specific message stored in LOG_PATH.
+ * You will need to specify wether the LOG_TYPE (INFO, WARNING, ERROR),
+ * and then you can just use it as a printf.
+ *
+ * \param type type of log.
+ * \param string complete log messages, including files, as used in printf.
+ * \param ... eventual flags we want to specify.
+ */
 void log(LOGTYPE type, char *string, ...)
 {
     va_list ap;
@@ -93,6 +119,15 @@ void log(LOGTYPE type, char *string, ...)
     free(msg);
 }
 
+/**
+ * \fn void log_if_errno(int errno, char *string, ...)
+ * \brief Adds a log to LOG_PATH if errno is different than 2 or 0.
+ * By default, every error triggered by this function is considered
+ * a critical error.
+ *
+ * \param errno ERRNO constant.
+ * \param function_name defining the operation you are currently doing.
+ */
 void log_if_errno(int err, char *function_name)
 {
     int fd = 0;if (log[my_strlen(log)] != '\n')

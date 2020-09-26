@@ -1,6 +1,9 @@
-//
-// Created by bogdan on 21/09/2020.
-//
+/**
+ * \file nums.c
+ * \brief Handles nums.
+ * \author Bogdan G.
+ * \date 21/09/2020
+ */
 
 #include "./utils.h"
 #include <stdlib.h>
@@ -32,6 +35,15 @@ static int add(int nb1, int nb2)
     return nb1 + nb2;
 }
 
+/**
+ * \fn int do_op(int first_nb, int second_nb, char sign)
+ * \brief executes a specific operation, depending on the sign.
+ *
+ * \param first_nb your first number
+ * \param second_nb your second number
+ * \param the sign of your operation (+, -, %, /, *)
+ * \return results of your operation.
+ */
 int do_op(int first, int second, char flag)
 {
     ptr functions[] = { &sub, &mult, &_div, &mod, &add, (void *) 0 };
@@ -43,6 +55,14 @@ int do_op(int first, int second, char flag)
     return (0);
 }
 
+/**
+ * \fn int my_nblen(int nb)
+ * \brief gets the length of a number, in numbers of characters.
+ * doesn't count the - character.
+ *
+ * \param nb the number you want to mesure.
+ * \return the length of your number.
+ */
 int my_nblen(int nb)
 {
     int result = 0;
@@ -61,6 +81,12 @@ static void my_putchar(char c)
         return;
 }
 
+/**
+ * \fn void my_putnbr(int nb)
+ * \brief displays a number to stdout.
+ *
+ * \param nb the number your want to display.
+ */
 void my_putnbr(int nb)
 {
     if (nb < 0) {
@@ -87,6 +113,15 @@ static int get_length_of_new_base(int nb, int base_len)
     return (result);
 }
 
+/**
+ * \fn char *my_getnbr_base(int nb, const char *base_to)
+ * \brief transforms an int into whatever base you want.
+ * useful for addresses.
+ *
+ * \param nb the number you want to convert.
+ * \param base_to the base you want to convert to.
+ * \return you converted number, in a string.
+ */
 char *my_getnbr_base(int nb, const char *base_to)
 {
     char *result = (void *) 0;
@@ -110,7 +145,14 @@ char *my_getnbr_base(int nb, const char *base_to)
     return (is_negative == true ? my_strcat("-", result) : result);
 }
 
-
+/**
+ * \fn char *my_putnbr_base(int nb, const char *base_to)
+ * \brief displays an int into whatever base you want.
+ * useful for addresses.
+ *
+ * \param nb the number you want to convert.
+ * \param base_to the base you want to convert to.
+ */
 void my_putnbr_base(int nb, const char *base)
 {
     char *converted_nb = my_getnbr_base(nb, base);

@@ -97,6 +97,9 @@ fclean: clean
 
 re: fclean all
 
+doc:
+	@make -C  ./doxygen --no-print-directory
+
 ########################
 #### UNIT TESTS ########
 ########################
@@ -125,4 +128,4 @@ tests_clean: tests
 #### .PHONY ############
 ########################
 
-.PHONY: all clean fclean re tests tests_clean
+.PHONY: all clean fclean re tests tests_clean doc
