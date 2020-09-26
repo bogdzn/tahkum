@@ -158,3 +158,17 @@ Test(clean_line, cleanlineofspaces)
 
 	cr_assert_str_eq(cleaned, "this is a line");
 }
+
+Test(is_float, testiffloat)
+{
+	cr_assert_eq(is_float(""), false);
+	cr_assert_eq(is_float(NULL), false);
+	cr_assert_eq(is_float(".388"), true);
+	cr_assert_eq(is_float(",388"), true);
+	cr_assert_eq(is_float("9.999"), true);
+	cr_assert_eq(is_float("-9.999"), true);
+	cr_assert_eq(is_float("9."), true);
+	cr_assert_eq(is_float("9,"), true);
+	cr_assert_eq(is_float("9.,2"), false);
+	cr_assert_eq(is_float("9.a"), false);
+}

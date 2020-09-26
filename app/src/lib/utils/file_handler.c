@@ -25,7 +25,7 @@ file_t get_file(char const *filepath)
 		return result;
 	if (stat(filepath, &result.st) == -1 || result.st.st_size < 1)
 		return result;
-	result.name = get_last_occurence_of((char *)filepath, '/');
+	result.name = get_last_occurence_of((char *) filepath, '/');
 	result.content = malloc(sizeof(char) * (result.st.st_size + 1));
 	fd = open(filepath, O_RDONLY);
 	if (result.content == NULL || fd == -1 ||

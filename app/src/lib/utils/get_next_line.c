@@ -79,8 +79,7 @@ char *get_next_line(int fd)
 	if (fd == -1 || buffer == NULL)
 		return (NULL);
 	buffer[0] = '\0';
-	for (int bzero = 0; !rest_got_a_line(rest);)
-	{
+	for (int bzero = 0; !rest_got_a_line(rest);) {
 		bzero = read(fd, buffer, READ_SIZE);
 		if (bzero == -1 || bzero == 0)
 			break;

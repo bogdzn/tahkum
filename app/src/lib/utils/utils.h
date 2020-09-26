@@ -70,6 +70,7 @@ char *clean_line(char *line);
 
 char *remove_tabs(char *line);
 
+bool is_float(char const *s);
 
 
 // swaps.c

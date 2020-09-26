@@ -63,15 +63,12 @@ static void my_putchar(char c)
 
 void my_putnbr(int nb)
 {
-	if (nb < 0)
-	{
+	if (nb < 0) {
 		my_putchar('-');
 		nb = nb * -1;
 	}
-	if (nb >= 0)
-	{
-		if (nb >= 10)
-		{
+	if (nb >= 0) {
+		if (nb >= 10) {
 			my_putnbr(nb / 10);
 			my_putchar(nb % 10 + 48);
 		} else my_putchar(nb + 48);
@@ -104,8 +101,7 @@ char *my_getnbr_base(int nb, const char *base_to)
 		return (my_strdup("0"));
 	nb = nb < 0 ? nb * -1 : nb;
 	result = malloc(sizeof(char) * (nb_len + 1));
-	for (int tmp = 0; ctr >= 0; ctr--)
-	{
+	for (int tmp = 0; ctr >= 0; ctr--) {
 		tmp = nb % base_len;
 		result[ctr] = base_to[tmp];
 		nb = nb / base_len;
