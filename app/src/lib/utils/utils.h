@@ -17,9 +17,9 @@
 // file_handler.c
 typedef struct file_s
 {
-	char *name;
-	char *content;
-	struct stat st;
+    char *name;
+    char *content;
+    struct stat st;
 } file_t;
 
 file_t get_file(char const *filepath);

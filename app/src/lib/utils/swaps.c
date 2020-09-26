@@ -6,24 +6,24 @@
 
 void swap_array(void **one, void **two)
 {
-	void *temp = *one;
+    void *temp = *one;
 
-	*one = *two;
-	*two = temp;
+    *one = *two;
+    *two = temp;
 }
 
 void swapc(char *one, char *two)
 {
-	char tmp = *two;
+    char tmp = *two;
 
-	*two = *one;
-	*one = tmp;
+    *two = *one;
+    *one = tmp;
 }
 
 void swap(int *one, int *two)
 {
-	int temp = *two;
+    int temp = *two;
 
-	*two = *one;
-	*one = temp;
+    *two = *one;
+    *one = temp;
 }
