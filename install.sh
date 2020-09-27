@@ -19,6 +19,7 @@ packages="graphviz doxygen"
 
 # functions
 install_package () {
+  printf "Installing ${Yellow}"$package_name"${NC} ..."
   package_name="$1"
   which zypper &> /dev/null && sudo zypper -y install "$package_name"
   which pacman &> /dev/null && sudo pacman --noconfirm -S "$package_name"
