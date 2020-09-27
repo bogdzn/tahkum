@@ -73,14 +73,6 @@ static bool rest_got_a_line(char *rest)
     return (false);
 }
 
-/**
- * \fn char *get_next_line(int fd)
- * \brief reads the next line from a file.
- * the file descriptor needs to be open and closed manually.
- *
- * \param fd the file descriptor of the file you want to read.
- * \return the next line of the file.
- */
 char *get_next_line(int fd)
 {
     static char *rest = NULL;

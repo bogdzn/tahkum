@@ -9,12 +9,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-/**
- * \fn void free_array(void **array)
- * \brief frees a 2dimentionnal array.
- *
- * \param array the array you want to destroy.
- */
 void free_array(void **array)
 {
     if (array == (void *) 0)
@@ -24,13 +18,6 @@ void free_array(void **array)
     free(array);
 }
 
-/**
- * \fn int my_tablen(char const **tab)
- * \brief gets the length of a 2dimentionnal array.
- *
- * \param tab an array of strings.
- * \return the number of string in your array.
- */
 int my_tablen(char const **tab)
 {
     int result = 0;
@@ -67,15 +54,6 @@ static int get_nb_rows(const char *str, char separator)
     return (res + 1);
 }
 
-/**
- * \fn char **tabgen(char const *str, char separator)
- * \brief generated a 2dimentionnal array, based on a string.
- * splits it every time it finds a separator.
- *
- * \param str your string.
- * \param separator the separating character
- * \return an array of string seperated by a specific character.
- */
 char **tabgen(const char *str, char separator)
 {
     int i = 0;
@@ -100,12 +78,6 @@ char **tabgen(const char *str, char separator)
     return (res);
 }
 
-/**
- * \fn void display_tab(char const **tab)
- * \brief displays a 2dimentionnal array.
- *
- * \param tab the array you want to display.
- */
 void display_tab(char const **tab)
 {
     if (tab == NULL || tab[0] == NULL || tab[0][0] == '\0')
@@ -114,14 +86,6 @@ void display_tab(char const **tab)
         my_putstr(tab[i]);
 }
 
-/**
- * \fn char **append_line_to_tab(char **tab, char *line)
- * \brief appends a line to a 2dimentionnal array.
- *
- * \param tab an array of strings.
- * \param line the string you want to concatenate.
- * \return an array of strings. (tab + line)
- */
 char **append_line_to_tab(char **tab, char *line)
 {
     char **new_tab = NULL;

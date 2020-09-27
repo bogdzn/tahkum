@@ -16,13 +16,6 @@
 #include <unistd.h>
 #include <string.h>
 
-/**
- * \fn int my_strlen(char const *s)
- * \brief gets the length of a string.
- *
- * \param s string you want to mesure.
- * \return length of the string.
- */
 int my_strlen(char const *s)
 {
     int size = 0;
@@ -33,13 +26,6 @@ int my_strlen(char const *s)
     return size;
 }
 
-/**
- * \fn char *my_strdup(char const *s)
- * \brief makes a deep copy of a string.
- *
- * \param s string you want to copy.
- * \return memory allocated copy of s.
- */
 char *my_strdup(char const *s)
 {
     int len = my_strlen(s);
@@ -56,14 +42,6 @@ char *my_strdup(char const *s)
     return result;
 }
 
-/**
- * \fn char *my_strcat(char const *s1, char const *s2)
- * \brief makes a deep copy of two stirngs, and concatenates them together.
- *
- * \param s1 first string you want to copy.
- * \param s2 second string you want to copy.
- * \return memory allocated s1 + s2.
- */
 char *my_strcat(const char *s1, const char *s2)
 {
     int len_string = 0;
@@ -86,13 +64,6 @@ char *my_strcat(const char *s1, const char *s2)
     return (result);
 }
 
-/**
- * \fn char *my_itoa(int nb)
- * \brief converts an int into a string.
- *
- * \param nb the int you want to convert.
- * \return a string containing the number.
- */
 char *my_itoa(int nb)
 {
     int nb_len = my_nblen(nb);
@@ -111,13 +82,6 @@ char *my_itoa(int nb)
     return (is_negative ? my_strcat("-", result) : result);
 }
 
-/**
- * \fn char *set_to_lowercase(char *s)
- * \brief sets a string to lowercase.
- *
- * \param s a string.
- * \return s but in lowercase.
- */
 char *set_to_lowercase(char *s)
 {
     if (s == (void *) 0 || s[0] == '\0')
@@ -128,13 +92,6 @@ char *set_to_lowercase(char *s)
     return (s);
 }
 
-/**
- * \fn char *set_to_uppercase(char *s)
- * \brief sets a string to uppercase.
- *
- * \param s a string.
- * \return s but in uppercase.
- */
 char *set_to_uppercase(char *s)
 {
     if (s == (void *) 0 || s[0] == '\0')
@@ -145,13 +102,6 @@ char *set_to_uppercase(char *s)
     return (s);
 }
 
-/**
- * \fn char *my_revstr(char *s)
- * \brief reverses a string.
- *
- * \param s a string.
- * \return s but reversed.
- */
 char *my_revstr(char *s)
 {
     int len_s = my_strlen(s) - 1;
@@ -163,15 +113,6 @@ char *my_revstr(char *s)
     return (s);
 }
 
-/**
- * \fn char *my_strcpy(char *dest, char const *src)
- * \brief copies a string into another.
- *  You will need to alloc the string.
- *
- * \param src the string you want to copy.
- * \param dest the string where you want to copy.
- * \return a copy of src.
- */
 char *my_strcpy(char *dest, char const *src)
 {
     int i = 0;
@@ -184,16 +125,6 @@ char *my_strcpy(char *dest, char const *src)
     return dest;
 }
 
-/**
- * \fn char *my_strncpy(char *dest, char const *src, int n)
- * \brief copies a string into another, for n characters.
- *  You will need to alloc the string.
- *
- * \param src the string you want to copy.
- * \param dest the string where you want to copy.
- * \param n the size of your copy.
- * \return a copy of src for n characters.
- */
 char *my_strncpy(char *dest, char const *src, int n)
 {
     int i = 0;
@@ -206,14 +137,6 @@ char *my_strncpy(char *dest, char const *src, int n)
     return dest;
 }
 
-/**
- * \fn bool is_same_string(char const *s1, char const *s2)
- * \brief tests if 2 strings are the same.
- *
- * \param s1 your first string.
- * \param s2 the string you want to compare.
- * \return a boolean explicitly telling you if your strings are the same.
- */
 bool is_same_string(const char *s1, const char *s2)
 {
     int i = 0;
@@ -224,15 +147,6 @@ bool is_same_string(const char *s1, const char *s2)
     return (s1[i] - s2[i]);
 }
 
-/**
- * \fn bool is_same_stringn(char const *s1, char const *s2, int n)
- * \brief tests if 2 strings are the same, for n characters.
- *
- * \param s1 your first string.
- * \param s2 the string you want to compare.
- * \param n range of how much you want to compare.
- * \return a boolean explicitly telling you if your strings are the same.
- */
 bool is_same_stringn(const char *s1, const char *s2, int n)
 {
     int i = 0;
@@ -243,13 +157,6 @@ bool is_same_stringn(const char *s1, const char *s2, int n)
     return (s1[i] - s2[i]);
 }
 
-/**
- * \fn bool is_num(const char *s)
- * \brief tests if a string can be translated into an int.
- *
- * \param s your string.
- * \return a boolean explicitly telling you if your string is a number.
- */
 bool is_num(const char *s)
 {
     if (s == (void *) 0 || s[0] == '\0')
@@ -261,15 +168,6 @@ bool is_num(const char *s)
     return (true);
 }
 
-/**
- * \fn bool is_a_letter(char c, bool is_lower)
- * \brief tests if a character is a letter.
- * (lowercase, or uppercase, depending on the boolean)
- *
- * \param c a character.
- * \param is_lower a boolean asking if you want to test lowercase of uppercase characters
- * \return a boolean explicitly telling you if your string is a letter..
- */
 bool is_a_letter(char c, bool is_lower)
 {
     int offset = is_lower == true ? 0 : 32;
@@ -295,14 +193,6 @@ bool is_alphabetic(char *s)
     return (true);
 }
 
-/**
- * \fn int is_in_string(char const *s, char to_find)
- * \brief tests if a specific character is in a string.
- *
- * \param s your string.
- * \param to_find the character you want to find.
- * \return the index of the character if found, or -1.
- */
 int is_in_string(const char *s, char to_find)
 {
     if (s == (void *) 0 || s[0] == '\0')
@@ -314,15 +204,6 @@ int is_in_string(const char *s, char to_find)
     return (-1);
 }
 
-/**
- * \fn char *get_last_occurence_of(char *s, char to_find)
- * \brief  gets the substring after the last occurence of a character.
- * useful for paths: /var/log/tello.log becomes tello.log if to_find == '/'
- *
- * \param s your string.
- * \param to_find the character you want to find.
- * \return a substring after the last occurence of to_find.
- */
 char *get_last_occurence_of(char *s, char to_find)
 {
     int position = is_in_string(s, to_find);
@@ -332,14 +213,6 @@ char *get_last_occurence_of(char *s, char to_find)
     return (get_last_occurence_of(&s[position + 1], to_find));
 }
 
-/**
- * \fn char *append_char(char *s, char c)
- * \brief appends a character to a string.
- *
- * \param s your string.
- * \param c the character you want to append.
- * \return s + c.
- */
 char *append_char(char *s, char c)
 {
     char *result = (void *) 0;
@@ -359,24 +232,12 @@ char *append_char(char *s, char c)
     return (result);
 }
 
-/**
- * \fn void my_putstr(char const *s)
- * \brief writes a string to stdout
- *
- * \param s your string.
- */
 void my_putstr(char const *s)
 {
     if (!write(1, s, my_strlen(s)))
         return;
 }
 
-/**
- * \fn void my_puterr(char const *s)
- * \brief writes a string to stderr.
- *
- * \param s your string.
- */
 void my_puterr(char const *s)
 {
     if (!write(2, s, my_strlen(s)))
@@ -401,15 +262,6 @@ static char *__strip_back(char *line, char to_strip)
     return line;
 }
 
-/**
- * \fn char *strip(char *line, char to_strip)
- * \brief strips a string of trailing of leading to_strip characters.
- * useful to remove trailing or leading spaces.
- *
- * \param line your string.
- * \param to_strip the character you want to strip.
- * \return line, stripped of leading and trailing to_strip.
- */
 char *strip(char *line, char to_strip)
 {
     if (line == NULL || line[0] == 0 || to_strip == 0)
@@ -417,13 +269,6 @@ char *strip(char *line, char to_strip)
     return __strip_back(__strip_front(line, to_strip), to_strip);
 }
 
-/**
- * \fn char *remove_tabs(char *line)
- * \brief transforms tabs into spaces.
- *
- * \param line your string.
- * \return line, but with spaces instead of tabs.
- */
 char *remove_tabs(char *line)
 {
     if (line == NULL || *line == 0)
@@ -433,13 +278,6 @@ char *remove_tabs(char *line)
     return line;
 }
 
-/**
- * \fn char *clean_line(char *line)
- * \brief removes double-spaces, trailing and leading spaces from a string.
- *
- * \param line your string.
- * \return line, stripped of leading and trailing spaces.
- */
 char *clean_line(char *line)
 {
     char *stripped = strip(remove_tabs(line), ' ');
@@ -457,13 +295,6 @@ char *clean_line(char *line)
     return strip(result, ' ');
 }
 
-/**
- * \fn bool is_float(char const *s)
- * \brief tests if a string can be converted to a float.
- *
- * \param s your string.
- * \return a boolean telling you if your string can be converted to a float.
- */
 bool is_float(char const *s)
 {
     int nb_dots = 0;
