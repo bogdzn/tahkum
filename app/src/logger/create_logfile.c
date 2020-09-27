@@ -1,5 +1,5 @@
 /**
- * \file create_logifle.c
+ * \file create_logfile.c
  * \brief Handles logifle creation and updating.
  * \author Bogdan G.
  * \date 26/09/2020

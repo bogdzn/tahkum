@@ -1,5 +1,5 @@
 /**
- * \file logifle.h
+ * \file logger.h
  * \brief Handles logifle.
  * \author Bogdan G.
  * \version 0.1

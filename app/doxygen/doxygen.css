@@ -109,7 +109,7 @@ dl.el {
 a.el {
     padding: 1px;
     text-decoration: none;
-    color: #869DCA;
+    color: #577E25;
 }
 
 a.el:hover {
@@ -197,7 +197,7 @@ div.groupText {
 }
 
 body {
-    background-color: ghostwhite;
+    background-color: white;
     color: black;
     margin: 0;
 }
@@ -271,7 +271,7 @@ img.footer {
 /* @group Code Colorization */
 
 span.keyword {
-    color: #e08060
+    color: #008000
 }
 
 span.keywordtype {
@@ -334,7 +334,7 @@ td.tiny {
 }
 
 th.dirtab {
-    background:#364D6A;
+    background: #EBEFF6;
     font-weight: bold;
 }
 
@@ -463,7 +463,7 @@ table.memberdecls {
     padding: 6px 0px 6px 0px;
     color: #000;
     font-weight: bold;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.9);
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.9);
     background-color: #eee;
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
@@ -764,7 +764,7 @@ table.fieldtable {
     outline: none;
     color: #283A5D;
     font-family: 'Lucida Grande',Geneva,Helvetica,Arial,sans-serif;
-    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.9);
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.9);
     text-decoration: none;
 }
 
@@ -794,7 +794,7 @@ div.summary a {
     white-space: nowrap;
     padding: 1px;
     text-decoration: none;
-    color: #364D6A;
+    color: #577E25;
 }
 
 div.summary a:hover {
@@ -1048,7 +1048,7 @@ tr.heading h2 {
     width: 100%;
     z-index: 101;
     font-size: 11pt;
-    background-color: whitesmoke;
+    background-color: #EAF5DB;
     border-left: 1px solid #999;
     border-right: 1px solid #999;
     border-bottom: 1px solid #999;
@@ -1101,7 +1101,7 @@ tr.heading h2 {
 
 /* SFML css */
 body {
-    font-family: 'Ubuntu', 'Helvetica', sans-serif;
+    font-family: 'Ubuntu', 'Arial', sans-serif;
     line-height: 140%;
     margin: 0 0 2em 0;
     padding: 0;
@@ -1112,7 +1112,7 @@ body {
     margin-top: 25px;
     border-top: 2px solid #999;
     border-bottom: 2px solid #999;
-    background-color:#869DCA;
+    background-color: rgb(140, 200, 65);
 }
 
 #banner {
@@ -1150,7 +1150,7 @@ body {
 #footer a {
     padding: 1px;
     text-decoration: none;
-    color: #869DCA;
+    color: rgb(70, 100, 30);
 }
 
 #footer a:hover {
@@ -1194,7 +1194,7 @@ div.contents p {
 div.contents a, #content a {
     padding: 1px;
     text-decoration: none;
-    color: #869DCA;
+    color: rgb(70, 100, 30);
 }
 
 div.contents a:hover, #content a:hover {
@@ -1234,7 +1234,7 @@ div.contents ul li {
     height: 14px;
     width: 16px;
     display: inline-block;
-    background-color: #869DCA;
+    background-color: #8cc445;
     color: white;
     text-align: center;
     border-radius: 4px;
@@ -1319,7 +1319,7 @@ div.contents ul li {
 }
 
 #powerTip div.ttdeci {
-    color: #869DCA;
+    color: #006318;
 }
 
 #powerTip div {
@@ -1353,7 +1353,7 @@ div.contents ul li {
 #powerTip.w:after,  #powerTip.e:after,
 #powerTip.nw:after, #powerTip.ne:after,
 #powerTip.sw:after, #powerTip.se:after {
-    border-color: rgba(255, 255, 255, 0);
+    border-color: rgba(0, 0, 0, 0.9);
 }
 
 #powerTip.n:before,  #powerTip.s:before,
