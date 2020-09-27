@@ -54,7 +54,7 @@ typedef enum LOG_TYPE {
 int create_logfile(void);
 
 /**
- * \fn void log(LOG_TYPE, char *string, ...)
+ * \fn void __log(LOG_TYPE, char *string, ...)
  * \brief appends a specific message stored in LOG_PATH.
  * You will need to specify wether the LOG_TYPE (INFO, WARNING, ERROR),
  * and then you can just use it as a printf.
@@ -75,7 +75,7 @@ void __log(log_type_e type, char *string, ...);
 bool logfile_exists(void);
 
 /**
- * \fn void log_if_errno(int errno, char *string, ...)
+ * \fn void log_if_errno(int errno, char *function_name)
  * \brief Adds a log to LOG_PATH if errno is different than 2 or 0.
  * By default, every error triggered by this function is considered
  * a critical error.

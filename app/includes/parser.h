@@ -55,7 +55,7 @@ instr_t *get_instructions_queue(char *filename);
 bool always_true(char const *s);
 
 /**
- * \fn bool is_comment(char *string
+ * \fn bool is_comment(char *string)
  * \brief checks if a line read from the file is a comment.
  *  this function also returns true if the string you sent is empty of NULL.
  *

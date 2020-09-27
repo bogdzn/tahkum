@@ -5,7 +5,7 @@
  * \date 27/09/2020
  */
 
-#include "logger.h"
+#include "../../includes//logger.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
@@ -52,7 +52,7 @@ static void write_logfile(log_type_e type, char *log)
     char *start_of_msg = get_start_of_msg(type);
     int fd = OPEN_LOGFILE;
 
-    if (fd == -1)
+    if (fd == -1 || !logfile_exists())
         return;
     log = my_strcat(start_of_msg, log);
     if (log[my_strlen(log)] != '\n')
@@ -86,7 +86,7 @@ void log_if_errno(int err, char *function_name)
     int fd = 0;
     char *err_msg = NULL;
 
-    if (err == 0 || err == 2)
+    if (err == 0 || err == 2 || !logfile_exists())
         return;
     err_msg = my_strcat("[ERROR] -- ", function_name);
     err_msg = my_strcat(err_msg, strerror(err));
