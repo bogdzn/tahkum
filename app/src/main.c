@@ -5,8 +5,8 @@
  * \date 27/09/2020
  */
 
-#include "utils.h"
-#include "logger.h"
+#include "./lib/utils/utils.h"
+#include "../includes/logger.h"
 
 int main(int ac, char **av)
 {
@@ -17,7 +17,7 @@ int main(int ac, char **av)
     } else if (create_logfile() != 0) {
         my_puterr("Unexpected error while creating logfile, exiting...\n");
         return 1;
-    } else log(INFO, "Successfully created log file.\n");
+    } else __log(INFO, "Successfully created log file.\n");
 
     return 0;
 }

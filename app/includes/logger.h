@@ -15,7 +15,9 @@
 #include <fcntl.h>
 
 /// path where the log file is stored.
-char const *LOG_PATH = "/var/log/tello.log";
+#ifndef LOG_PATH
+#define LOG_PATH ("/var/log/tello.log")
+#endif
 
 /// Macro opening the log file, with O_APPEND flag set.
 #ifndef OPEN_LOGFILE
@@ -37,7 +39,7 @@ char const *LOG_PATH = "/var/log/tello.log";
  *
  * Defines which type of log we want to write.
  */
-typedef enum LOG_TYPE = {
+typedef enum LOG_TYPE {
     INFO, /*!< used for misc infos. */
     WARNING, /*!< used for warnings and non-critical errors. */
     ERROR /*!< used for critical errors. */
@@ -61,7 +63,7 @@ int create_logfile(void);
  * \param string complete log messages, including files, as used in printf.
  * \param ... eventual flags we want to specify.
  */
-void log(LOG_TYPE type, char *string, ...);
+void __log(log_type_e type, char *string, ...);
 
 
 /**

@@ -35,9 +35,9 @@ LINK_FLAG = -L$(LIBPATH) -lutils
 
 LIBPATH = ./src/.
 
-LIBUTILS_PATH =  ./src/lib/utils
+LIBUTILS_PATH =  ./src/lib/utils/.
 
-LIBS  		= libutils.a
+LIB 		= libutils.a
 
 ########################
 ### FILES PATH #########

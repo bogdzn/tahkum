@@ -2,11 +2,10 @@
  * \file update_logs.c
  * \brief Handles logs updates.
  * \author Bogdan G.
- * \date 26/09/2020
+ * \date 27/09/2020
  */
 
 #include "logger.h"
-#include "utils.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
@@ -31,7 +30,7 @@ static char *switch_case(char flag, va_list ap)
             result = my_strdup(va_arg(ap,char *));
             break;
         case 'f':
-            result = fcvt(va_arg(ap, float), float_max_len, &decimal, &sign);
+            result = fcvt(va_arg(ap, double), float_max_len, &decimal, &sign);
             break;
         default :
             result = append_char(result, '%');
@@ -39,7 +38,7 @@ static char *switch_case(char flag, va_list ap)
     return (result);
 }
 
-static char *get_start_of_msg(LOGTYPE_type)
+static char *get_start_of_msg(log_type_e type)
 {
     if (type == INFO)
         return my_strdup("[INFO] :");
@@ -48,9 +47,9 @@ static char *get_start_of_msg(LOGTYPE_type)
     else return my_strdup("[ERROR] :");
 }
 
-static void write_logfile(LOGTYPE type, char *log)
+static void write_logfile(log_type_e type, char *log)
 {
-    char *start_of_msg = get_start_of_msg(LOGTYPE);
+    char *start_of_msg = get_start_of_msg(type);
     int fd = OPEN_LOGFILE;
 
     if (fd == -1)
@@ -62,19 +61,19 @@ static void write_logfile(LOGTYPE type, char *log)
     close(fd);
 }
 
-void log(LOGTYPE type, char *string, ...)
+void __log(log_type_e type, char *string, ...)
 {
     va_list ap;
     char *msg = (void *) 0;
 
-    if (s == (void *) 0 || s[0] == '\0')
+    if (string == (void *) 0 || string[0] == '\0')
         return;
     va_start(ap, string);
     for (int i = 0; string[i] != 0; i++) {
         if (string[i] == '%' && string[i + 1] != 0) {
-            res = my_strcat(res, swtch_case(string[i + 1], ap));
+            msg = my_strcat(msg, switch_case(string[i + 1], ap));
             i++;
-        } else msg = append_char(msg, s[i]);
+        } else msg = append_char(msg, string[i]);
     }
     va_end(ap);
     write_logfile(type, msg);
@@ -83,8 +82,7 @@ void log(LOGTYPE type, char *string, ...)
 
 void log_if_errno(int err, char *function_name)
 {
-    int fd = 0;if (log[my_strlen(log)] != '\n')
-        log = my_strcat(log, "\n");
+    int fd = 0;
     char *err_msg = NULL;
 
     if (err == 0 || err == 2)
