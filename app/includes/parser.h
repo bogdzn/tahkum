@@ -17,19 +17,27 @@ typedef struct input_file {
     int len;
 }input_file_t;
 
-typedef struct param
-{
-    char *desc;
-    int *size;
-}param_t;
-
 typedef struct cmd_list
 {
     int instruction_id;
     char *cmd;
     int nb_param;
-    param_t params;
+    char *desc;
+    int size[2];
 } cmd_list_t;
+
+const cmd_list_t USER_CMD[] = {
+    {0, "start",            0, NULL, 0},
+    {1, "takeoff",          0, NULL, 0},
+    {2, "delay",            1, "time",     (int *){(int)sizeof(float), -1}},
+    {3, "sleep",      	    1, "time",     (int *){(int)sizeof(float), -1}},
+    {4, "foreward",    	    0, NULL, 0},
+    {5, "lattitude",	    1, "degrees",  (int *){(int)sizeof(float), -1}},
+    {6, "longitude",        1, "degrees",  (int *)(int){sizeof(float), -1}},
+    {7, "land",             0, NULL, 0},
+    {8, "end",              0, NULL, 0},
+    {0, NULL,               0, NULL, 0}
+};
 
 typedef struct instr instr_t;
 struct instr_t {
@@ -37,20 +45,6 @@ struct instr_t {
     float *params;
     instr_t *next;
 };
-
-const cmd_list_t USER_CMD[] = {
-    {0, "start",            0, NULL},
-    {1, "takeoff",          0, NULL},
-    {2, "delay",            1, {"time",     (int *){sizeof(float), -1}}},
-    {3, "sleep",      	    1, {"time",     (int *){sizeof(float), -1}}},
-    {4, "foreward",    	    0, NULL},
-    {5, "lattitude",	    1, {"degrees",  (int *){sizeof(float), -1}}},
-    {6, "longitude",        1, {"degrees",  (int *){sizeof(float), -1}}},
-    {7, "land",             0, NULL},
-    {8, "end",              0, NULL},
-    {0, NULL,               0, NULL}
-};
-
 
 // get_instr_queue.c
 instr_t *init_instr(void);

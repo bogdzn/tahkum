@@ -1,5 +1,5 @@
 /**
- * \file logifle.h
+ * \file logger.h
  * \brief Handles logifle.
  * \author Bogdan G.
  * \version 0.1
@@ -15,19 +15,21 @@
 #include <fcntl.h>
 
 /// path where the log file is stored.
-char const *LOG_PATH = "/var/log/tello.log";
+#ifndef LOG_PATH
+#define LOG_PATH ("/var/log/tello.log")
+#endif
 
 /// Macro opening the log file, with O_APPEND flag set.
 #ifndef OPEN_LOGFILE
 #define OPEN_LOGFILE (open(LOG_PATH, \
-        O_NDELAY | O_CREAT | O_APPEND, O_RDWR, \
+        O_NDELAY | O_CREAT | O_APPEND | O_RDWR, \
         S_IRUSR | S_IRGRP | S_IROTH))
 #endif
 
 /// macro for truncating the log file.
 #ifndef CREATE_LOGFILE
 #define CREATE_LOGFILE (open(LOG_PATH, \
-        O_NDELAY | O_CREAT | O_TRUNC, O_RDWR, \
+        O_NDELAY | O_CREAT | O_TRUNC | O_RDWR, \
         S_IRUSR | S_IRGRP | S_IROTH))
 #endif
 
@@ -37,13 +39,11 @@ char const *LOG_PATH = "/var/log/tello.log";
  *
  * Defines which type of log we want to write.
  */
-typedef enum LOG_TYPE = {
+typedef enum LOG_TYPE {
     INFO, /*!< used for misc infos. */
     WARNING, /*!< used for warnings and non-critical errors. */
     ERROR /*!< used for critical errors. */
 } log_type_e;
-
-// CREATE_LOGFILE.C
 
 /**
  * \fn int create_logfile(void)
@@ -63,7 +63,7 @@ int create_logfile(void);
  * \param string complete log messages, including files, as used in printf.
  * \param ... eventual flags we want to specify.
  */
-void log(LOG_TYPE type, char *string, ...);
+void __log(log_type_e type, char *string, ...);
 
 
 /**

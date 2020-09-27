@@ -2,28 +2,32 @@
 #include <stdlib.h>
 #include "./../../includes/parser.h"
 #include "./../lib/utils/utils.h"
+#include "./../../includes/logger.h"
 #include <stdbool.h>
 
 input_file_t parse(char const *filepath)
 {
-    input_file_t parsed_file = NULL;
+    input_file_t parsed_file = {
+        .instructions = NULL,
+        .len = 0
+    };
     file_t file = get_file(filepath);
 
-    if (!file) {
+    if (!file.content) {
         my_puterr("Error while loading the file. Retry with -h.");
-        free(filepath);
+        free((void *)filepath);
         exit(F_LOADING_FILE);
     }
     parsed_file.instructions = clean_file(file.content);
-    parsed_file.len = tab_len(parsed_file.instructions);
+    parsed_file.len = my_tablen((char const **)parsed_file.instructions);
     if (!check_file(parsed_file.instructions)) {
         destroy_file(file);
-        free_array(parsed_file.instructions);
-        free(filepath);
+        free_array((void **)parsed_file.instructions);
+        free((void *)filepath);
         exit(F_INVALID_CMD_FILE);
     }
     my_putstr("The file has been successfully downloaded.\n");
-    free(filepath);
+    free((void *)filepath);
     return parsed_file;
 }
 
@@ -65,12 +69,9 @@ char **clean_file(char *file)
 
 bool check_if_cmd_exists(char **user_instructions)
 {
-    bool found = false;
-
     for (int i = 0; user_instructions[i] != NULL; i++) {
         if (get_instr_id(user_instructions[i]) == -1)
             return false;
-        found = false;
     }
     return true;
 }
@@ -103,7 +104,7 @@ bool check_parameters(char **user_instructions)
         id = get_instr_id(user_instructions[i]);
         line_instr = tabgen(user_instructions[i], ' ');
         nb_params = USER_CMD[id].nb_param;
-        if (tab_len(line_instr) - 1 != nb_params) {
+        if (my_tablen((char const **)line_instr) - 1 != nb_params) {
             right_param = false;
                 break;
         }

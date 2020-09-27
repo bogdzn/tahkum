@@ -36,9 +36,9 @@ LINK_FLAG = -L$(LIBPATH) -lutils
 
 LIBPATH = ./src/.
 
-LIBUTILS_PATH =  ./src/lib/utils
+LIBUTILS_PATH =  ./src/lib/utils/.
 
-LIBS  		= libutils.a
+LIB 		= libutils.a
 
 ########################
 ### FILES PATH #########
@@ -52,6 +52,8 @@ PARSER = 	get_instr_from_file.c \
 		get_instr_queue.c
 
 LOGGER = create_logfile.c
+LOGGER = create_logfile.c \
+		 update_logs.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
