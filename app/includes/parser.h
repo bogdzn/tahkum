@@ -37,12 +37,12 @@ struct instr_t {
 
 const cmd_list_t USER_CMD[] = {
     {0, "start",            0, NULL},
-    {1, "take off",         0, NULL},
-    {2, "delay",            1, {"time",     [sizeof(int),   -1]}},
-    {3, "sleep until",      1, {"time",     [sizeof(float), -1]}},
-    {4, "move foreward",    0, NULL},
-    {5, "turn lattitude at",1, {"degrees",  [sizeof(float), -1]}},
-    {6, "turn longitude at",1, {"degrees",  [sizeof(float), -1]}},
+    {1, "takeoff",          0, NULL},
+    {2, "delay",            1, {"time",     [sizeof(float), -1]}},
+    {3, "sleep",      	    1, {"time",     [sizeof(float), -1]}},
+    {4, "foreward",    	    0, NULL},
+    {5, "lattitude",	    1, {"degrees",  [sizeof(float), -1]}},
+    {6, "longitude",        1, {"degrees",  [sizeof(float), -1]}},
     {7, "land",             0, NULL},
     {8, "end",              0, NULL},
     {0, NULL,               0, NULL}
