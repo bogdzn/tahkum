@@ -48,8 +48,8 @@ MAIN		 =	main.c
 
 SRC = \
 
-PARSER = 	get_instr_from_file.c \
-		get_instr_queue.c
+PARSER = 	get_instruction_queue.c \
+			input_checking.c
 
 LOGGER = create_logfile.c
 LOGGER = create_logfile.c \

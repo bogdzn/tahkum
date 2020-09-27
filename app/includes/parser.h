@@ -1,65 +1,66 @@
+/**
+ * \file parser.h
+ * \brief Handles initial parsing.
+ * \author Adina C.
+ * \version 0.1
+ * \date 27/09/2020
+ */
+
 #ifndef PARSER_H
 #define PARSER_H
-
-#ifndef F_LOADING_FILE
-#define F_LOADING_FILE 111
-#endif
-
-#ifndef F_INVALID_CMD_FILE
-#define F_INVALID_CMD_FILE 112
-#endif
 
 #include <stdbool.h>
 #include "./../src/lib/utils/utils.h"
 
-typedef struct input_file {
-    char **instructions;
-    int len;
-}input_file_t;
+/**
+ * \brief function pointer containing input check.
+ *
+ * Returns true if correct, false if not. (duh)
+ */
+typedef bool (*check_t)(char const *);
 
-typedef struct cmd_list
-{
-    int instruction_id;
-    char *cmd;
-    int nb_param;
-    char *desc;
-    int size[2];
-} cmd_list_t;
-
-const cmd_list_t USER_CMD[] = {
-    {0, "start",            0, NULL, 0},
-    {1, "takeoff",          0, NULL, 0},
-    {2, "delay",            1, "time",     (int *){(int)sizeof(float), -1}},
-    {3, "sleep",      	    1, "time",     (int *){(int)sizeof(float), -1}},
-    {4, "foreward",    	    0, NULL, 0},
-    {5, "lattitude",	    1, "degrees",  (int *){(int)sizeof(float), -1}},
-    {6, "longitude",        1, "degrees",  (int *)(int){sizeof(float), -1}},
-    {7, "land",             0, NULL, 0},
-    {8, "end",              0, NULL, 0},
-    {0, NULL,               0, NULL, 0}
-};
-
-typedef struct instr instr_t;
-struct instr_t {
-    int id;
-    float *params;
-    instr_t *next;
-};
+/**
+ * \struct instr_t
+ * \brief Linked list holding a command.
+ *
+ * Contains the command, it's parameters, and if it is locally executed.
+ */
+typedef struct instr {
+    char *command;
+    char *params;
+    check_t input_check;
+    struct instr_s *next;
+} instr_t;
 
 // get_instr_queue.c
-instr_t *init_instr(void);
-instr_t *fill_instruction(char *instr);
+
+/**
+ * \fn instr_t *get_instructions_queue(char *filename)
+ * \brief loads instructions in memory.
+ *
+ * \param filename the path of the file you want to load.
+ * \return a linked list containing your commands.
+ */
 instr_t *get_instructions_queue(char *filename);
 
-//get_instr_from_file.c
-input_file_t parse(char const *filepath);
-int get_instr_id(char *instr);
-char **crop_from_start(char **tab);
-char **clean_file(char *file);
-bool check_if_cmd_exists(char **user_instructions);
-bool check_param_type(char **line_instr, int idx);
-bool check_parameters(char **user_instructions);
-bool check_file(char **user_instructions);
+// input_checking.c
 
+/**
+ * \fn bool always_true(char const *s)
+ * \brief inline function always returning true.
+ *
+ * \param s a string.
+ * \return true. (duh)
+ */
+bool always_true(char const *s);
+
+/**
+ * \fn bool is_comment(char *string
+ * \brief checks if a line read from the file is a comment.
+ *
+ * \param string the string you want to test.
+ * \return a boolean, depending on if it's a comment or not.
+ */
+bool is_comment(char *string);
 
 #endif
