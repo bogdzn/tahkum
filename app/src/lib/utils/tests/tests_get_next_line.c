@@ -24,8 +24,6 @@ Test(get_next_line, test_gnl)
 	int fd = open("Makefile", O_RDONLY);
 
 	cr_assert_str_eq(get_next_line(fd), "##");
-	cr_assert_str_eq(get_next_line(fd), "## Bogdan G. // Adina C.");
-	cr_assert_str_eq(get_next_line(fd), "##");
 	close(fd);
 }
 

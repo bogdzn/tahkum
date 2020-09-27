@@ -43,8 +43,6 @@ typedef enum LOG_TYPE = {
     ERROR /*!< used for critical errors. */
 } log_type_e;
 
-// CREATE_LOGFILE.C
-
 /**
  * \fn int create_logfile(void)
  * \brief creates log file in LOG_PATH.

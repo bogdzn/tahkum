@@ -47,7 +47,8 @@ MAIN		 =	main.c
 
 SRC = \
 
-LOGGER = create_logfile.c
+LOGGER = create_logfile.c \
+		 update_logs.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
