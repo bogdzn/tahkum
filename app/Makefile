@@ -64,12 +64,12 @@ COMBINED_NO_MAIN = 	$(SRC) \
 COMBINED	=	$(MAIN) \
 			$(COMBINED_NO_MAIN)
 
-TEST_SRC 	= ./tests/tests_parse.c
+TEST_SRC 	= ./tests/tests_parser.c
 
 OBJECT_DIR 	= ./objects
 
 OBJ 	 	= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED))
-OBJTST 		= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED_NO_SRC))
+OBJTST 		= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED_NO_MAIN))
 
 ########################
 #### COMPILATION #######
@@ -135,7 +135,7 @@ tests: directories $(LIB) $(OBJTST)
 
 tests_clean: tests
 	@gcovr --exclude tests/
-	@make fclean --no-print-directory -C $(LIBUTILS_PATH)
+	@make clean_tests --no-print-directory -C $(LIBUTILS_PATH)
 	@$(RM) unit_tests
 	@$(RM) *.gc* unit_tests
 	@$(RM) $(NAME)

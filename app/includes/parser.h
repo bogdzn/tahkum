@@ -57,6 +57,7 @@ bool always_true(char const *s);
 /**
  * \fn bool is_comment(char *string
  * \brief checks if a line read from the file is a comment.
+ *  this function also returns true if the string you sent is empty of NULL.
  *
  * \param string the string you want to test.
  * \return a boolean, depending on if it's a comment or not.
