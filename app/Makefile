@@ -4,6 +4,7 @@
 
 vpath %.c ./src/
 vpath %.c ./src/logger
+vpath %.c ./src/parser
 
 ########################
 #### VARIABLES #########
@@ -47,17 +48,21 @@ MAIN		 =	main.c
 
 SRC = \
 
+PARSER = 	get_instr_from_file.c \
+		get_instr_queue.c
+
 LOGGER = create_logfile.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
-					$(LOGGER)
+					$(LOGGER)\
+					$(PARSER)
 
 # binary included files
 COMBINED	=	$(MAIN) \
 			$(COMBINED_NO_MAIN)
 
-TEST_SRC 	= ./tests/
+TEST_SRC 	= ./tests/tests_parse.c
 
 OBJECT_DIR 	= ./objects
 

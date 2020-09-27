@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../includes/parser.h"
-#include "../src/lib/utils.h"
+#include "./../includes/parser.h"
+#include "./../src/lib/utils/utils.h"
 #include <stdbool.h>
 #include <criterion/criterion.h>
 

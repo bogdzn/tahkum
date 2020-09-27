@@ -9,6 +9,9 @@
 #define F_INVALID_CMD_FILE 112
 #endif
 
+#include <stdbool.h>
+#include "./../src/lib/utils/utils.h"
+
 typedef struct input_file {
     char **instructions;
     int len;
@@ -38,11 +41,11 @@ struct instr_t {
 const cmd_list_t USER_CMD[] = {
     {0, "start",            0, NULL},
     {1, "takeoff",          0, NULL},
-    {2, "delay",            1, {"time",     [sizeof(float), -1]}},
-    {3, "sleep",      	    1, {"time",     [sizeof(float), -1]}},
+    {2, "delay",            1, {"time",     (int *){sizeof(float), -1}}},
+    {3, "sleep",      	    1, {"time",     (int *){sizeof(float), -1}}},
     {4, "foreward",    	    0, NULL},
-    {5, "lattitude",	    1, {"degrees",  [sizeof(float), -1]}},
-    {6, "longitude",        1, {"degrees",  [sizeof(float), -1]}},
+    {5, "lattitude",	    1, {"degrees",  (int *){sizeof(float), -1}}},
+    {6, "longitude",        1, {"degrees",  (int *){sizeof(float), -1}}},
     {7, "land",             0, NULL},
     {8, "end",              0, NULL},
     {0, NULL,               0, NULL}

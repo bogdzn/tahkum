@@ -11,7 +11,8 @@ void redirect_all(void);
 
 void my_putchar(char c)
 {
-    write(1, &c, 1);
+    if (!write(1, &c, 1))
+        return;
 }
 
 Test(swap, testswap, .init = redirect_all)

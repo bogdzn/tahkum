@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../../includes/parser.h"
-#include "../lib/utils.h"
+#include "./../../includes/parser.h"
+#include "./../lib/utils/utils.h"
 #include <stdbool.h>
 
 input_file_t parse(char const *filepath)
