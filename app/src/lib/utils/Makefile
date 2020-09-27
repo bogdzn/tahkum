@@ -67,4 +67,8 @@ tests_clean: tests
 	@echo "[*** CLEAN SUCCESSFUL ***]"
 
 
-.PHONY: all clean fclean re tests tests_clean
+clean_tests: fclean
+	@gcovr --exclude tests/
+	@$(RM) $(TEST_BIN) *gc* $(NAME) objects
+
+.PHONY: all clean fclean re tests tests_clean clean_tests

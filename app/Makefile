@@ -4,6 +4,7 @@
 
 vpath %.c ./src/
 vpath %.c ./src/logger
+vpath %.c ./src/parser
 
 ########################
 #### VARIABLES #########
@@ -47,23 +48,28 @@ MAIN		 =	main.c
 
 SRC = \
 
+PARSER = 	get_instruction_queue.c \
+			input_checking.c
+
+LOGGER = create_logfile.c
 LOGGER = create_logfile.c \
 		 update_logs.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
-					$(LOGGER)
+					$(LOGGER)\
+					$(PARSER)
 
 # binary included files
 COMBINED	=	$(MAIN) \
 			$(COMBINED_NO_MAIN)
 
-TEST_SRC 	= ./tests/
+TEST_SRC 	= ./tests/tests_parser.c
 
 OBJECT_DIR 	= ./objects
 
 OBJ 	 	= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED))
-OBJTST 		= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED_NO_SRC))
+OBJTST 		= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED_NO_MAIN))
 
 ########################
 #### COMPILATION #######
@@ -129,7 +135,7 @@ tests: directories $(LIB) $(OBJTST)
 
 tests_clean: tests
 	@gcovr --exclude tests/
-	@make fclean --no-print-directory -C $(LIBUTILS_PATH)
+	@make clean_tests --no-print-directory -C $(LIBUTILS_PATH)
 	@$(RM) unit_tests
 	@$(RM) *.gc* unit_tests
 	@$(RM) $(NAME)
