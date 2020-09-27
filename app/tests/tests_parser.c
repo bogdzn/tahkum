@@ -21,3 +21,10 @@ Test(always_true, trueXD)
 {
     cr_assert_eq(always_true("asd"), true);
 }
+
+Test(get_instructions_queue, check_if_loading_something)
+{
+    instr_t * instruc = get_instructions_queue("./tests/.tests_files/valid");
+
+    cr_assert_neq(instruc, 0);
+}
