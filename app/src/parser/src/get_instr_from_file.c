@@ -1,12 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "parser.h"
+#include "../../includes/parser.h"
 #include "../lib/utils.h"
 #include <stdbool.h>
-
-/*
-        make units tests.
-*/
 
 input_file_t parse(char const *filepath)
 {
@@ -33,6 +29,8 @@ input_file_t parse(char const *filepath)
 
 int get_instr_id(char *instr)
 {
+    if (instr == NULL || instr[0] == 0)
+        return -1;
     for (int j = 0; USER_CMD[j].cmd != NULL; j++)
         if (!is_same_stringn(instr, USER_CMD[j].cmd, my_strlen(USER_CMD[j].cmd)))
             return j;
@@ -41,6 +39,8 @@ int get_instr_id(char *instr)
 
 char **crop_from_start(char **tab)
 {
+    if (!tab || !tab[0] || !tab[0][0])
+        return NULL;
     for (int i = 0; tab[i] != NULL; i++) {
         if (!is_same_string("start", tab[i])) {
             return &tab[i];
@@ -51,8 +51,11 @@ char **crop_from_start(char **tab)
 
 char **clean_file(char *file)
 {
-    char **cleaned_file = tabgen(file, '\n');
-
+    char **cleaned_file = NULL;
+    
+    if (!file || !file[0])
+        return NULL;
+    cleaned_file = tabgen(file, '\n');
     cleaned_file = crop_from_start(cleaned_file);
     for (int i = 0; cleaned_file[i] != NULL; i++) {
         cleaned_file[i] = clean_line(cleaned_file[i]);
@@ -77,7 +80,7 @@ bool check_param_type(char **line_instr, int idx)
     int nb_params = USER_CMD[idx].nb_param;
 
     for (int i = 0; i < nb_params; i++) {
-        if (line_instr[i] == '\0')
+        if (!line_instr[i])
             return false;
         if (USER_CMD[idx].size[i] == sizeof(int))
             if (!is_num(line_instr[i]))
@@ -115,7 +118,7 @@ bool check_parameters(char **user_instructions)
 
 bool check_file(char **user_instructions)
 {
-    if (!user_instructions || !user_instructions[0])
+    if (!user_instructions || !user_instructions[0] || !user_instructions[0][0])
         return false;
     if (!check_if_cmd_exists(user_instructions))
         return false;
