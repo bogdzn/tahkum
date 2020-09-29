@@ -2,7 +2,7 @@
 // Created by bogdan on 23/09/2020.
 //
 
-#include "./../utils.h"
+#include "utils.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 

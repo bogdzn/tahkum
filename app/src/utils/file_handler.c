@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "./utils.h"
+#include "utils.h"
 
 file_t get_file(char const *filepath)
 {

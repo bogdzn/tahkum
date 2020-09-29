@@ -11,7 +11,7 @@
 #include <stdarg.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "../lib/utils/utils.h"
+#include "utils.h"
 
 bool logfile_exists(void)
 {

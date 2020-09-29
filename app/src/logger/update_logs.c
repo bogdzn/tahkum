@@ -5,13 +5,13 @@
  * \date 27/09/2020
  */
 
-#include "../../includes//logger.h"
+#include "logger.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 #include <fcntl.h>
 #include <errno.h>
-#include "../lib/utils/utils.h"
+#include "utils.h"
 
 static char *switch_case(char flag, va_list ap)
 {

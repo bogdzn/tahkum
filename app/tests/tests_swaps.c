@@ -3,7 +3,7 @@
 //
 
 #include <unistd.h>
-#include "./../utils.h"
+#include "utils.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 

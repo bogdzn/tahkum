@@ -5,7 +5,7 @@
  * \date 21/09/2020
  */
 
-#include "./utils.h"
+#include "utils.h"
 
 void swap_array(void **one, void **two)
 {

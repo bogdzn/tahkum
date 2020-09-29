@@ -9,7 +9,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include "./../src/lib/utils/utils.h"
+#include "utils.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -34,7 +34,7 @@
 #endif
 
 /**
- * \enum LOG_TYPE
+ * \enum log_type_e
  * \brief Log messages types.
  *
  * Defines which type of log we want to write.

@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include "parser.h"
-#include "./../src/lib/utils/utils.h"
+#include "utils.h"
 
 /**
  * \struct authorized_t

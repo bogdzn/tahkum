@@ -8,8 +8,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "./../../includes/logger.h"
-#include "./../../includes/authorized_commands.h"
+#include "logger.h"
+#include "authorized_commands.h"
 #include <stdbool.h>
 #include <errno.h>
 
