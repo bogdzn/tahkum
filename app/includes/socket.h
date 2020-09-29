@@ -15,6 +15,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include <stdbool.h>
 
 /// Reply size defines the max size of an expected reply.
 #ifndef REPLY_SIZE

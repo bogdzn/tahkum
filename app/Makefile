@@ -6,6 +6,7 @@ vpath %.c ./src/
 vpath %.c ./src/logger
 vpath %.c ./src/parser
 vpath %.c ./src/utils
+vpath %.c ./src/socket
 
 ########################
 #### VARIABLES #########
@@ -52,11 +53,15 @@ UTILS =     arrays.c \
 LOGGER = create_logfile.c \
 		 update_logs.c
 
+SOCKET = messages.c \
+		 socket_handler.c
+
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
 					$(LOGGER) \
 					$(UTILS) \
-					$(PARSER)
+					$(PARSER) \
+					$(SOCKET)
 
 # binary included files
 COMBINED	=	$(MAIN) \

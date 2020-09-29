@@ -26,9 +26,9 @@ socket_t create_socket(char const *ip_addr, int port)
             .status = connect(
                     result.socket,
                     (struct sockaddr *) &result.addr,
-                    sizeof(result.add)
+                    sizeof(result.addr)
             )
-    }
+    };
 
     log_if_errno(errno, "create_socket");
     bind(result.socket, (struct sockaddr *) &result.addr, sizeof(result.addr));
@@ -37,25 +37,9 @@ socket_t create_socket(char const *ip_addr, int port)
     return result;
 }
 
-void send_data(socket_t sock, char const *data)
+inline socket_t create_default_socket(void)
 {
-    __log(INFO, "sending:%s\n", data);
-    send(sock.socket, data, my_strlen(data), 0);
-    log_if_errno(errno, "send_data");
-}
-
-char *get_data(socket_t sock)
-{
-    char *reply = malloc(sizeof(char) * (REPLY_SIZE + 1));
-    size_t msg_size = 0;
-
-    msg_size = recv(sock.socket, reply, REPLY_SIZE, 0);
-    if (msg_size == -1 || reply == NULL) {
-        __log(ERROR, "message reception failed.\n");
-        return NULL;
-    } else reply[msg_size] = 0;
-    __log(INFO, "received:%s\n", reply);
-    return reply;
+    return create_socket(RYZE_IP_ADDR, RYZE_PORT);
 }
 
 void close_socket(socket_t sock)
