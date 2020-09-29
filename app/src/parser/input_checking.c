@@ -10,9 +10,9 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "./../../includes/logger.h"
-#include "./../../includes/parser.h"
-#include "./../lib/utils/utils.h"
+#include "logger.h"
+#include "parser.h"
+#include "utils.h"
 
 inline bool always_true(__attribute__ ((unused)) char const *s)
 {

@@ -5,9 +5,9 @@
  * \date 28/09/2020
  */
 
-#include "../../includes/socket.h"
-#include "../../includes/logger.h"
-#include "../lib/utils/utils.h"
+#include "socket.h"
+#include "logger.h"
+#include "utils.h"
 #include <errno.h>
 
 socket_t create_socket(char const *ip_addr, int port)

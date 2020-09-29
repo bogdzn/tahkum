@@ -5,6 +5,7 @@
 vpath %.c ./src/
 vpath %.c ./src/logger
 vpath %.c ./src/parser
+vpath %.c ./src/utils
 
 ########################
 #### VARIABLES #########
@@ -28,17 +29,7 @@ CFLAGS 	= -g3 \
 		  --pedantic \
 		  -Ofast
 
-########################
-### LIB RELATED ########
-########################
-
-LINK_FLAG = -L$(LIBPATH) -lutils
-
-LIBPATH = ./src/.
-
-LIBUTILS_PATH =  ./src/lib/utils/.
-
-LIB 		= libutils.a
+LINK_FLAG =
 
 ########################
 ### FILES PATH #########
@@ -51,20 +42,33 @@ SRC = \
 PARSER = 	get_instruction_queue.c \
 			input_checking.c
 
-LOGGER = create_logfile.c
+UTILS =     arrays.c \
+			file_handler.c \
+			get_next_line.c \
+			nums.c \
+			strings.c \
+			swaps.c
+
 LOGGER = create_logfile.c \
 		 update_logs.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
-					$(LOGGER)\
+					$(LOGGER) \
+					$(UTILS) \
 					$(PARSER)
 
 # binary included files
 COMBINED	=	$(MAIN) \
 			$(COMBINED_NO_MAIN)
 
-TEST_SRC 	= ./tests/tests_parser.c
+TEST_SRC 	= ./tests/tests_parser.c \
+			  ./tests/tests_nums.c \
+			  ./tests/tests_swaps.c \
+			  ./tests/tests_arrays.c \
+			  ./tests/tests_strings.c \
+			  ./tests/tests_file_handler.c \
+			  ./tests/tests_get_next_line.c
 
 OBJECT_DIR 	= ./objects
 
@@ -87,18 +91,15 @@ $(OBJECT_DIR)/%.o : %.c
 	@echo -e "\e[35mCompiling $@\e[39m"
 
 $(LIB):
-	@make --no-print-directory -C $(LIBUTILS_PATH)
 
 $(NAME): $(OBJ)
 	@gcc -o $(NAME) $^ $(LINK_FLAG)
 	@echo -e "\e[34m[*** COMPILATION SUCCESSFUL ***]\e[39m"
 
 clean:
-	@make clean --no-print-directory -C $(LIBUTILS_PATH)
 	@$(RM) objects
 
 fclean: clean
-	@make fclean --no-print-directory -C $(LIBUTILS_PATH)
 	@$(RM) $(NAME)
 	@echo -e "\e[34m[*** CLEAN ***]\e[39m"
 
@@ -126,7 +127,6 @@ func_tests:
 	@sh tests/.ftests
 
 tests: directories $(LIB) $(OBJTST)
-	@make tests --no-print-directory -C $(LIBUTILS_PATH)
 	@$(CC) -c $(TEST_SRC) --coverage -g3 $(INCLUDES) $(LINK_FLAG)
 	@mv *.o objects
 	@$(CC) -o unit_tests ./objects/*.o --coverage $(INCLUDES) $(LINK_FLAG) -lcriterion
@@ -135,7 +135,6 @@ tests: directories $(LIB) $(OBJTST)
 
 tests_clean: tests
 	@gcovr --exclude tests/
-	@make clean_tests --no-print-directory -C $(LIBUTILS_PATH)
 	@$(RM) unit_tests
 	@$(RM) *.gc* unit_tests
 	@$(RM) $(NAME)

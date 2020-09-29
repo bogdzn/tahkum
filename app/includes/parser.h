@@ -10,7 +10,7 @@
 #define PARSER_H
 
 #include <stdbool.h>
-#include "./../src/lib/utils/utils.h"
+#include "utils.h"
 
 /**
  * \brief function pointer containing input check.

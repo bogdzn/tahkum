@@ -9,7 +9,7 @@
 #ifndef LOGGER_H
 #define LOGGER_H
 
-#include "./../src/lib/utils/utils.h"
+#include "utils.h"
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>

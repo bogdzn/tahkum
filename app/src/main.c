@@ -5,8 +5,8 @@
  * \date 27/09/2020
  */
 
-#include "./lib/utils/utils.h"
-#include "../includes/logger.h"
+#include "utils.h"
+#include "logger.h"
 
 int main(int ac, char **av)
 {
