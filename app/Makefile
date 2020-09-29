@@ -6,7 +6,7 @@ vpath %.c ./src/
 vpath %.c ./src/logger
 vpath %.c ./src/parser
 vpath %.c ./src/utils
-vpath %.c ./src/socket
+vpath %.c ./src/net
 
 ########################
 #### VARIABLES #########
@@ -41,7 +41,8 @@ MAIN		 =	main.c
 SRC = \
 
 PARSER = 	get_instruction_queue.c \
-			input_checking.c
+			input_checking.c \
+			argument_checking.c
 
 UTILS =     arrays.c \
 			file_handler.c \
