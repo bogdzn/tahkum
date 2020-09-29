@@ -34,7 +34,7 @@
 #endif
 
 /**
- * \enum LOG_TYPE
+ * \enum log_type_e
  * \brief Log messages types.
  *
  * Defines which type of log we want to write.

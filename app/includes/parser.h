@@ -64,4 +64,17 @@ bool always_true(char const *s);
  */
 bool is_comment(char *string);
 
+// argument_checking.c
+
+/**
+ * \fn bool instructions_are_valid(instr_t *instructions)
+ * \brief checks if instructions sent to the program can be interpreted without destroying the drone..
+ *  Tests if the commands sent have as many takeoff commands as land,
+ *  and that it starts with "start" and ends with "end".
+ *
+ * \param instructions a linked list containing the instructions.
+ * \return a boolean
+ */
+bool instructions_are_valid(instr_t *instructions);
+
 #endif
