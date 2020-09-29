@@ -7,8 +7,10 @@
 
 #include "utils.h"
 #include "logger.h"
+#include "socket.h"
+#include "parser.h"
 
-int main(int ac, char **av)
+static int arg_handling(int ac, char **av)
 {
     if (ac != 2) {
         my_puterr(av[0]);
@@ -18,6 +20,23 @@ int main(int ac, char **av)
         my_puterr("Unexpected error while creating logfile, exiting...\n");
         return 1;
     } else __log(INFO, "Successfully created log file.\n");
+    return 0;
+}
 
+int main(int ac, char **av)
+{
+    socket_t ryze;
+    instr_t *instructions = NULL;
+
+    if (arg_handling(ac, av) == 1) // todo refactor this using getopt_long or getopt.
+        return 1;
+    instructions = get_instructions_queue(av[1]);
+    ryze = create_default_socket();
+    if (!is_socket_ok(ryze) || !instructions_are_valid(instructions))
+        return 1;
+
+    // todo implement while loop sending instructions and checking if result is ok
+
+    close_socket(ryze);
     return 0;
 }

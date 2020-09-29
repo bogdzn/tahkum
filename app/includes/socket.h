@@ -47,8 +47,37 @@ typedef struct sckt_s
 
 // socket_handler.c
 
+/**
+ * \fn socket_t create_socket(char const *ip_addr, int port)
+ * \\brief loads a socket_t struct into memory, binded to specified address and port.
+ * The ip_addr has to be IPV4, as the socket is set to AF_INET.
+ *
+ * \return a socket_t instance.
+ */
+socket_t create_socket(char const *ip_addr, int port);
+
+/**
+ * \fn socket_t create_default_socket(void)
+ * \\brief calls `create_socket()` with RYZE_IP_ADDR and RYZE_PORT as parameters.
+ *
+ * \return a socket_t structure filled with default params.
+ */
 socket_t create_default_socket(void);
 
+/**
+ * \fn bool is_socket_ok(socket_t sock)
+ * \\brief checks if status and socket are not equal to -1.
+ *
+ * \return a boolean.
+ */
 bool is_socket_ok(socket_t sock);
+
+/**
+ * \fn void close_socket(socket_t sock)
+ * \\brief closes sock.socket.
+ *
+ * \param sock your socket.
+ */
+void close_socket(socket_t sock);
 
 #endif //TELLIB_SOCKET_H
