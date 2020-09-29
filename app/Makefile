@@ -22,7 +22,7 @@ RM		= rm -rf
 
 CC		= gcc
 
-INCLUDES = -I./includes/
+INCLUDES = -I./include/
 
 CFLAGS 	= -g3 \
 		  -Wno-unused-function \
