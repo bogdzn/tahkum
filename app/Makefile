@@ -28,6 +28,9 @@ CFLAGS 	= -g3 \
 		  -Wno-unused-function \
 		  -Wall -Werror -Wextra \
 		  --pedantic \
+		  -fprofile-arcs \
+		  --coverage \
+		  -fPIC \
 		  -Ofast
 
 LINK_FLAG =
@@ -141,7 +144,7 @@ tests: directories $(LIB) $(OBJTST)
 	@echo -e "\e[34m[*** TESTS OVER ***]\e[39m"
 
 tests_clean: tests
-	@gcovr --exclude tests/
+	@gcovr -r . --branches --object-directory ${PWD}/objects/ -e tests --sort-percentage
 	@$(RM) unit_tests
 	@$(RM) *.gc* unit_tests
 	@$(RM) $(NAME) tello.log
