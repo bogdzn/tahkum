@@ -81,9 +81,22 @@ bool is_socket_ok(socket_t sock);
 void close_socket(socket_t sock);
 
 // messages.c
+/**
+ * \fn void send_command(socket_t sock, char const *data)
+ * \\brief send a string through a socket.
+ *
+ * \param sock your socket.
+ * \param data the string you want to send
+ */
+void send_command(socket_t sock, char const *data);
 
-void send_data(socket_t sock, char const *data);
-
-char *get_data(socket_t sock);
+/**
+ * \fn char *get_response(socket_t sock)
+ * \\brief receives a string through a socket.
+ *
+ * \param sock your socket.
+ * \return a string containing the message received
+ */
+char *get_response(socket_t sock);
 
 #endif //TELLIB_SOCKET_H

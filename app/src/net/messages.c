@@ -11,23 +11,23 @@
 #include <stdlib.h>
 #include <errno.h>
 
-void send_data(socket_t sock, char const *data)
+void send_command(socket_t sock, char const *data)
 {
-    __log(INFO, "sending:%s\n", data);
+    __log(INFO, "sending [%s]\n", data);
     send(sock.socket, data, my_strlen(data), 0);
-    log_if_errno(errno, "send_data");
+    log_if_errno(errno, "send_command");
 }
 
-char *get_data(socket_t sock)
+char *get_response(socket_t sock)
 {
     char *reply = malloc(sizeof(char) * (REPLY_SIZE + 1));
-    int msg_size = 0;
+    int msg_size =  recv(sock.socket, reply, REPLY_SIZE, 0);
 
-    msg_size = recv(sock.socket, reply, REPLY_SIZE, 0);
+    log_if_errno(errno, "get_response");
     if (msg_size == -1 || reply == NULL) {
         __log(ERROR, "message reception failed.\n");
         return NULL;
     } else reply[msg_size] = 0;
-    __log(INFO, "received:%s\n", reply);
+    __log(INFO, "received [%s]\n", reply);
     return reply;
 }

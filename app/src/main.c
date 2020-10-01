@@ -38,8 +38,8 @@ int main(int ac, char **av)
 
     // todo implement while loop sending instructions and checking if result is ok
     do {
-        send_data(ryze, instructions->command);
-        msg = get_data(ryze);
+        send_command(ryze, instructions->command);
+        msg = get_response(ryze);
         printf("Recieved:%s\n", msg);
         __log(INFO, "Recieved %s\n", msg);
         instructions = (instr_t*)instructions->next;
