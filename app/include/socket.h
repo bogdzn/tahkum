@@ -80,4 +80,10 @@ bool is_socket_ok(socket_t sock);
  */
 void close_socket(socket_t sock);
 
+// messages.c
+
+void send_data(socket_t sock, char const *data);
+
+char *get_data(socket_t sock);
+
 #endif //TELLIB_SOCKET_H
