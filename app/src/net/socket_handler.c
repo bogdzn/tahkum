@@ -13,14 +13,15 @@
 socket_t create_socket(char const *ip_addr, int port)
 {
     __log(INFO, "creating socket for address %s:%i\n", ip_addr, port);
+    int sock_option = 1;
 
     socket_t result = {
-            .port = port,
-            .ip_addr = my_strdup(ip_addr),
+            .port = (port < 0) ? 7070 : port,
+            .ip_addr = (!ip_addr) ? "127.0.0.1" : my_strdup(ip_addr),
             .socket = socket(AF_INET, SOCK_STREAM, 0),
             .addr = {
-                    .sin_addr.s_addr = inet_addr(ip_addr),
-                    .sin_port = htons(port),
+                    .sin_addr.s_addr = (!ip_addr) ? INADDR_ANY : inet_addr(ip_addr),
+                    .sin_port = htons((port < 0) ? 7070 : port),
                     .sin_family = AF_INET
             },
             .status = connect(
@@ -32,8 +33,10 @@ socket_t create_socket(char const *ip_addr, int port)
 
     log_if_errno(errno, "create_socket");
     bind(result.socket, (struct sockaddr *) &result.addr, sizeof(result.addr));
-    if (result.status > 0 || is_socket_ok(result))
+    setsockopt(result.socket, SOL_SOCKET, SO_REUSEADDR, &sock_option, sizeof(sock_option));
+    if (is_socket_ok(result))
         __log(INFO, "Connected.\n");
+    else __log(WARNING, "Couldn't connect socket to %s:%i.\n", ip_addr, port);
     return result;
 }
 
@@ -51,5 +54,5 @@ void close_socket(socket_t sock)
 
 inline bool is_socket_ok(socket_t sock)
 {
-    return (sock.status != -1 || sock.socket != -1);
+    return (sock.status != -1 && sock.socket != -1);
 }
