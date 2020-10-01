@@ -27,8 +27,9 @@ int main(int ac, char **av)
 {
     socket_t ryze;
     instr_t *instructions = NULL;
+    char *msg = NULL;
 
-    if (arg_handling(ac, av) == 1) // todo refactor this using getopt_long or getopt.
+    if (arg_handling(ac, av) != 0)
         return 1;
     instructions = get_instructions_queue(av[1]);
     ryze = create_default_socket();
@@ -36,6 +37,13 @@ int main(int ac, char **av)
         return 1;
 
     // todo implement while loop sending instructions and checking if result is ok
+    do {
+        send_data(ryze, instructions->command);
+        msg = get_data(ryze);
+        printf("Recieved:%s\n", msg);
+        __log(INFO, "Recieved %s\n", msg);
+        instructions = (instr_t*)instructions->next;
+    } while (instructions != NULL);
 
     close_socket(ryze);
     return 0;

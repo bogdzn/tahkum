@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include "utils.h"
+#include <stdio.h>
 
 static char *switch_case(char flag, va_list ap)
 {
@@ -41,10 +42,10 @@ static char *switch_case(char flag, va_list ap)
 static char *get_start_of_msg(log_type_e type)
 {
     if (type == INFO)
-        return my_strdup("[INFO] :");
+        return my_strdup("[INFO]: ");
     else if (type == WARNING)
-        return my_strdup("[WARNING} :");
-    else return my_strdup("[ERROR] :");
+        return my_strdup("[WARNING]: ");
+    else return my_strdup("[ERROR]: ");
 }
 
 static void write_logfile(log_type_e type, char *log)
@@ -55,8 +56,6 @@ static void write_logfile(log_type_e type, char *log)
     if (fd == -1 || !logfile_exists())
         return;
     log = my_strcat(start_of_msg, log);
-    if (log[my_strlen(log)] != '\n')
-        log = my_strcat(log, "\n");
     if (!write(fd, log, my_strlen(log)))
         return;
     close(fd);
@@ -88,10 +87,10 @@ void log_if_errno(int err, char *function_name)
 
     if (err == 0 || err == 2 || !logfile_exists())
         return;
-    err_msg = my_strcat("[ERROR] -- ", function_name);
+    err_msg = my_strcat("[ERROR ON ", function_name);
+    err_msg = my_strcat(err_msg, "]: ");
     err_msg = my_strcat(err_msg, strerror(err));
-    if (err_msg[my_strlen(err_msg)] != '\n')
-        err_msg= my_strcat(err_msg, "\n");
+    err_msg = my_strcat(err_msg, "\n");
     fd = OPEN_LOGFILE;
     if (!write(fd, err_msg, my_strlen(err_msg)))
         return;

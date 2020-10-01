@@ -47,6 +47,7 @@ char *my_strcat(const char *s1, const char *s2)
     int len_string = 0;
     char *result = (void *) 0;
     int ctr = 0;
+    int ctr2 = 0;
 
     if (s2 == (void *) 0 || s2[0] == 0)
         return (my_strdup(s1));
@@ -58,9 +59,9 @@ char *my_strcat(const char *s1, const char *s2)
     result = malloc(sizeof(char) * (len_string + 1));
     for (; s1[ctr] != '\0'; ctr++)
         result[ctr] = s1[ctr];
-    for (int ctr2 = 0; s2[ctr2] != '\0'; ctr2++)
+    for (; s2[ctr2] != '\0'; ctr2++)
         result[ctr + ctr2] = s2[ctr2];
-    result[len_string] = '\0';
+    result[ctr + ctr2] = '\0';
     return (result);
 }
 
@@ -175,13 +176,6 @@ bool is_a_letter(char c, bool is_lower)
     return (c >= 'a' + offset && c <= 'z' + offset ? true : false);
 }
 
-/**
- * \fn bool is_alphabetic(char *s)
- * \brief  tests if a string only contains alphabetic characters.
- *
- * \param s your string.
- * \return a boolean explicitly telling you if your string is a letter..
- */
 bool is_alphabetic(char *s)
 {
     if (s == (void *) 0 || s[0] == '\0')
@@ -216,17 +210,18 @@ char *get_last_occurence_of(char *s, char to_find)
 char *append_char(char *s, char c)
 {
     char *result = (void *) 0;
+    int len =  my_strlen(s);
 
-    if (s == (void *) 0) {
+    if (s == (void *) 0 || *s == 0) {
         result = malloc(sizeof(char) * 2);
         result[0] = c;
         result[1] = '\0';
         return (result);
     } else {
-        result = malloc(sizeof(char) * (my_strlen(s) + 2));
+        result = malloc(sizeof(char) * (len + 2));
         result = my_strcpy(result, s);
-        result[my_strlen(s)] = c;
-        result[my_strlen(s) + 1] = '\0';
+        result[len] = c;
+        result[len + 1] = '\0';
         free(s);
     }
     return (result);
