@@ -12,7 +12,7 @@ vpath %.c ./src/net
 #### VARIABLES #########
 ########################
 
-NAME	= tello
+NAME	= tahkum
 
 RM		= rm -rf
 
@@ -144,7 +144,7 @@ tests_clean: tests
 	@gcovr --exclude tests/
 	@$(RM) unit_tests
 	@$(RM) *.gc* unit_tests
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) tello.log
 	@$(RM) objects
 	@echo -e "\e[34m[*** CLEAN SUCCESSFUL ***]\e[39m"
 
