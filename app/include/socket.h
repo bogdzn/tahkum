@@ -2,7 +2,7 @@
  * \file socket.h
  * \brief all things related to socket handling.
  * \author Bogdan G.
- * \date 28/09/2020
+ * \date 01/10/2020
  */
 
 #ifndef TELLIB_SOCKET_H
@@ -29,7 +29,7 @@
 
 /// Port on which the drone listens.
 #ifndef RYZE_PORT
-#define RYZE_PORT (8899)
+#define RYZE_PORT (8889)
 #endif
 
 /**
