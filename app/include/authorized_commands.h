@@ -29,17 +29,20 @@ typedef struct authorized_s
     check_t input_check;
 } authorized_cmd_t;
 
+/// authorized_commands must be ordered alphabetically
 static authorized_cmd_t AUTHORIZED_COMMANDS[] = {
-        { "start",   true,  &always_true },
-        { "stop",    true,  &always_true },
-        { "takeoff", false, &always_true },
-        { "land",    false, &always_true },
-        { "flip",    false, &is_float },
-        { "turn",    false, &is_float },
-        { "up",      false, &always_true },
-        { "down",    false, &always_true },
-        { "delay",   true,  &is_num },
-        { NULL,      true,  NULL }
+        { "backward", false, &always_true }, /*!< to go backwards */
+        { "delay",    true,  &is_num },      /*!< to call sleep() for n seconds. */
+        { "down",     false, &always_true }, /*!< to go down. */
+        { "flip",     false, &is_float },    /*!< to execute a flip. */
+        { "forward",  false, &always_true }, /*!< to go backward. */
+        { "land",     false, &always_true }, /*!< to execute landing process. */
+        { "left",     false, &is_float },    /*!< to go left. */
+        { "ping",     false, &always_true},  /*!< to test connection status. */
+        { "right",    false, &is_float },    /*!< to go right. */
+        { "takeoff",  false, &always_true }, /*!< to execute takeoff process. */
+        { "up",       false, &always_true }, /*!< to go up. */
+        { NULL,        true, NULL }
 };
 
 #endif //TELLIB_AUTHORIZED_COMMANDS_H
