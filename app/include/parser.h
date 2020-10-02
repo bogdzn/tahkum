@@ -67,6 +67,15 @@ bool is_comment(char *string);
 // argument_checking.c
 
 /**
+ * \fn instr_t *to_next(instr_t *ins)
+ * \brief returns next node of instructions if there are any.
+ *
+ * \param instructions a linked list containing instructions for the drone..
+ * \return next node of the linked list, or the same node if it is at the end.
+ */
+instr_t *to_next(instr_t *ins);
+
+/**
  * \fn bool instructions_are_valid(instr_t *instructions)
  * \brief checks if instructions sent to the program can be interpreted without destroying the drone..
  *  Tests if the commands sent have as many takeoff commands as land,

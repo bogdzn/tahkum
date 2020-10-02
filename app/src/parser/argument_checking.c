@@ -12,23 +12,20 @@
 #include "logger.h"
 #include <stdbool.h>
 
+instr_t * to_next(instr_t *ins)
+{
+    return (ins->next) ? (instr_t *)ins->next : ins;
+}
+
 inline bool instructions_are_valid(instr_t *instructions)
 {
     long head = (long)instructions;
-    int nb_takeoff = 0;
-    int nb_land = 0;
 
-    if (!instructions || !is_same_string(instructions->command, "start"))
+    if (!instructions || !is_same_string(instructions->command, "takeoff"))
         return false;
-    do {
-        instructions = (instr_t *)instructions->next;
-        if (is_same_string(instructions->command, "takeoff"))
-            nb_takeoff++;
-        else if (is_same_string(instructions->command, "land"))
-            nb_land++;
-    } while (instructions->next != NULL);
-    if (!is_same_string(instructions->command, "end"))
+    for (; instructions->next != NULL; instructions = to_next(instructions));
+    if (!is_same_string(instructions->command, "land"))
         return false;
     instructions = (instr_t *)head;
-    return (nb_takeoff == nb_land);
+    return (true);
 }

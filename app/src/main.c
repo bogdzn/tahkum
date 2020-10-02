@@ -36,13 +36,21 @@ int main(int ac, char **av)
     if (!is_socket_ok(ryze) || !instructions_are_valid(instructions))
         return 1;
 
-    // todo implement while loop sending instructions and checking if result is ok
+    // this is horrendous but i will change this
+    // when i will know it works.
+    int timeout = 0;
+
     do {
-        send_command(ryze, instructions->command);
-        msg = get_response(ryze);
-        printf("Recieved:%s\n", msg);
-        __log(INFO, "Recieved %s\n", msg);
-        instructions = (instr_t*)instructions->next;
+        do {
+            send_command(ryze, instructions->command);
+            msg = get_response(ryze);
+            printf("Recieved:%s\n", msg);
+            __log(INFO, "Recieved %s\n", msg);
+            timeout++;
+        } while (is_drone_ok(msg) && timeout != 15);
+
+        timeout = 0;
+        instructions = to_next(instructions);
     } while (instructions != NULL);
 
     close_socket(ryze);

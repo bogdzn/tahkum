@@ -21,6 +21,5 @@ inline bool always_true(__attribute__ ((unused)) char const *s)
 
 inline bool is_comment(char *string)
 {
-    return (!string || *string == 0 || !is_a_letter(*string, true) ||
-    *string == '#' || *string == '\n' || *string == '\'');
+    return (!string || *string == 0 || !is_a_letter(*string, true));
 }
