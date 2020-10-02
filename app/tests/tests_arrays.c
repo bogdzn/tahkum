@@ -19,13 +19,16 @@ Test(tabgen, tbgn)
 
 	cr_assert_eq(tab,0);
 	cr_assert_str_eq(tab2[0],"lol");
+    cr_assert_eq(tabgen("", '\n'), 0);
 	free_array((void **)tab2);
 }
 
 Test(display_tab, test_display_tab, .init = redirect_all)
 {
 	char **test = tabgen("this is a tab.\n", ' ');
+    char **tab = tabgen((void *) 0, '\n');
 
+    display_tab((char const **)tab);
 	display_tab((char const **)test);
 	cr_assert_stdout_eq_str("thisisatab.\n");
 	free_array((void **)test);
@@ -46,6 +49,24 @@ Test(free_array, test_free_tab)
 	free_array((void **)tab);
 	free_array((void **)inttab);
 	free_array((void **)lol);
+}
+
+Test(my_tablen, tablength)
+{
+    char **example = tabgen("this is an example", ' ');
+    char **lines = tabgen("some lines\nthat are\nvery epic", '\n');
+    char **null_keyword = NULL;
+    char **empty_first_line = malloc(sizeof(char *) * 1);
+
+    empty_first_line[0] = NULL;
+
+    cr_assert_eq(my_tablen((char const **)example), 4);
+    cr_assert_eq(my_tablen((char const **)lines), 3);
+    cr_assert_eq(my_tablen((char const **)null_keyword), 0);
+    cr_assert_eq(my_tablen((char const **)empty_first_line), 0);
+
+    free_array((void **)example);
+    free_array((void **)lines);
 }
 
 Test(append_line_to_tab, appendline)
