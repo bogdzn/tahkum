@@ -99,4 +99,13 @@ void send_command(socket_t sock, char const *data);
  */
 char *get_response(socket_t sock);
 
+/**
+ * \fn bool is_drone_ok(char const *response)
+ * \\brief tests drone's response.
+ *
+ * \param response the drone's answer.
+ * \return true if contains "OK"
+ */
+bool is_drone_ok(char const *response);
+
 #endif //TELLIB_SOCKET_H

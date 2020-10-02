@@ -31,3 +31,11 @@ char *get_response(socket_t sock)
     __log(INFO, "received [%s]\n", reply);
     return reply;
 }
+
+bool is_drone_ok(char const *response)
+{
+    if (!is_same_string(response, "OK")) {
+        __log(ERROR, "drone returned [%s]\n", response);
+        return false;
+    } else return true;
+}
