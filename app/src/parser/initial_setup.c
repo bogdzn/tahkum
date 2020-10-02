@@ -72,7 +72,7 @@ cmdline_settings_t initial_setup(int ac, char **av)
     };
 
     setup_logfile(ac, av);
-    if (ac == 2)
+    if (ac == 2 && av[1][0] != '-')
         return data;
     while ((opt_flag = getopt_long(ac, av, "a:s:hf:",long_options, &opt_idx)) != -1)
         switchcase(optarg, opt_flag, data, optind);
