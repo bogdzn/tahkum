@@ -7,20 +7,22 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-Test(create_socket, creating_socket)
-{
-    socket_t basic_socket = create_socket("127.0.1.1", 2499);
-
-    cr_assert_str_eq(basic_socket.ip_addr, "127.0.1.1");
-    cr_assert_eq(basic_socket.port, 2499);
-
-    close_socket(basic_socket);
-}
-
 Test(is_socket_ok, issockok)
 {
-    socket_t basic_socket = create_socket("127.0.1.1", 2800);
+    socket_t basic_socket = {
+        .ip_addr = my_strdup(RYZE_IP_ADDR),
+        .port = RYZE_PORT,
+        .status = 0,
+        .socket = 0
+    };
 
-    cr_assert_eq(is_socket_ok(basic_socket), false);
-    close_socket(basic_socket);
+    socket_t evilsocket = {
+        .ip_addr = my_strdup("looser"),
+        .port = 6969,
+        .status = -1,
+        .socket = -1
+    };
+
+    cr_assert_eq(is_socket_ok(basic_socket), true);
+    cr_assert_eq(is_socket_ok(evilsocket), false);
 }
