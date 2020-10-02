@@ -15,6 +15,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
+#include "parser.h"
 #include <stdbool.h>
 
 /// Reply size defines the max size of an expected reply.
@@ -107,5 +108,9 @@ char *get_response(socket_t sock);
  * \return true if contains "OK"
  */
 bool is_drone_ok(char const *response);
+
+// exec_loop.c
+
+void exec_loop(socket_t ryze, instr_t *instructions, cmdline_settings_t settings);
 
 #endif //TELLIB_SOCKET_H

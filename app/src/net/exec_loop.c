@@ -1,8 +1,9 @@
 /**
- * \file main.c
- * \brief main file of the project.
+ * \file exec_loop.c
+ * \brief handles command execution.
  * \author Bogdan G.
- * \date 27/09/2020
+ * \version 0.1
+ * \date 02/10/2020
  */
 
 #include "utils.h"
@@ -10,21 +11,12 @@
 #include "socket.h"
 #include "parser.h"
 
-int main(int ac, char **av)
+void exec_loop(socket_t ryze, instr_t *instructions, cmdline_settings_t settings)
 {
-    socket_t ryze;
-    instr_t *instructions = NULL;
-    char *msg = NULL;
-    cmdline_settings_t settings = initial_setup(ac, av);
-
-    instructions = get_instructions_queue(settings.filepath);
-    ryze = create_default_socket();
-    if (!is_socket_ok(ryze) || !instructions_are_valid(instructions))
-        return 1;
-
     // this is horrendous but i will change this
     // when i will know it works.
     int timeout = 0;
+    char *msg = NULL;
 
     do {
         do {
@@ -36,10 +28,9 @@ int main(int ac, char **av)
             sleep(settings.sleep_time);
         } while (is_drone_ok(msg) && timeout != settings.max_timeout);
 
+        if (settings.max_timeout == timeout)
+            break;
         timeout = 0;
         instructions = to_next(instructions);
     } while (instructions != NULL);
-
-    close_socket(ryze);
-    return 0;
 }

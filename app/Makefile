@@ -44,7 +44,8 @@ SRC = \
 
 PARSER = 	get_instruction_queue.c \
 			input_checking.c \
-			argument_checking.c
+			argument_checking.c \
+			initial_setup.c
 
 UTILS =     arrays.c \
 			file_handler.c \
@@ -57,7 +58,8 @@ LOGGER = create_logfile.c \
 		 update_logs.c
 
 SOCKET = messages.c \
-		 socket_handler.c
+		 socket_handler.c \
+		 exec_loop.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
@@ -135,7 +137,7 @@ docre:
 func_tests:
 	@sh tests/.ftests
 
-tests: directories $(LIB) $(OBJTST)
+tests: fclean directories $(LIB) $(OBJTST)
 	@$(CC) -c $(TEST_SRC) --coverage -g3 $(INCLUDES) $(LINK_FLAG)
 	@mv *.o objects
 	@$(CC) -o unit_tests ./objects/*.o --coverage $(INCLUDES) $(LINK_FLAG) -lcriterion

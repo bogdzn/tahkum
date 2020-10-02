@@ -3,7 +3,7 @@
  * \brief Handles initial parsing.
  * \author Adina C.
  * \version 0.1
- * \date 27/09/2020
+ * \date 02/10/2020
  */
 
 #ifndef PARSER_H
@@ -11,6 +11,7 @@
 
 #include <stdbool.h>
 #include "utils.h"
+#include <getopt.h>
 
 /**
  * \brief function pointer containing input check.
@@ -31,6 +32,19 @@ typedef struct instr {
     check_t input_check;
     struct instr_s *next;
 } instr_t;
+
+typedef struct input_s {
+    int max_timeout;
+    int sleep_time;
+    char *filepath;
+} cmdline_settings_t;
+
+// initial_setup.c
+
+cmdline_settings_t initial_setup(int ac, char **av);
+
+void display_usage(char const *bin_name);
+
 
 // get_instr_queue.c
 
