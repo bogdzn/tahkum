@@ -25,11 +25,10 @@ CC		= gcc
 INCLUDES = -I./include/
 
 CFLAGS 	= -g3 \
-		  -Wno-unused-function \
+		  -ftest-coverage \
 		  -Wall -Werror -Wextra \
 		  --pedantic \
 		  -fprofile-arcs \
-		  --coverage \
 		  -fPIC \
 		  -Ofast
 
@@ -103,7 +102,7 @@ $(OBJECT_DIR)/%.o : %.c
 $(LIB):
 
 $(NAME): $(OBJ)
-	@gcc -o $(NAME) $^ $(LINK_FLAG)
+	@gcc -o $(NAME) $(CFLAGS) $^ $(LINK_FLAG)
 	@echo -e "\e[34m[*** COMPILATION SUCCESSFUL ***]\e[39m"
 
 clean:
