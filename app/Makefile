@@ -143,7 +143,7 @@ tests: directories $(LIB) $(OBJTST)
 	@echo -e "\e[34m[*** TESTS OVER ***]\e[39m"
 
 tests_clean: tests
-	@gcovr -r . --branches --object-directory ${PWD}/objects/ -e tests --sort-percentage
+	@gcovr -r . -e tests --sort-percentage
 	@$(RM) unit_tests
 	@$(RM) *.gc* unit_tests
 	@$(RM) $(NAME) tello.log
