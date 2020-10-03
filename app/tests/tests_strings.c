@@ -175,3 +175,22 @@ Test(is_float, testiffloat)
 	cr_assert_eq(is_float("9.,2"), false);
 	cr_assert_eq(is_float("9.a"), false);
 }
+
+Test(is_same_string, issamestr)
+{
+    cr_assert_eq(is_same_string("string", NULL), false);
+    cr_assert_eq(is_same_string("", "string"), false);
+    cr_assert_eq(is_same_string("string", "string"), true);
+    cr_assert_eq(is_same_string("string", "char"), false);
+}
+
+Test(is_same_stringn, issamestrn)
+{
+    cr_assert_eq(is_same_stringn("string", NULL, 5), false);
+    cr_assert_eq(is_same_stringn("", "string", 3), false);
+    cr_assert_eq(is_same_stringn("string", "string", 3), true);
+    cr_assert_eq(is_same_stringn("string", "char", 2), false);
+    cr_assert_eq(is_same_stringn("strings are weird", "strings are cool", 10), true);
+}
+
+

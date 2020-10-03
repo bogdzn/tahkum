@@ -10,17 +10,19 @@
 Test(is_socket_ok, issockok)
 {
     socket_t basic_socket = {
-        .ip_addr = my_strdup(RYZE_IP_ADDR),
-        .port = RYZE_PORT,
-        .status = 0,
-        .socket = 0
+        .target_port = RYZE_PORT,
+        .local_port = RYZE_PORT,
+        .target_ip = my_strdup(RYZE_IP_ADDR),
+        .local_ip = my_strdup(LOCAL_IP_ADDR),
+        .socket = 0,
     };
 
     socket_t evilsocket = {
-        .ip_addr = my_strdup("looser"),
-        .port = 6969,
-        .status = -1,
-        .socket = -1
+        .target_port = RYZE_PORT,
+        .local_port = RYZE_PORT,
+        .target_ip = my_strdup(RYZE_IP_ADDR),
+        .local_ip = my_strdup(LOCAL_IP_ADDR),
+        .socket = -1,
     };
 
     cr_assert_eq(is_socket_ok(basic_socket), true);

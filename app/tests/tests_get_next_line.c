@@ -27,3 +27,12 @@ Test(get_next_line, test_gnl)
 	close(fd);
 }
 
+Test(concat_str, concatstr)
+{
+    char *str = my_strdup("a string");
+    char *another = my_strdup(" with another");
+
+    cr_assert_str_eq(concat_str(str, another), "a string with another");
+    cr_assert_str_eq(concat_str(str, NULL), str);
+    cr_assert_eq(concat_str(NULL, NULL), 0);
+}
