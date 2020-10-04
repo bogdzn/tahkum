@@ -14,10 +14,10 @@ int main(int ac, char **av)
 {
     settings_t settings = initial_setup(ac, av);
     socket_t ryze = create_default_socket(settings);
-    instr_t *instructions = get_instructions_queue(settings.filepath);;
+    char **instructions = get_instructions_queue(settings.filepath);;
 
-    if (instructions)
+    if (instructions != NULL)
         exec_loop(ryze, instructions, settings);
-    close_socket(ryze);
+    close_socket(ryze, settings);
     return 0;
 }

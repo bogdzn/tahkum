@@ -46,6 +46,7 @@ static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
             data.filepath = my_strdup(optarg);
             break;
         case 'd':
+            data.fake_socket = true;
             __log(INFO, "setting fake_socket to TRUE.\n");
             break;
         case 'a':
@@ -80,10 +81,9 @@ settings_t initial_setup(int ac, char **av)
     if (ac == 2 && av[1][0] != '-')
         return data;
     while ((opt_flag = getopt_long(ac, av, "a:s:hf:d",long_options, &opt_idx)) != -1)
-        switchcase(optarg, opt_flag, data, optind);
+        data = switchcase(optarg, opt_flag, data, optind);
     if (data.filepath == NULL) {
-        my_puterr(av[0]);
-        my_puterr(": Error -- filepath not specified.\n");
+        __log(ERROR, "filepath not specified.\n");
         exit(1);
     }
     return data;

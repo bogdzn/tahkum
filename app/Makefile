@@ -29,8 +29,7 @@ CFLAGS 	= -g3 \
 		  -Wall -Werror -Wextra \
 		  --pedantic \
 		  -fprofile-arcs \
-		  -fPIC \
-		  -Ofast
+		  -fPIC
 
 LINK_FLAG =
 
@@ -44,7 +43,6 @@ SRC = \
 
 PARSER = 	get_instruction_queue.c \
 			input_checking.c \
-			argument_checking.c \
 			initial_setup.c
 
 UTILS =     arrays.c \
