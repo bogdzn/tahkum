@@ -18,8 +18,7 @@ static instr_t *init_instr(void)
     instr_t *instr = malloc(sizeof(instr_t));
 
     if (instr == NULL) {
-        __log(ERROR,
-              "memory allocation failed for init_instr().\n");
+        __log(ERROR,"memory allocation failed for init_instr().\n");
         return NULL;
     }
     instr->next =NULL;
@@ -28,35 +27,35 @@ static instr_t *init_instr(void)
     return instr;
 }
 
-static instr_t *load_command(char **split)
+static instr_t *load_command(char **words)
 {
     instr_t *result = init_instr();
-    int tablen = my_tablen((char const **)split);
+    int tablen = my_tablen((char const **)words);
 
     for (int i = 0; AUTHORIZED_COMMANDS[i].command != NULL; i++) {
-        if (is_same_string(AUTHORIZED_COMMANDS[i].command, split[0])) {
-            result->command = my_strdup(split[0]);
-            result->params = (tablen != 1) ? my_strdup(split[1]) : NULL;
+        if (is_same_string(AUTHORIZED_COMMANDS[i].command, words[0])) {
+            result->command = my_strdup(words[0]);
+            result->params = (tablen != 1) ? my_strdup(words[1]) : NULL;
             result->input_check = AUTHORIZED_COMMANDS[i].input_check;
             break;
         }
     }
+    free_array((void **)words);
     log_if_errno(errno, "load command");
     return result;
 }
 
-static instr_t *fill_instruction(char *instruction)
+static instr_t *fill_instruction(char *command)
 {
-    char **split_instructions = NULL;
+    char **words = NULL;
     instr_t *instr = NULL;
 
-    if (is_comment(instruction))
+    if (is_comment(command))
         return free(instr), NULL;
-    split_instructions = tabgen(instruction, ' ');
+    words = tabgen(command, ' ');
     log_if_errno(errno, "fill instructions");
-    instr = load_command(split_instructions);
-    free_array((void **)split_instructions);
-    return instr->input_check(instr->params) ? instr : NULL;
+    instr = load_command(words);
+    return  instr;
 }
 
 static char **extract_from_file(char const *filename)

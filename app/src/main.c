@@ -12,16 +12,12 @@
 
 int main(int ac, char **av)
 {
-    socket_t ryze;
-    instr_t *instructions = NULL;
-    cmdline_settings_t settings = initial_setup(ac, av);
+    settings_t settings = initial_setup(ac, av);
+    socket_t ryze = create_default_socket(settings);
+    instr_t *instructions = get_instructions_queue(settings.filepath);;
 
-    instructions = get_instructions_queue(settings.filepath);
-    ryze = create_default_socket();
-
-    if (!is_socket_ok(ryze) || !instructions_are_valid(instructions))
-        return 1;
-    exec_loop(ryze, instructions, settings);
+    if (instructions)
+        exec_loop(ryze, instructions, settings);
     close_socket(ryze);
     return 0;
 }

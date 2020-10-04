@@ -19,6 +19,7 @@ static struct option long_options[] = {
         {"sleep_time",  required_argument,  0,  's'},
         {"help",        no_argument,        0,  'h'},
         {"file",        required_argument,  0,  'f'},
+        {"debug",       no_argument,        0,  'd'},
         {NULL,          no_argument,        0,  '\0'}
 };
 
@@ -34,7 +35,7 @@ static void setup_logfile(int ac, char **av)
     } else __log(INFO, "Successfully created log file.\n");
 }
 
-static cmdline_settings_t switchcase(char *arg, char flag, cmdline_settings_t data, int ind)
+static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
 {
     switch (flag) {
         case '?':
@@ -43,6 +44,9 @@ static cmdline_settings_t switchcase(char *arg, char flag, cmdline_settings_t da
         case 'f':
             __log(INFO, "setting filepath to [%s]\n", arg);
             data.filepath = my_strdup(optarg);
+            break;
+        case 'd':
+            __log(INFO, "setting fake_socket to TRUE.\n");
             break;
         case 'a':
             __log(INFO, "setting max_timeout to [%s]\n", arg);
@@ -61,20 +65,21 @@ static cmdline_settings_t switchcase(char *arg, char flag, cmdline_settings_t da
     return data;
 }
 
-cmdline_settings_t initial_setup(int ac, char **av)
+settings_t initial_setup(int ac, char **av)
 {
     int opt_idx = 0;
     char opt_flag = 0;
-    cmdline_settings_t data = {
+    settings_t data = {
             .max_timeout = 10,
             .sleep_time = 1,
-            .filepath = (ac == 2) ? my_strdup(av[1]) : NULL
+            .filepath = (ac == 2) ? my_strdup(av[1]) : NULL,
+            .fake_socket = false
     };
 
     setup_logfile(ac, av);
     if (ac == 2 && av[1][0] != '-')
         return data;
-    while ((opt_flag = getopt_long(ac, av, "a:s:hf:",long_options, &opt_idx)) != -1)
+    while ((opt_flag = getopt_long(ac, av, "a:s:hf:d",long_options, &opt_idx)) != -1)
         switchcase(optarg, opt_flag, data, optind);
     if (data.filepath == NULL) {
         my_puterr(av[0]);
@@ -89,4 +94,5 @@ void display_usage(char const *bin_name)
     my_puterr(bin_name);
     my_puterr(":\n\t-a\tsets max timeout.\n\t-s\tsets sleep time between calls to drone.\n");
     my_puterr("\t-h\tprints this message.\n\t-f\tspecifies the file with the commands.\n");
+    my_puterr("\t-d\tenables debug mode, and doesn't actually interact with the drone.\n");
 }

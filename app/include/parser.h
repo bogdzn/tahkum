@@ -33,15 +33,17 @@ typedef struct instr {
     struct instr_s *next;
 } instr_t;
 
-typedef struct input_s {
+typedef struct input_s settings_t;
+struct input_s {
     int max_timeout;
     int sleep_time;
+    bool fake_socket;
     char *filepath;
-} cmdline_settings_t;
+};
 
 // initial_setup.c
 
-cmdline_settings_t initial_setup(int ac, char **av);
+settings_t initial_setup(int ac, char **av);
 
 void display_usage(char const *bin_name);
 

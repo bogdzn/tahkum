@@ -12,9 +12,9 @@
 #include "logger.h"
 #include <stdbool.h>
 
-instr_t * to_next(instr_t *ins)
+inline instr_t * to_next(instr_t *ins)
 {
-    return (ins->next) ? (instr_t *)ins->next : ins;
+    return (instr_t *)ins->next;
 }
 
 inline bool instructions_are_valid(instr_t *instructions)
