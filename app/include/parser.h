@@ -43,8 +43,22 @@ struct input_s {
 
 // initial_setup.c
 
+/**
+ * \fn settings_t initial_setup(int ac, char **av)
+ * \brief sets up logfile, and parses arguments
+ *
+ * \param ac argument count
+ * \param av arguments
+ * \return a structure containing user-specified settings.
+ */
 settings_t initial_setup(int ac, char **av);
 
+/**
+ * \fn void display_usage(char const *bin_name)
+ * \brief displays program usage
+ *
+ * \param bin_name binary's name
+ */
 void display_usage(char const *bin_name);
 
 
