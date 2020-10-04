@@ -11,26 +11,27 @@
 #include "socket.h"
 #include "parser.h"
 
-void exec_loop(socket_t ryze, instr_t *instructions, cmdline_settings_t settings)
+static char *get_cmd(instr_t *ins)
 {
-    // this is horrendous but i will change this
-    // when i will know it works.
-    int timeout = 0;
+    return (!ins) ? NULL : my_strcat(my_strcat(ins->command, " "), ins->params);
+}
+
+void exec_loop(socket_t ryze, instr_t *ins, settings_t settings)
+{
     char *msg = NULL;
 
-    do {
-        do {
-            send_command(ryze, instructions->command);
-            msg = get_response(ryze);
-            printf("Recieved:%s\n", msg);
-            __log(INFO, "Recieved %s\n", msg);
-            timeout++;
-            sleep(settings.sleep_time);
-        } while (is_drone_ok(msg) && timeout != settings.max_timeout);
-
-        if (settings.max_timeout == timeout)
-            break;
-        timeout = 0;
-        instructions = to_next(instructions);
-    } while (instructions != NULL);
+    send_command(ryze, "command", settings);
+    while (ins != NULL) {
+        for (int timeout = 0; timeout != settings.max_timeout; timeout++) {
+            send_command(ryze, get_cmd(ins), settings);
+            usleep(10000 * settings.sleep_time);
+            msg = get_response(ryze, settings);
+            if (is_drone_ok(msg))
+                break;
+        }
+        usleep(10000 * settings.sleep_time);
+        ins = to_next(ins);
+    }
+    free(msg);
+    // todo destroy instructions here
 }

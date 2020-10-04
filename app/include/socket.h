@@ -23,6 +23,11 @@
 #define REPLY_SIZE (2000)
 #endif
 
+/// Local IP
+#ifndef LOCAL_IP_ADDR
+#define LOCAL_IP_ADDR ("0.0.0.0")
+#endif
+
 /// Drone's configured IP address.
 #ifndef RYZE_IP_ADDR
 #define RYZE_IP_ADDR ("192.168.10.1")
@@ -33,72 +38,17 @@
 #define RYZE_PORT (8889)
 #endif
 
-/**
- * \struct socket_t
- * \brief holds a socket, its status and a sockaddr_in.
- */
-typedef struct sckt_s
+typedef struct socket_s
 {
-    char *ip_addr; /*!< socket's ip address. */
-    int port; /*!< socket's configured port. */
-    int status; /*!< socket's current status. */
-    struct sockaddr_in addr; /*!< socket's address info. */
-    int socket; /*!< the actual socket. */
+    int drone_port;
+    int local_port;
+    char *drone_ip;
+    char *local_ip;
+    int socket;
+    struct sockaddr_in drone_addr;
+    struct sockaddr_in local_addr;
 } socket_t;
 
-// socket_handler.c
-
-/**
- * \fn socket_t create_socket(char const *ip_addr, int port)
- * \\brief loads a socket_t struct into memory, binded to specified address and port.
- * The ip_addr has to be IPV4, as the socket is set to AF_INET.
- *
- * \return a socket_t instance.
- */
-socket_t create_socket(char const *ip_addr, int port);
-
-/**
- * \fn socket_t create_default_socket(void)
- * \\brief calls `create_socket()` with RYZE_IP_ADDR and RYZE_PORT as parameters.
- *
- * \return a socket_t structure filled with default params.
- */
-socket_t create_default_socket(void);
-
-/**
- * \fn bool is_socket_ok(socket_t sock)
- * \\brief checks if status and socket are not equal to -1.
- *
- * \return a boolean.
- */
-bool is_socket_ok(socket_t sock);
-
-/**
- * \fn void close_socket(socket_t sock)
- * \\brief closes sock.socket.
- *
- * \param sock your socket.
- */
-void close_socket(socket_t sock);
-
-// messages.c
-/**
- * \fn void send_command(socket_t sock, char const *data)
- * \\brief send a string through a socket.
- *
- * \param sock your socket.
- * \param data the string you want to send
- */
-void send_command(socket_t sock, char const *data);
-
-/**
- * \fn char *get_response(socket_t sock)
- * \\brief receives a string through a socket.
- *
- * \param sock your socket.
- * \return a string containing the message received
- */
-char *get_response(socket_t sock);
 
 /**
  * \fn bool is_drone_ok(char const *response)
@@ -109,8 +59,22 @@ char *get_response(socket_t sock);
  */
 bool is_drone_ok(char const *response);
 
+socket_t create_default_socket(settings_t user_settings);
+
+void close_socket(socket_t sock);
+
+socket_t create_socket(char **ips, int *ports, settings_t settings);
+
+bool is_socket_ok(socket_t socket);
+
+// messages.c
+
+char *get_response(socket_t sock, settings_t settings);
+
+void send_command(socket_t sock, char const *data, settings_t settings);
+
 // exec_loop.c
 
-void exec_loop(socket_t ryze, instr_t *instructions, cmdline_settings_t settings);
+void exec_loop(socket_t ryze, instr_t *instructions, settings_t settings);
 
 #endif //TELLIB_SOCKET_H

@@ -10,17 +10,17 @@
 Test(is_socket_ok, issockok)
 {
     socket_t basic_socket = {
-        .target_port = RYZE_PORT,
         .local_port = RYZE_PORT,
-        .target_ip = my_strdup(RYZE_IP_ADDR),
+        .drone_port = RYZE_PORT,
+        .drone_ip = my_strdup(RYZE_IP_ADDR),
         .local_ip = my_strdup(LOCAL_IP_ADDR),
         .socket = 0,
     };
 
     socket_t evilsocket = {
-        .target_port = RYZE_PORT,
+        .drone_port = RYZE_PORT,
         .local_port = RYZE_PORT,
-        .target_ip = my_strdup(RYZE_IP_ADDR),
+        .drone_ip = my_strdup(RYZE_IP_ADDR),
         .local_ip = my_strdup(LOCAL_IP_ADDR),
         .socket = -1,
     };
