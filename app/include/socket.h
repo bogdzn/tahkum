@@ -73,8 +73,9 @@ socket_t create_default_socket(settings_t user_settings);
  * \\brief closes a socket
  *
  * \param sock your socket
+ * \param settings user settings, used to check if we're in debug mode
  */
-void close_socket(socket_t sock);
+void close_socket(socket_t sock, settings_t settings);
 
 /**
  * \fn socket_t create_socket(char **ips, int *ports, settings_t settings)
@@ -127,6 +128,6 @@ void send_command(socket_t sock, char const *data, settings_t settings);
  * \param instructions user-specified insctructions
  * \param settings user settings
  */
-void exec_loop(socket_t ryze, instr_t *instructions, settings_t settings);
+void exec_loop(socket_t ryze, char **instructions, settings_t settings);
 
 #endif //TELLIB_SOCKET_H
