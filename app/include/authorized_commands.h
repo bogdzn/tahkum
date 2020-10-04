@@ -25,24 +25,27 @@
 typedef struct authorized_s
 {
     char *command;
-    bool is_local;
     check_t input_check;
 } authorized_cmd_t;
 
+/// If you want to re-implement this on your own, please note:
+/// You should first send "command" to the drone, before takeoff
+/// If you don't the drone doesn't interact with you.
+
 /// authorized_commands must be ordered alphabetically
 static authorized_cmd_t AUTHORIZED_COMMANDS[] = {
-        { "backward", false, &always_true }, /*!< to go backwards */
-        { "delay",    true,  &is_num },      /*!< to call sleep() for n seconds. */
-        { "down",     false, &always_true }, /*!< to go down. */
-        { "flip",     false, &is_float },    /*!< to execute a flip. */
-        { "forward",  false, &always_true }, /*!< to go backward. */
-        { "land",     false, &always_true }, /*!< to execute landing process. */
-        { "left",     false, &is_float },    /*!< to go left. */
-        { "ping",     false, &always_true},  /*!< to test connection status. */
-        { "right",    false, &is_float },    /*!< to go right. */
-        { "takeoff",  false, &always_true }, /*!< to execute takeoff process. */
-        { "up",       false, &always_true }, /*!< to go up. */
-        { NULL,        true, NULL }
+        { "backward", &always_true },   /*!< to go backwards */
+        { "battery?", &always_true },   /*!< to get the battery level. */
+        { "cw",       &is_num },        /*!< to rotate clockwise. */
+        { "ccw",      &is_num },        /*!< to rotate counter-clockwise. */
+        { "delay",    &is_num },        /*!< to call sleep() for n seconds. */
+        { "flip",     &is_float },      /*!< to execute a flip. */
+        { "height?",  &always_true },   /*!< to get the drone's height. */
+        { "land",     &always_true },   /*!< to execute landing process. */
+//        { "move",     &is_legal_move }, /*!< to move the drone. */
+        { "takeoff",  &always_true },   /*!< to execute takeoff process. */
+        { "time?",    &always_true },   /*!< get flight time. */
+        { NULL,       NULL }
 };
 
 #endif //TELLIB_AUTHORIZED_COMMANDS_H
