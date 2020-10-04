@@ -38,6 +38,11 @@
 #define RYZE_PORT (8889)
 #endif
 
+/// Local port
+#ifndef LOCAL_PORT
+#define LOCAL_PORT (3000)
+#endif
+
 typedef struct socket_s
 {
     int drone_port;
