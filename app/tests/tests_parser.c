@@ -24,7 +24,10 @@ Test(always_true, trueXD)
 
 Test(get_instructions_queue, check_if_loading_something)
 {
-    instr_t * instruc = get_instructions_queue("./tests/.tests_files/valid");
+    char **instruc = get_instructions_queue("./tests/.tests_files/valid");
 
-    cr_assert_neq(instruc, 0);
+    cr_assert_str_eq(instruc[0], "takeoff");
+    cr_assert_str_eq(instruc[1], "battery?");
+    cr_assert_str_eq(instruc[2], "timer?");
+    cr_assert_str_eq(instruc[3], "land");
 }
