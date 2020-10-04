@@ -11,6 +11,19 @@
 #include "socket.h"
 #include "parser.h"
 
+bool is_drone_ok(char *response)
+{
+    char **tab = NULL;
+    bool result = false;
+
+    if (response == NULL)
+        return false;
+    tab = tabgen(response, ' ');
+    result = is_same_string("error", set_to_lowercase(tab[0]));
+    free_array((void **)tab);
+    return !result;
+}
+
 void exec_loop(socket_t ryze, char **ins, settings_t settings)
 {
     char *msg = NULL;
@@ -28,7 +41,6 @@ void exec_loop(socket_t ryze, char **ins, settings_t settings)
             if (!is_same_string("error", set_to_lowercase(msg_tab[0])))
                 break;
         }
-        //sleep(settings.sleep_time);
     }
     free(msg);
     free_array((void **)ins);

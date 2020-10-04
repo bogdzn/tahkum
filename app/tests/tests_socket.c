@@ -2,10 +2,24 @@
 // Created by bogdan on 01/10/2020.
 //
 
+#include "parser.h"
 #include "utils.h"
 #include "socket.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
+
+
+settings_t set_test_settings(void)
+{
+    settings_t settings = {
+        .max_timeout = 2,
+        .sleep_time = 2,
+        .fake_socket = true,
+        .filepath = NULL
+    };
+
+    return settings;
+}
 
 Test(is_socket_ok, issockok)
 {
@@ -28,3 +42,11 @@ Test(is_socket_ok, issockok)
     cr_assert_eq(is_socket_ok(basic_socket), true);
     cr_assert_eq(is_socket_ok(evilsocket), false);
 }
+
+Test(is_drone_ok, isdroneok)
+{
+    cr_assert_eq(is_drone_ok("17%"), true);
+    cr_assert_eq(is_drone_ok("ok"), true);
+    cr_assert_eq(is_drone_ok("error whatever"), false);
+}
+

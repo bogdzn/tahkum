@@ -25,5 +25,7 @@ static char **extract_from_file(char const *filename)
 
 char **get_instructions_queue(char *filename)
 {
+    // todo use AUTHORIZED_COMMANDS and extract only the commands we can use !!
+
     return extract_from_file(filename);
 }

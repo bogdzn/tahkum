@@ -56,15 +56,6 @@ typedef struct socket_s
 
 
 /**
- * \fn bool is_drone_ok(char const *response)
- * \\brief tests drone's response.
- *
- * \param response the drone's answer.
- * \return true if contains "OK"
- */
-bool is_drone_ok(char const *response);
-
-/**
  * \fn socket_t create_default_socket(settings_t user_settings)
  * \\brief creates the socket needed to control the drone
  *
@@ -134,5 +125,14 @@ void send_command(socket_t sock, char const *data, settings_t settings);
  * \param settings user settings
  */
 void exec_loop(socket_t ryze, char **instructions, settings_t settings);
+
+/**
+ * \fn bool is_drone_ok(char const *response)
+ * \\brief tests drone's response.
+ *
+ * \param response the drone's answer.
+ * \return true if contains "OK"
+ */
+bool is_drone_ok(char *response);
 
 #endif //TELLIB_SOCKET_H
