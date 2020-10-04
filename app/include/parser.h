@@ -23,7 +23,7 @@ typedef bool (*check_t)(char const *);
 typedef struct input_s settings_t;
 struct input_s {
     int max_timeout;
-    int sleep_time;
+    unsigned int sleep_time;
     bool fake_socket;
     char *filepath;
 };
