@@ -40,13 +40,13 @@ char *get_response(socket_t sock, settings_t settings)
     }
     __log(INFO, "waiting for a message ...\n");
     char *reply = malloc(sizeof(char) * (REPLY_SIZE + 1));
-    unsigned int socklen = sizeof(sock.local_addr);
+    unsigned int socklen = sizeof(sock.drone_addr);
     int msg_size = recvfrom(
             sock.socket,
             reply,
             REPLY_SIZE,
             0,
-            (struct sockaddr *) &sock.local_addr,
+            (struct sockaddr *) &sock.drone_addr,
             &socklen
     );
 
@@ -55,6 +55,8 @@ char *get_response(socket_t sock, settings_t settings)
         __log(ERROR, "message reception failed.\n");
         return NULL;
     } else reply[msg_size] = 0;
+    if (reply[msg_size - 1] == '\n')
+        reply[msg_size - 1] = 0;
     __log(INFO, "received [%s]\n", reply);
     return reply;
 }

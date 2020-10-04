@@ -14,17 +14,21 @@
 void exec_loop(socket_t ryze, char **ins, settings_t settings)
 {
     char *msg = NULL;
+    char **msg_tab = NULL;
 
     send_command(ryze, "command", settings);
+    if (!is_same_string(get_response(ryze, settings), "ok"))
+        return;
     for (int i = 0; ins[i] != NULL; i++) {
         for (int timeout = 0; timeout != settings.max_timeout; timeout++) {
             send_command(ryze, ins[i], settings);
-            usleep(10000 * settings.sleep_time);
             msg = get_response(ryze, settings);
-            if (!is_same_string(msg, "KO"))
+            msg_tab = tabgen(msg, ' ');
+            sleep(settings.sleep_time);
+            if (!is_same_string("error", set_to_lowercase(msg_tab[0])))
                 break;
         }
-        usleep(10000 * settings.sleep_time);
+        //sleep(settings.sleep_time);
     }
     free(msg);
     free_array((void **)ins);

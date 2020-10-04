@@ -41,9 +41,7 @@ static struct sockaddr_in create_addr(char *ip, int port)
     log_if_errno(errno, "memset create_addr_in");
     if (is_same_string(LOCAL_IP_ADDR, ip)) {
         s.sin_addr.s_addr = htonl(INADDR_ANY);
-    } else {
-        s.sin_addr.s_addr = inet_addr(ip);
-    }
+    } else s.sin_addr.s_addr = inet_addr(ip);
     s.sin_port = htons(port);
     s.sin_family = AF_INET;
     return s;
@@ -70,7 +68,7 @@ socket_t create_socket(char **ips, int *ports, settings_t settings)
 socket_t create_default_socket(settings_t settings)
 {
     char *ip[2] = { LOCAL_IP_ADDR, RYZE_IP_ADDR };
-    int ports[2] = { RYZE_PORT, RYZE_PORT };
+    int ports[2] = { LOCAL_PORT, RYZE_PORT };
 
     return create_socket(ip, ports, settings);
 }
