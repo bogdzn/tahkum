@@ -41,13 +41,10 @@ static struct sockaddr_in create_addr(char *ip, int port)
     log_if_errno(errno, "memset create_addr_in");
     if (is_same_string(LOCAL_IP_ADDR, ip)) {
         s.sin_addr.s_addr = htonl(INADDR_ANY);
-        log_if_errno(errno, "htonl");
     } else {
         s.sin_addr.s_addr = inet_addr(ip);
-        log_if_errno(errno, "inet_addr");
     }
     s.sin_port = htons(port);
-    log_if_errno(errno, "htons");
     s.sin_family = AF_INET;
     return s;
 }
@@ -57,7 +54,7 @@ socket_t create_socket(char **ips, int *ports, settings_t settings)
     socket_t sock;
 
     if (settings.fake_socket) {
-        __log(INFO, "debug mode is enabled, so the socket will not be created.\n");
+        __log(INFO, "(debug) creating socket for [%s:%i].\n", ips[0], ports[0]);
         return sock;
     }
     sock = load_initial_data(ips, ports);
@@ -72,7 +69,7 @@ socket_t create_socket(char **ips, int *ports, settings_t settings)
 
 socket_t create_default_socket(settings_t settings)
 {
-    char *ip[2] = {LOCAL_IP_ADDR, RYZE_IP_ADDR };
+    char *ip[2] = { LOCAL_IP_ADDR, RYZE_IP_ADDR };
     int ports[2] = { RYZE_PORT, RYZE_PORT };
 
     return create_socket(ip, ports, settings);
@@ -83,8 +80,12 @@ bool is_socket_ok(socket_t socket)
     return (socket.socket == 0);
 }
 
-void close_socket(socket_t sock)
+void close_socket(socket_t sock, settings_t settings)
 {
+    if (settings.fake_socket) {
+        __log(INFO, "(debug) closing socket.\n");
+        return;
+    }
     __log(INFO, "closing socket on address [%s:%i]\n", sock.local_ip, sock.local_port);
     free(sock.drone_ip);
     free(sock.local_ip);

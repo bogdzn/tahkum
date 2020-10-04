@@ -16,7 +16,7 @@ void send_command(socket_t sock, char const *data, settings_t settings)
     unsigned int socklen = 0;
 
     if (settings.fake_socket) {
-        __log(INFO, "Debug mode enabled, nothing will be sent.\n");
+        __log(INFO, "(debug) sending [%s].\n", data);
         return;
     }
     socklen =sizeof(sock.drone_addr);
@@ -35,7 +35,7 @@ void send_command(socket_t sock, char const *data, settings_t settings)
 char *get_response(socket_t sock, settings_t settings)
 {
     if (settings.fake_socket) {
-        __log(INFO, "Debug mode enabled, returning 'OK'.\n");
+        __log(INFO, "(debug) received \"OK\".\n");
         return my_strdup("OK");
     }
     __log(INFO, "waiting for a message ...\n");
