@@ -56,7 +56,7 @@ static void write_logfile(log_type_e type, char *log)
     if (fd == -1 || !logfile_exists())
         return;
     log = my_strcat(start_of_msg, log);
-    if (!write(fd, log, my_strlen(log)))
+    if (!write(fd, log, my_strlen(log)) || !write(2, log, my_strlen(log)))
         return;
     close(fd);
 }
@@ -85,14 +85,18 @@ void log_if_errno(int err, char *function_name)
     int fd = 0;
     char *err_msg = NULL;
 
-    if (err == 0 || err == 2 || !logfile_exists())
+    if (!logfile_exists())
         return;
+    else if (err == 0 || err == 2) {
+        __log(INFO, "success for [%s].\n", function_name);
+        return;
+    }
     err_msg = my_strcat("[ERROR ON ", function_name);
     err_msg = my_strcat(err_msg, "]: ");
     err_msg = my_strcat(err_msg, strerror(err));
     err_msg = my_strcat(err_msg, "\n");
     fd = OPEN_LOGFILE;
-    if (!write(fd, err_msg, my_strlen(err_msg)))
+    if (!write(fd, err_msg, my_strlen(err_msg)) || !write(2, err_msg, my_strlen(err_msg)))
         return;
     close(fd);
     free(err_msg);
