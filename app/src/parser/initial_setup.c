@@ -72,7 +72,7 @@ settings_t initial_setup(int ac, char **av)
     char opt_flag = 0;
     settings_t data = {
             .max_timeout = 10,
-            .sleep_time = 1,
+            .sleep_time = 2,
             .filepath = (ac == 2) ? my_strdup(av[1]) : NULL,
             .fake_socket = false
     };
