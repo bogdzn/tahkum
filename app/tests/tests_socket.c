@@ -8,6 +8,7 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
+void redirect_all(void);
 
 settings_t set_test_settings(void)
 {
@@ -43,6 +44,23 @@ Test(is_socket_ok, issockok)
     cr_assert_eq(is_socket_ok(evilsocket), false);
 }
 
+Test(get_response, mockresponse)
+{
+    settings_t set = set_test_settings();
+    socket_t sock;
+
+    cr_assert_str_eq(get_response(sock, set), "OK");
+}
+
+Test(send_command, mocksend, .init = redirect_all)
+{
+    settings_t set = set_test_settings();
+    socket_t sock;
+
+    send_command(sock, "message", set);
+    cr_assert_stderr_eq_str("[INFO]: (debug) sending [message].\n");
+}
+
 Test(is_drone_ok, isdroneok)
 {
     cr_assert_eq(is_drone_ok("17%"), true);
@@ -50,3 +68,20 @@ Test(is_drone_ok, isdroneok)
     cr_assert_eq(is_drone_ok("error whatever"), false);
 }
 
+Test(create_default_socket, fakesocket, .init = redirect_all)
+{
+    settings_t set = set_test_settings();
+    socket_t sock = create_default_socket(set);
+
+    cr_assert_stderr_eq_str("[INFO]: (debug) creating socket for [0.0.0.0:3000].\n");
+}
+
+Test(close_socket, fakeclose, .init = redirect_all)
+{
+    settings_t set = set_test_settings();
+    socket_t sock;
+
+    close_socket(sock, set);
+    cr_assert_stderr_eq_str("[INFO]: (debug) closing socket.\n");
+
+}
