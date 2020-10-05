@@ -140,7 +140,7 @@ tests: fclean directories $(LIB) $(OBJTST)
 	@$(CC) -c $(TEST_SRC) --coverage -g3 $(INCLUDES) $(LINK_FLAG)
 	@mv *.o objects
 	@$(CC) -o unit_tests ./objects/*.o --coverage $(INCLUDES) $(LINK_FLAG) -lcriterion
-	@./unit_tests > /dev/null
+	@./unit_tests >/dev/null 2>&1
 	@echo -e "\e[34m[*** TESTS OVER ***]\e[39m"
 
 tests_clean: tests
