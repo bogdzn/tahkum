@@ -45,7 +45,7 @@ char *get_response(socket_t sock, settings_t settings)
         __log(ERROR, "empty message.\n");
         return NULL;
     } else reply[msg_size] = 0;
-    reply[msg_size - 1] = (reply[msg_size - 1] == '\n') ? reply[msg_size - 1] : 0;
+    reply[msg_size - 1] = (reply[msg_size - 1] == '\n') ? 0 : reply[msg_size - 1];
     __log(INFO, "received [%s]\n", reply);
     return reply;
 }
