@@ -28,6 +28,6 @@ Test(get_instructions_queue, check_if_loading_something)
 
     cr_assert_str_eq(instruc[0], "takeoff");
     cr_assert_str_eq(instruc[1], "battery?");
-    cr_assert_str_eq(instruc[2], "timer?");
+    cr_assert_str_eq(instruc[2], "time?");
     cr_assert_str_eq(instruc[3], "land");
 }

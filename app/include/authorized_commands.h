@@ -33,19 +33,19 @@ typedef struct authorized_s
 /// If you don't the drone doesn't interact with you.
 
 /// authorized_commands must be ordered alphabetically
-//static authorized_cmd_t AUTHORIZED_COMMANDS[] = {
-//        { "backward", &always_true },   /*!< to go backwards */
-//        { "battery?", &always_true },   /*!< to get the battery level. */
-//        { "cw",       &is_num },        /*!< to rotate clockwise. */
-//        { "ccw",      &is_num },        /*!< to rotate counter-clockwise. */
-//        { "delay",    &is_num },        /*!< to call sleep() for n seconds. */
-//        { "flip",     &is_float },      /*!< to execute a flip. */
-//        { "height?",  &always_true },   /*!< to get the drone's height. */
-//        { "land",     &always_true },   /*!< to execute landing process. */
-//        { "move",     &is_legal_move }, /*!< to move the drone. */
- //       { "takeoff",  &always_true },   /*!< to execute takeoff process. */
-//        { "time?",    &always_true },   /*!< get flight time. */
-//        { NULL,       NULL }
-//};
+static authorized_cmd_t AUTHORIZED_COMMANDS[] = {
+        { "backward", &always_true },   /*!< to go backwards */
+        { "battery?", &always_true },   /*!< to get the battery level. */
+        { "cw",       &is_num },        /*!< to rotate clockwise. */
+        { "ccw",      &is_num },        /*!< to rotate counter-clockwise. */
+        { "delay",    &is_num },        /*!< to call sleep() for n seconds. */
+        { "flip",     &is_float },      /*!< to execute a flip. */
+        { "height?",  &always_true },   /*!< to get the drone's height. */
+        { "land",     &always_true },   /*!< to execute landing process. */
+        { "move",     &always_true },   /*!< to move the drone. */
+        { "takeoff",  &always_true },   /*!< to execute takeoff process. */
+        { "time?",    &always_true },   /*!< get flight time. */
+        { NULL,       NULL }
+};
 
 #endif //TELLIB_AUTHORIZED_COMMANDS_H
