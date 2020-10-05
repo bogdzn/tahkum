@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "logger.h"
-#include "authorized_commands.h"
+#include "api_commands.h"
 #include <stdbool.h>
 #include <errno.h>
 
@@ -27,8 +27,8 @@ static bool is_command(char *cmd)
 {
     char **words = tabgen(cmd, ' ');
 
-    for (int i = 0; AUTHORIZED_COMMANDS[i].command != NULL; i++)
-        if (is_same_string(words[0], AUTHORIZED_COMMANDS[i].command))
+    for (int i = 0; API_COMMANDS[i].command != NULL; i++)
+        if (is_same_string(words[0], API_COMMANDS[i].command))
             return true;
     return false;
 }

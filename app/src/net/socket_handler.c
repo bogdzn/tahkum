@@ -37,8 +37,6 @@ static struct sockaddr_in create_addr(char *ip, int port)
 {
     struct sockaddr_in s;
 
-    memset(&s, 0, sizeof(s));
-    log_if_errno(errno, "memset create_addr_in");
     if (is_same_string(LOCAL_IP_ADDR, ip)) {
         s.sin_addr.s_addr = htonl(INADDR_ANY);
     } else s.sin_addr.s_addr = inet_addr(ip);

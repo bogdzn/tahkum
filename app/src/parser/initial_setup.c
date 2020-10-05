@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 static struct option long_options[] = {
-        {"max_timeout", required_argument,  0,  'a'},
+        {"max_timeout", required_argument,  0,  't'},
         {"sleep_time",  required_argument,  0,  's'},
         {"help",        no_argument,        0,  'h'},
         {"file",        required_argument,  0,  'f'},
@@ -80,7 +80,7 @@ settings_t initial_setup(int ac, char **av)
     setup_logfile(ac, av);
     if (ac == 2 && av[1][0] != '-')
         return data;
-    while ((opt_flag = getopt_long(ac, av, "a:s:hf:d",long_options, &opt_idx)) != -1)
+    while ((opt_flag = getopt_long(ac, av, "t:s:hf:d",long_options, &opt_idx)) != -1)
         data = switchcase(optarg, opt_flag, data, optind);
     if (data.filepath == NULL) {
         __log(ERROR, "filepath not specified.\n");
@@ -92,7 +92,7 @@ settings_t initial_setup(int ac, char **av)
 void display_usage(char const *bin_name)
 {
     my_puterr(bin_name);
-    my_puterr(":\n\t-a\tsets max timeout.\n\t-s\tsets sleep time between calls to drone.\n");
+    my_puterr(":\n\t-t\tsets max timeout.\n\t-s\tsets sleep time between calls to drone.\n");
     my_puterr("\t-h\tprints this message.\n\t-f\tspecifies the file with the commands.\n");
     my_puterr("\t-d\tenables debug mode, and doesn't actually interact with the drone.\n");
 }

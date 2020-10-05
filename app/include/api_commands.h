@@ -1,13 +1,13 @@
 /**
- * \file authorized_commands.h
+ * \file api_commands.h
  * \brief a static char ** holding all the commands handled by the Ryze Tello..
  * \author Bogdan G.
  * \version 0.1
- * \date 27/09/2020
+ * \date 05/10/2020
  */
 
-#ifndef TELLIB_AUTHORIZED_COMMANDS_H
-#define TELLIB_AUTHORIZED_COMMANDS_H
+#ifndef TELLIB_API_COMMANDS_H
+#define TELLIB_API_COMMANDS_H
 
 #include <unistd.h>
 #include <stdbool.h>
@@ -33,7 +33,7 @@ typedef struct authorized_s
 /// If you don't the drone doesn't interact with you.
 
 /// authorized_commands must be ordered alphabetically
-static authorized_cmd_t AUTHORIZED_COMMANDS[] = {
+static authorized_cmd_t API_COMMANDS[] = {
         { "battery?", &always_true },   /*!< to get the battery level. */
         { "cw",       &is_num },        /*!< to rotate clockwise. */
         { "ccw",      &is_num },        /*!< to rotate counter-clockwise. */
