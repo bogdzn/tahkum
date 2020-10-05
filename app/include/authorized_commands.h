@@ -34,7 +34,6 @@ typedef struct authorized_s
 
 /// authorized_commands must be ordered alphabetically
 static authorized_cmd_t AUTHORIZED_COMMANDS[] = {
-        { "backward", &always_true },   /*!< to go backwards */
         { "battery?", &always_true },   /*!< to get the battery level. */
         { "cw",       &is_num },        /*!< to rotate clockwise. */
         { "ccw",      &is_num },        /*!< to rotate counter-clockwise. */
