@@ -42,20 +42,20 @@ static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
             __log(ERROR, "triggered error -- argv[%i]:%s\n", ind, arg);
             _exit(1);
         case 'f':
-            __log(INFO, "setting filepath to [%s]\n", arg);
             data.filepath = my_strdup(optarg);
+            __log(INFO, "setting filepath to [%s]\n", data.filepath);
             break;
         case 'd':
             data.fake_socket = true;
             __log(INFO, "setting fake_socket to TRUE.\n");
             break;
         case 'a':
-            __log(INFO, "setting max_timeout to [%s]\n", arg);
-            data.max_timeout = atoi(arg);
+            data.max_timeout = my_getnbr(arg);
+            __log(INFO, "setting max_timeout to [%i]\n", data.max_timeout);
             break;
         case 's':
-            __log(INFO, "setting sleep_time to [%s]\n", arg);
-            data.sleep_time = atoi(arg);
+            data.sleep_time = my_getnbr(arg);
+            __log(INFO, "setting max_timeout to [%i]\n", data.sleep_time);
             break;
         case 'h':
             display_usage("tahkum");

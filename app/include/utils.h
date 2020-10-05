@@ -384,6 +384,16 @@ void my_putnbr(int nb);
 int my_nblen(int nb);
 
 /**
+ * \fn int my_getnbr(char *nb)
+ * \brief Extracts a number from a string.
+ * Will only bypass whitespaces.
+ *
+ * \param nb the number you want to convert.
+ * \return you converted number, in an int.
+ */
+int my_getnbr(char *nb);
+
+/**
  * \fn char *my_getnbr_base(int nb, const char *base_to)
  * \brief transforms an int into whatever base you want.
  * useful for addresses.
