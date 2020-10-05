@@ -44,7 +44,7 @@ static char *copy_until(char *s, char separator, int from)
     return (result);
 }
 
-static char *concat_str(char *s1, char *s2)
+char *concat_str(char *s1, char *s2)
 {
     char *result;
     int i = 0;

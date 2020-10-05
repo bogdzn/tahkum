@@ -416,4 +416,13 @@ void my_putnbr_base(int nb, char const *base_to);
  */
 char *get_next_line(int fd);
 
+/**
+ * \fn char *concat_str(char *s1, char *s2);
+ * \brief concatenates two strings
+ * \param s1 first string
+ * \param s2 second string
+ * \return s1 + s2
+ */
+char *concat_str(char *s1, char *s2);
+
 #endif //TELLO_UTILS_H

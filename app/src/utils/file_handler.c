@@ -18,6 +18,7 @@
 
 file_t get_file(char const *filepath)
 {
+    int size = 0;
     int fd = 0;
     file_t result = {
             .name = NULL,
@@ -32,8 +33,9 @@ file_t get_file(char const *filepath)
     result.content = malloc(sizeof(char) * (result.st.st_size + 1));
     fd = open(filepath, O_RDONLY);
     if (result.content == NULL || fd == -1 ||
-        read(fd, result.content, result.st.st_size) == -1)
+            (size = read(fd, result.content, result.st.st_size)) == -1)
         return result;
+    result.content[size] = 0;
     close(fd);
     return result;
 }

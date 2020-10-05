@@ -1,8 +1,4 @@
-
-
-start
 takeoff
-turn 90
-turn -90
+battery?
+time?
 land
-end

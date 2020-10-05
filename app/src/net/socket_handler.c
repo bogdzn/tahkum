@@ -2,57 +2,90 @@
  * \file socket_handler.c
  * \brief minimalistic socket handler.
  * \author Bogdan G.
- * \date 28/09/2020
+ * \date 01/10/2020
  */
 
 #include "socket.h"
 #include "logger.h"
 #include "utils.h"
+#include <string.h>
+#include "parser.h"
 #include <errno.h>
 
-socket_t create_socket(char const *ip_addr, int port)
+static void close_if_errno(int socket, int err, char *func_name)
 {
-    __log(INFO, "creating socket for address %s:%i\n", ip_addr, port);
-    int sock_option = 1;
-
-    socket_t result = {
-            .port = (port < 0) ? 7070 : port,
-            .ip_addr = (!ip_addr) ? "127.0.0.1" : my_strdup(ip_addr),
-            .socket = socket(AF_INET, SOCK_STREAM, 0),
-            .addr = {
-                    .sin_addr.s_addr = (!ip_addr) ? INADDR_ANY : inet_addr(ip_addr),
-                    .sin_port = htons((port < 0) ? 7070 : port),
-                    .sin_family = AF_INET
-            },
-            .status = connect(
-                    result.socket,
-                    (struct sockaddr *) &result.addr,
-                    sizeof(result.addr)
-            )
-    };
-
-    log_if_errno(errno, "create_socket");
-    bind(result.socket, (struct sockaddr *) &result.addr, sizeof(result.addr));
-    setsockopt(result.socket, SOL_SOCKET, SO_REUSEADDR, &sock_option, sizeof(sock_option));
-    if (is_socket_ok(result))
-        __log(INFO, "Connected.\n");
-    else __log(WARNING, "Couldn't connect socket to %s:%i.\n", ip_addr, port);
-    return result;
+    if (err != 2 && errno != 0) {
+        close(socket);
+        log_if_errno(errno, func_name);
+        _exit(1);
+    } else __log(INFO, "success for [%s].\n", func_name);
 }
 
-inline socket_t create_default_socket(void)
+static socket_t load_initial_data(char **ip, int *port)
 {
-    return create_socket(RYZE_IP_ADDR, RYZE_PORT);
+    socket_t sock;
+
+    __log(INFO, "creating socket for address %s:%i\n", ip[0], port[0]);
+    sock.local_port = port[0];
+    sock.local_ip = my_strdup(ip[0]);
+    sock.drone_port = port[1];
+    sock.drone_ip = my_strdup(ip[1]);
+    return sock;
 }
 
-void close_socket(socket_t sock)
+static struct sockaddr_in create_addr(char *ip, int port)
 {
-    __log(INFO, "Closing socket %s:%i.\n", sock.ip_addr, sock.port);
+    struct sockaddr_in s;
+
+    memset(&s, 0, sizeof(s));
+    log_if_errno(errno, "memset create_addr_in");
+    if (is_same_string(LOCAL_IP_ADDR, ip)) {
+        s.sin_addr.s_addr = htonl(INADDR_ANY);
+    } else s.sin_addr.s_addr = inet_addr(ip);
+    s.sin_port = htons(port);
+    s.sin_family = AF_INET;
+    return s;
+}
+
+socket_t create_socket(char **ips, int *ports, settings_t settings)
+{
+    socket_t sock;
+
+    if (settings.fake_socket) {
+        __log(INFO, "(debug) creating socket for [%s:%i].\n", ips[0], ports[0]);
+        return sock;
+    }
+    sock = load_initial_data(ips, ports);
+    sock.local_addr = create_addr(sock.local_ip, sock.local_port);
+    sock.drone_addr = create_addr(sock.drone_ip, sock.drone_port);
+    sock.socket = socket(AF_INET, SOCK_DGRAM, 0);
+    close_if_errno(sock.socket, errno, "create_socket");
+    bind(sock.socket, (struct sockaddr *) &sock.local_addr, sizeof(sock.local_addr));
+    close_if_errno(errno, sock.socket, "bind");
+    return sock;
+}
+
+socket_t create_default_socket(settings_t settings)
+{
+    char *ip[2] = { LOCAL_IP_ADDR, RYZE_IP_ADDR };
+    int ports[2] = { LOCAL_PORT, RYZE_PORT };
+
+    return create_socket(ip, ports, settings);
+}
+
+bool is_socket_ok(socket_t socket)
+{
+    return (socket.socket == 0);
+}
+
+void close_socket(socket_t sock, settings_t settings)
+{
+    if (settings.fake_socket) {
+        __log(INFO, "(debug) closing socket.\n");
+        return;
+    }
+    __log(INFO, "closing socket on address [%s:%i]\n", sock.local_ip, sock.local_port);
+    free(sock.drone_ip);
+    free(sock.local_ip);
     close(sock.socket);
-    free(sock.ip_addr);
-}
-
-inline bool is_socket_ok(socket_t sock)
-{
-    return (sock.status != -1 && sock.socket != -1);
 }

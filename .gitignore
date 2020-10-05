@@ -1,4 +1,5 @@
 .idea
+./app/tello.log
 .pycharm
 venv/
 app/doxygen/build/

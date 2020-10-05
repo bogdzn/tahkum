@@ -10,6 +10,7 @@ void redirect_all(void);
 
 Test(my_getnbr_base, gnbase)
 {
+    cr_assert_str_eq(my_getnbr_base(0, "01234567"), "0");
 	cr_assert_str_eq(my_getnbr_base(12, "01234567"), "14");
 	cr_assert_str_eq(my_getnbr_base(10, "01"), "1010");
 	cr_assert_str_eq(my_getnbr_base(236, "0123456789abcdef"), "ec");
@@ -38,4 +39,10 @@ Test(do_op, doop)
 	cr_assert_eq(do_op(3, 5, '*'), 15);
 	cr_assert_eq(do_op(15, 3, '/'), 5);
 	cr_assert_eq(do_op(12, 5, '%'), 2);
+}
+
+Test(my_putnbr, putnbr, .init = redirect_all)
+{
+    my_putnbr(-127);
+    cr_assert_stdout_eq_str("-127\n");
 }

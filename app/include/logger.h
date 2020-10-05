@@ -16,21 +16,21 @@
 
 /// path where the log file is stored.
 #ifndef LOG_PATH
-#define LOG_PATH ("/var/log/tello.log")
+#define LOG_PATH ("./tello.log")
 #endif
 
 /// Macro opening the log file, with O_APPEND flag set.
 #ifndef OPEN_LOGFILE
 #define OPEN_LOGFILE (open(LOG_PATH, \
-        O_NDELAY | O_CREAT | O_APPEND | O_RDWR, \
-        S_IRUSR | S_IRGRP | S_IROTH))
+        O_CREAT | O_APPEND | O_RDWR, \
+        S_IRWXU | S_IRWXG | S_IRWXO))
 #endif
 
 /// macro for truncating the log file.
 #ifndef CREATE_LOGFILE
 #define CREATE_LOGFILE (open(LOG_PATH, \
-        O_NDELAY | O_CREAT | O_TRUNC | O_RDWR, \
-        S_IRUSR | S_IRGRP | S_IROTH))
+        O_CREAT | O_TRUNC | O_RDWR, \
+        S_IRWXU | S_IRWXG | S_IRWXO))
 #endif
 
 /**
@@ -39,7 +39,8 @@
  *
  * Defines which type of log we want to write.
  */
-typedef enum LOG_TYPE {
+typedef enum LOG_TYPE
+{
     INFO, /*!< used for misc infos. */
     WARNING, /*!< used for warnings and non-critical errors. */
     ERROR /*!< used for critical errors. */

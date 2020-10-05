@@ -25,21 +25,26 @@
 typedef struct authorized_s
 {
     char *command;
-    bool is_local;
     check_t input_check;
 } authorized_cmd_t;
 
+/// If you want to re-implement this on your own, please note:
+/// You should first send "command" to the drone, before takeoff
+/// If you don't the drone doesn't interact with you.
+
+/// authorized_commands must be ordered alphabetically
 static authorized_cmd_t AUTHORIZED_COMMANDS[] = {
-        { "start",   true,  &always_true },
-        { "stop",    true,  &always_true },
-        { "takeoff", false, &always_true },
-        { "land",    false, &always_true },
-        { "flip",    false, &is_float },
-        { "turn",    false, &is_float },
-        { "up",      false, &always_true },
-        { "down",    false, &always_true },
-        { "delay",   true,  &is_num },
-        { NULL,      true,  NULL }
+        { "battery?", &always_true },   /*!< to get the battery level. */
+        { "cw",       &is_num },        /*!< to rotate clockwise. */
+        { "ccw",      &is_num },        /*!< to rotate counter-clockwise. */
+        { "delay",    &is_num },        /*!< to call sleep() for n seconds. */
+        { "flip",     &is_float },      /*!< to execute a flip. */
+        { "height?",  &always_true },   /*!< to get the drone's height. */
+        { "land",     &always_true },   /*!< to execute landing process. */
+        { "move",     &always_true },   /*!< to move the drone. */
+        { "takeoff",  &always_true },   /*!< to execute takeoff process. */
+        { "time?",    &always_true },   /*!< get flight time. */
+        { NULL,       NULL }
 };
 
 #endif //TELLIB_AUTHORIZED_COMMANDS_H

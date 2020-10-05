@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include "utils.h"
+#include <stdio.h>
 
 bool logfile_exists(void)
 {
@@ -26,5 +27,5 @@ int create_logfile(void)
 {
     int fd = CREATE_LOGFILE;
     close(fd);
-    return (fd == -1) ? 0 : 1;
+    return (fd == -1) ? 1 : 0;
 }

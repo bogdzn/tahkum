@@ -12,7 +12,7 @@ vpath %.c ./src/net
 #### VARIABLES #########
 ########################
 
-NAME	= tello
+NAME	= tahkum
 
 RM		= rm -rf
 
@@ -25,10 +25,11 @@ CC		= gcc
 INCLUDES = -I./include/
 
 CFLAGS 	= -g3 \
-		  -Wno-unused-function \
+		  -ftest-coverage \
 		  -Wall -Werror -Wextra \
 		  --pedantic \
-		  -Ofast
+		  -fprofile-arcs \
+		  -fPIC
 
 LINK_FLAG =
 
@@ -42,7 +43,7 @@ SRC = \
 
 PARSER = 	get_instruction_queue.c \
 			input_checking.c \
-			argument_checking.c
+			initial_setup.c
 
 UTILS =     arrays.c \
 			file_handler.c \
@@ -55,7 +56,8 @@ LOGGER = create_logfile.c \
 		 update_logs.c
 
 SOCKET = messages.c \
-		 socket_handler.c
+		 socket_handler.c \
+		 exec_loop.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
@@ -75,7 +77,8 @@ TEST_SRC 	= ./tests/tests_parser.c \
 			  ./tests/tests_strings.c \
 			  ./tests/tests_file_handler.c \
 			  ./tests/tests_get_next_line.c \
-			  ./tests/tests_socket.c
+			  ./tests/tests_socket.c \
+			  ./tests/tests_logger.c
 
 OBJECT_DIR 	= ./objects
 
@@ -100,7 +103,7 @@ $(OBJECT_DIR)/%.o : %.c
 $(LIB):
 
 $(NAME): $(OBJ)
-	@gcc -o $(NAME) $^ $(LINK_FLAG)
+	@gcc -o $(NAME) $(CFLAGS) $^ $(LINK_FLAG)
 	@echo -e "\e[34m[*** COMPILATION SUCCESSFUL ***]\e[39m"
 
 clean:
@@ -133,7 +136,7 @@ docre:
 func_tests:
 	@sh tests/.ftests
 
-tests: directories $(LIB) $(OBJTST)
+tests: fclean directories $(LIB) $(OBJTST)
 	@$(CC) -c $(TEST_SRC) --coverage -g3 $(INCLUDES) $(LINK_FLAG)
 	@mv *.o objects
 	@$(CC) -o unit_tests ./objects/*.o --coverage $(INCLUDES) $(LINK_FLAG) -lcriterion
@@ -141,10 +144,10 @@ tests: directories $(LIB) $(OBJTST)
 	@echo -e "\e[34m[*** TESTS OVER ***]\e[39m"
 
 tests_clean: tests
-	@gcovr --exclude tests/
+	@gcovr -r . -e tests --sort-percentage
 	@$(RM) unit_tests
 	@$(RM) *.gc* unit_tests
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) tello.log
 	@$(RM) objects
 	@echo -e "\e[34m[*** CLEAN SUCCESSFUL ***]\e[39m"
 
