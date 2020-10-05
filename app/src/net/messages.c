@@ -21,15 +21,8 @@ void send_command(socket_t sock, char const *data, settings_t settings)
     }
     socklen =sizeof(sock.drone_addr);
     __log(INFO, "sending \"%s\"\n", data);
-    sendto(
-            sock.socket,
-            data,
-            my_strlen(data),
-            0,
-            (struct sockaddr *) &sock.drone_addr,
-            socklen
-    );
-    log_if_errno(errno, "send_command");
+    sendto(sock.socket, data, my_strlen(data),0, (struct sockaddr *) &sock.drone_addr, socklen);
+    log_if_errno(errno, "sendto");
 }
 
 char *get_response(socket_t sock, settings_t settings)
@@ -41,22 +34,15 @@ char *get_response(socket_t sock, settings_t settings)
     __log(INFO, "waiting for a message ...\n");
     char *reply = malloc(sizeof(char) * (REPLY_SIZE + 1));
     unsigned int socklen = sizeof(sock.drone_addr);
-    int msg_size = recvfrom(
-            sock.socket,
-            reply,
-            REPLY_SIZE,
-            0,
-            (struct sockaddr *) &sock.drone_addr,
-            &socklen
-    );
+    int msg_size = recvfrom(sock.socket, reply, REPLY_SIZE, 0,
+            (struct sockaddr *) &sock.drone_addr,&socklen);
 
-    log_if_errno(errno, "get_response");
+    log_if_errno(errno, "recvfrom");
     if (msg_size == -1 || reply == NULL) {
-        __log(ERROR, "message reception failed.\n");
+        __log(ERROR, "empty message.\n");
         return NULL;
     } else reply[msg_size] = 0;
-    if (reply[msg_size - 1] == '\n')
-        reply[msg_size - 1] = 0;
+    reply[msg_size - 1] = (reply[msg_size - 1] == '\n') ? reply[msg_size - 1] : 0;
     __log(INFO, "received [%s]\n", reply);
     return reply;
 }
