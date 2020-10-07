@@ -49,7 +49,7 @@ static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
             data.fake_socket = true;
             __log(INFO, "setting fake_socket to TRUE.\n");
             break;
-        case 'a':
+        case 't':
             data.max_timeout = my_getnbr(arg);
             __log(INFO, "setting max_timeout to [%i]\n", data.max_timeout);
             break;
