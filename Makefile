@@ -137,9 +137,9 @@ func_tests:
 	@sh tests/.ftests
 
 tests: fclean directories $(LIB) $(OBJTST)
-	@$(CC) -c $(TEST_SRC) --coverage -g3 $(INCLUDES) $(LINK_FLAG)
+	@$(CC) -c $(TEST_SRC) --coverage -g3 $(INCLUDES)
 	@mv *.o objects
-	@$(CC) -o unit_tests ./objects/*.o --coverage $(INCLUDES) $(LINK_FLAG) -lcriterion
+	@$(CC) -o unit_tests ./objects/*.o --coverage $(INCLUDES) -lcriterion
 	@./unit_tests >/dev/null 2>&1
 	@echo -e "\e[34m[*** TESTS OVER ***]\e[39m"
 
@@ -155,4 +155,4 @@ tests_clean: tests
 #### .PHONY ############
 ########################
 
-.PHONY: all clean fclean re tests tests_clean doc
+.PHONY: all clean fclean re tests tests_clean doc docre docdel

@@ -15,7 +15,7 @@ NC="\[\e[m\]"               # Color Reset
 # needed for read -a
 IFS=' '
 #packages to install
-packages="graphviz doxygen"
+packages="graphviz doxygen gcovr"
 
 # functions
 install_package () {

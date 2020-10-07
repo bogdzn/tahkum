@@ -17,5 +17,5 @@ jobs:
       run: sudo add-apt-repository ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get install criterion-dev
     - name: install build-essential gcovr gcc
       run: sudo apt-get install -y gcovr build-essential gcc
-    - name: make tests_clean
-      run: make tests_clean
+    - name: make tests
+      run: make tests
