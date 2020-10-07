@@ -14,6 +14,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: install Criterion
-      run: sudo add-apt-repository ppa:snaipewasataken/ppa && sudo apt-get update && sudo apt-get install criterion-dev
+      run: sudo add-apt-repository ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get install criterion-dev
     - name: make tests_clean
       run: make tests_clean
