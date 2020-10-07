@@ -13,9 +13,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: install Criterion
-      run: sudo add-apt-repository ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get install criterion-dev
-    - name: install build-essential gcovr gcc
-      run: sudo apt-get install -y gcovr build-essential gcc
-    - name: make tests
-      run: make tests
+    - name: func_tests
+      run: make func_tests
