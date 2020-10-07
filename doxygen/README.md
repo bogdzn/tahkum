@@ -33,4 +33,4 @@ git clone https://github.com/bogdzn/tahkum && cd tahkum/app && make
 ```
 
 You can then type `./tahkum -h` to check the available options for the program and how to use it.
-You can also check the documentation, doing `make doc` and, opening `./doxygen/build/html/index.html` with your favorite browser.
+
