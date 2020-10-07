@@ -13,5 +13,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: func_tests
+    - name: installs
+      run: sudo add-apt-repository ppa:snaipewastaken/ppa && sudo apt-get update && sudo apt-get install criterion-dev criterion gcovr build-essential gcc
+    - name: functionnal tests
       run: make func_tests
