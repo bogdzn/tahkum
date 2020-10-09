@@ -50,7 +50,8 @@ UTILS =     arrays.c \
 			get_next_line.c \
 			nums.c \
 			strings.c \
-			swaps.c
+			swaps.c \
+			key_listener.c
 
 LOGGER = create_logfile.c \
 		 update_logs.c
@@ -133,7 +134,7 @@ docre:
 #### UNIT TESTS ########
 ########################
 
-func_tests:
+func_tests: tests_clean
 	@sh tests/.ftests
 
 tests: fclean directories $(LIB) $(OBJTST)

@@ -14,12 +14,22 @@
 #include <getopt.h>
 
 /**
+ * \typedef bool (*check_t)(char const *);
  * \brief function pointer containing input check.
  *
  * Returns true if correct, false if not. (duh)
  */
 typedef bool (*check_t)(char const *);
 
+/**
+ * \struct input_s settings_t;
+ * \brief user-defined settings
+ *
+ * \param max_timeout defines the number of the time a command will be retied if it fails.
+ * \param sleep_time defines the amout of time we wait before sending another command.
+ * \param fake_socket allows program to pretend it sends information to a drone.
+ * \param filepath path of the file full of commands.
+ */
 typedef struct input_s settings_t;
 struct input_s {
     int max_timeout;

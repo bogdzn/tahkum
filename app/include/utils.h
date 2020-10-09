@@ -9,6 +9,9 @@
 #ifndef TELLO_UTILS_H
 #define TELLO_UTILS_H
 
+
+
+
 /// Macro needed for get_next_line.c
 #ifndef READ_SIZE
 #define READ_SIZE (60)
@@ -434,5 +437,15 @@ char *get_next_line(int fd);
  * \return s1 + s2
  */
 char *concat_str(char *s1, char *s2);
+
+
+// key_listener.c
+/**
+  * \fn char get_pressed_key(void)
+  * \brief reads user input from terminal, in a non-blocking way.
+  *
+  * \return user-pressed key, or \0 if nothing.
+  */
+char get_pressed_key(void);
 
 #endif //TELLO_UTILS_H
