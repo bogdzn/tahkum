@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://imgur.com/a/hECwiXV" width=500 />
+  ![Tahkum](./.github/tahkum.png)
 </p>
 
 
