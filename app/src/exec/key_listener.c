@@ -79,9 +79,8 @@ int loop_wrapper(socket_t ryze, settings_t settings)
     }
     while (status != 1) {
         do {
-            usleep(50000);
+            usleep(75000);
             status = read(STDIN_FILENO, &buffer, 1);
-            __log(INFO, "-- read:%c [%i]\n", buffer, status);
         } while (status < 0);
         if (buffer == 'c') {
             __log(WARNING, "c has been triggered. Exiting.\n");

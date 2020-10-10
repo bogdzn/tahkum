@@ -21,11 +21,10 @@ char **get_user_commands(char extracted, int status)
 {
     char **cmds = tabgen("height?", ' ');
 
-    if (status == -1)
-        return cmds;
+    (void)status;
     for (int i = 0; API_COMMANDS[i].command != NULL; i++) {
         if (API_COMMANDS[i].code == extracted) {
-            return tabgen(API_COMMANDS->command, ' ');
+            return tabgen(API_COMMANDS[i].command, '\n');
         }
     }
     return cmds;
