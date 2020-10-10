@@ -22,8 +22,9 @@
  */
 typedef bool (*check_t)(char const *);
 
+
 /**
- * \struct input_s settings_t;
+ * \typedef struct input_s settings_t
  * \brief user-defined settings
  *
  * \param max_timeout defines the number of the time a command will be retied if it fails.
@@ -41,7 +42,7 @@ struct input_s {
 
 
 /**
- * \struct file_t
+ * \typedef struct file_s file_t
  * \brief Object handling files.
  *
  * Contains its name, stats and content.
@@ -95,7 +96,7 @@ void display_usage(char const *bin_name);
 
 // get_instr_queue.c
 /**
- * \fn char **get_user_commands(struct input_event *evts, int status);
+ * \fn char **get_user_commands(char extracted, int status);
  * \brief interprets the user input we extracted from key_listener.c
  *
  * \param extracted extracted letter

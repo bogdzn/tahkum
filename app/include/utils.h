@@ -63,7 +63,7 @@ typedef enum LOG_TYPE
 int create_logfile(void);
 
 /**
- * \fn void __log(LOG_TYPE, char *string, ...)
+ * \fn void __log(LOG_TYPE, char *string)
  * \brief appends a specific message stored in LOG_PATH.
  * You will need to specify wether the LOG_TYPE (INFO, WARNING, ERROR),
  * and then you can just use it as a printf.

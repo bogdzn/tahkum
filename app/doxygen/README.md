@@ -1,36 +1,52 @@
-<p align="center">
-  <img src="https://images.unsplash.com/photo-1499808624579-3471e371ce50?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" width=500 />
-</p>
-
-
 <h4 align="center">Control your Tello Ryze from your computer !</h4>
 
-## About
+## Purpose
 
-I recently bought a drone to my father, for his birthday. Little did he know, the gift was for me !
+The goal of this documentation is to help anyone wanting to study this code. If you want to implement your own program, or help writing this one, this documentation is for you !
+Some things are not explained as they are trivial. If you have a question regarding the code, or the way things are implement, you can open an issue to ask your question.
+You are also more than welcome to fork the project, and improve things. Just make sure to write unit tests, and document everything you do if you want to open a Pull Request.
 
-I started building this for fun on my free time, because I wanted to learn about socket programming. If you want to do so as well, you can head over to `doxygen/` and compile the documentation. It might help you, if you want to get started.
-If you just want to use the program, you can ! Please make sure to have a Tello Ryze, because I only tested with this drone. It might work with other Tello drones, but I can't be sure about that.
+## How to compile the documentation ?
 
-
-## Features
-
-- can interact with a Tello Ryze, through its private API, and the use of DGRAM sockets
-- minimalistic debug mode, and log file handler.
-
-
-## In the works
-
-- better UI
-- multi-threading support
-- sending commands in real time
-
-## How do I use it ?
-
-To compile the program, you will first need to `clone` the repository, and compile the project:
-```bash
-git clone https://github.com/bogdzn/tahkum && cd tahkum/app && make
+Open this directory in a terminal, and type `make`. You can then open up the documentation with the browser of your choice by typing :
+```
+$BROWSER ./builds/html/index.html
 ```
 
-You can then type `./tahkum -h` to check the available options for the program and how to use it.
+## Commands
 
+You may be looking at the documentation to check what commands are used to control the drone.
+Although it is not possible at this time to configure the commands, it is added to the `In The Works` list.
+
+Here are the current supported commands:
+```
+"battery?"          -> b        #query battery status
+"cw 90"             -> q        #turn clockwise 90 degrees
+"ccw 90"            -> e        #turn counter-clockwise 90 degrees
+"delay 5"           -> x        #waits for 5 seconds
+"flip front"        -> o        #performs a front flip
+"flip back"         -> l        #performs a back flip
+"flip left"         -> k        #performs a left flip
+"flip right"        -> ;        #performs a right flip
+"height?"           -> h        #query height
+"land"              -> m        #lands the drone
+"move up"           -> SPACE    #moves the drone up
+"move down"         -> z        #moves the drone down
+"move forward"      -> w        #moves the drone forward
+"move backward"     -> s        #moves the drone backward
+"move left"         -> d        #moves the drone left
+"move right"        -> a        #moves the drone right
+"takeoff"           -> r        #initiates takeoff
+"time?"             -> t        #query flight time
+NULL                -> c        #quits the program (and automatically lands the drone)
+```
+
+The reason we can only use ascii-supported characters is because the program currently reads `FILENO_STDIN` to get the user input.
+A better IO handler is in the works, but in the meantime, this solution "works".
+
+
+# Socket handler
+
+The Tello Ryze drone has a WIFI router installed on the drone, and to interact with it, you have to connect to the router.
+The drone then sends command-related data to port `3000` of your local ip (`0.0.0.0`). It also expects data from this IP: `127.168.1.10:8889`.
+The expected protocol is UDP, using DATAGRAM sockets.

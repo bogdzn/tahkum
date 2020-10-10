@@ -1,6 +1,6 @@
 /**
- * \file socket.h
- * \brief all things related to socket handling.
+ * \file exec.h
+ * \brief all things related to command execution, such as sockets, or the exec loop.
  * \author Bogdan G.
  * \date 01/10/2020
  */
@@ -43,6 +43,17 @@
 #define LOCAL_PORT (3000)
 #endif
 
+/**
+ * \typedef struct socket_s socket_t
+ * \brief holds any relevant information regarding socket creation.
+ * \param drone_port port where the drone sends data.
+ * \param local_port port where the drone expects data.
+ * \param drone_ip ip address for the drone.
+ * \param local_ip ip address where the drone sends data.
+ * \param socket the actual socket.
+ * \param drone_addr drone address wrapped in a struct sockaddr_in.
+ * \param local_addr local address wrapped in a struct sockaddr_in.
+ */
 typedef struct socket_s
 {
     int drone_port;
@@ -66,7 +77,7 @@ typedef struct socket_s
 socket_t create_default_socket(settings_t user_settings);
 
 /**
- * \fn void close_socket(socket_t sock)
+ * \fn void close_socket(socket_t sock, settings_t settings)
  * \\brief closes a socket
  *
  * \param sock your socket
@@ -118,8 +129,8 @@ void send_command(socket_t sock, char const *data, settings_t settings);
 // exec_loop.c
 
 /**
- * \fn void exec_loop(socket_t ryze, instr_t *instructions, settings_t settings)
- * \\brief loops through instructions and sends them to the drone
+ * \fn int exec_loop(socket_t ryze, instr_t *instructions, settings_t settings)
+ * \brief loops through instructions and sends them to the drone
  *
  * \param ryze structure containing all relevant connection information
  * \param instructions user-specified insctructions
@@ -130,7 +141,7 @@ void send_command(socket_t sock, char const *data, settings_t settings);
 int exec_loop(socket_t ryze, settings_t settings, char **cmds);
 
 /**
- * \fn bool is_drone_ok(char const *response)
+ * \fn bool is_drone_ok(char *response)
  * \\brief tests drone's response.
  *
  * \param response the drone's answer.
