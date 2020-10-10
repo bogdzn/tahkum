@@ -1,6 +1,4 @@
-<p align="center">
-  ![Tahkum](./.github/tahkum.png)
-</p>
+![Tahkum](./.github/tahkum.png)
 
 
 <h4 align="center">Control your Tello Ryze from your computer !</h4>
