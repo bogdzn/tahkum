@@ -6,18 +6,16 @@
  */
 
 #include "utils.h"
-#include "logger.h"
-#include "socket.h"
 #include "parser.h"
+#include <stdio.h>
+#include "exec.h"
 
 int main(int ac, char **av)
 {
     settings_t settings = initial_setup(ac, av);
     socket_t ryze = create_default_socket(settings);
-    char **instructions = get_instructions_queue(settings.filepath);;
+    int status = loop_wrapper(ryze, settings);
 
-    if (instructions != NULL)
-        exec_loop(ryze, instructions, settings);
     close_socket(ryze, settings);
-    return 0;
+    return status;
 }

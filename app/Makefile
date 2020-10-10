@@ -3,10 +3,10 @@
 ##
 
 vpath %.c ./src/
-vpath %.c ./src/logger
+vpath %.c ./src/exec/net
+vpath %.c ./src/exec
 vpath %.c ./src/parser
 vpath %.c ./src/utils
-vpath %.c ./src/net
 
 ########################
 #### VARIABLES #########
@@ -43,28 +43,26 @@ SRC = \
 
 PARSER = 	get_instruction_queue.c \
 			input_checking.c \
-			initial_setup.c
+			initial_setup.c \
+			file_handler.c
 
 UTILS =     arrays.c \
-			file_handler.c \
+			logs.c \
 			get_next_line.c \
 			nums.c \
 			strings.c \
 			swaps.c
 
-LOGGER = create_logfile.c \
-		 update_logs.c
-
-SOCKET = messages.c \
+EXEC  = drone_interactions.c \
 		 socket_handler.c \
+		 key_listener.c \
 		 exec_loop.c
 
 # needed for unit tests, do not include $(MAIN)
 COMBINED_NO_MAIN = 	$(SRC) \
-					$(LOGGER) \
 					$(UTILS) \
 					$(PARSER) \
-					$(SOCKET)
+					$(EXEC)
 
 # binary included files
 COMBINED	=	$(MAIN) \
@@ -133,7 +131,7 @@ docre:
 #### UNIT TESTS ########
 ########################
 
-func_tests:
+func_tests: tests_clean
 	@sh tests/.ftests
 
 tests: fclean directories $(LIB) $(OBJTST)

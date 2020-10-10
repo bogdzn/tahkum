@@ -7,8 +7,7 @@
  */
 
 #include "utils.h"
-#include "logger.h"
-#include "socket.h"
+#include "exec.h"
 #include "parser.h"
 #include <getopt.h>
 #include <unistd.h>
@@ -23,13 +22,9 @@ static struct option long_options[] = {
         {NULL,          no_argument,        0,  '\0'}
 };
 
-static void setup_logfile(int ac, char **av)
+static void setup_logfile(void)
 {
-    if (ac == 1) {
-        my_puterr(av[0]);
-        my_puterr(": Error -- you have to specify a file.\n");
-        _exit(1);
-    } else if (create_logfile() != 0) {
+    if (create_logfile() != 0) {
         my_puterr("Unexpected error while creating logfile, exiting...\n");
         _exit(1);
     } else __log(INFO, "Successfully created log file.\n");
@@ -77,15 +72,9 @@ settings_t initial_setup(int ac, char **av)
             .fake_socket = false
     };
 
-    setup_logfile(ac, av);
-    if (ac == 2 && av[1][0] != '-')
-        return data;
+    setup_logfile();
     while ((opt_flag = getopt_long(ac, av, "t:s:hf:d",long_options, &opt_idx)) != -1)
         data = switchcase(optarg, opt_flag, data, optind);
-    if (data.filepath == NULL) {
-        __log(ERROR, "filepath not specified.\n");
-        exit(1);
-    }
     return data;
 }
 
@@ -93,6 +82,6 @@ void display_usage(char const *bin_name)
 {
     my_puterr(bin_name);
     my_puterr(":\n\t-t\tsets max timeout.\n\t-s\tsets sleep time between calls to drone.\n");
-    my_puterr("\t-h\tprints this message.\n\t-f\tspecifies the file with the commands.\n");
+    my_puterr("\t-h\tprints this message.\n\t-f\tspecifies config file's path.\n");
     my_puterr("\t-d\tenables debug mode, and doesn't actually interact with the drone.\n");
 }

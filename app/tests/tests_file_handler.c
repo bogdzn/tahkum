@@ -3,6 +3,7 @@
 //
 
 #include "utils.h"
+#include "parser.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 

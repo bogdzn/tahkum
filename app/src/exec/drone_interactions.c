@@ -5,8 +5,7 @@
  * \date 28/09/2020
  */
 
-#include "socket.h"
-#include "logger.h"
+#include "exec.h"
 #include "utils.h"
 #include <stdlib.h>
 #include <errno.h>

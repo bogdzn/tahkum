@@ -1,6 +1,6 @@
 .idea
-.tello.log
+./app/tello.log
 .pycharm
 venv/
-doxygen/build/
-compile_flags.txt
+app/doxygen/build/
+app/compile_flags.txt

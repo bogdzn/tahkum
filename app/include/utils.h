@@ -9,48 +9,90 @@
 #ifndef TELLO_UTILS_H
 #define TELLO_UTILS_H
 
-/// Macro needed for get_next_line.c
-#ifndef READ_SIZE
-#define READ_SIZE (60)
-#endif
-
+#include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
-// file_handler.c
+/// path where the log file is stored.
+#ifndef LOG_PATH
+#define LOG_PATH ("./tello.log")
+#endif
+
+/// Macro opening the log file, with O_APPEND flag set.
+#ifndef OPEN_LOGFILE
+#define OPEN_LOGFILE (open(LOG_PATH, \
+        O_CREAT | O_APPEND | O_RDWR, \
+        S_IRWXU | S_IRWXG | S_IRWXO))
+#endif
+
+/// macro for truncating the log file.
+#ifndef CREATE_LOGFILE
+#define CREATE_LOGFILE (open(LOG_PATH, \
+        O_CREAT | O_TRUNC | O_RDWR, \
+        S_IRWXU | S_IRWXG | S_IRWXO))
+#endif
+
+/// Macro needed for get_next_line.c
+#ifndef READ_SIZE
+#define READ_SIZE (60)
+#endif
 
 /**
- * \struct file_t
- * \brief Object handling files.
+ * \enum log_type_e
+ * \brief Log messages types.
  *
- * Contains its name, stats and content.
+ * Defines which type of log we want to write.
  */
-typedef struct file_s
+typedef enum LOG_TYPE
 {
-    char *name;
-    char *content;
-    struct stat st;
-} file_t;
+    INFO, /*!< used for misc infos. */
+    WARNING, /*!< used for warnings and non-critical errors. */
+    ERROR /*!< used for critical errors. */
+} log_type_e;
 
 /**
- * \fn file_t get_file(char const *filepath)
- * \brief loads file information into memory.
+ * \fn int create_logfile(void)
+ * \brief creates log file in LOG_PATH.
  *
- * \param filepath path of the file you want to read.
- * \return filled file_t structure.
+ * \return 0 if successful, 1 if not.
  */
-file_t get_file(char const *filepath);
+int create_logfile(void);
 
 /**
- * \fn void destroy_file(file_t file)
- * \brief destroys file_t structure.
+ * \fn void __log(LOG_TYPE, char *string)
+ * \brief appends a specific message stored in LOG_PATH.
+ * You will need to specify wether the LOG_TYPE (INFO, WARNING, ERROR),
+ * and then you can just use it as a printf.
  *
- * \param file structure you want to erase.
+ * \param type type of log.
+ * \param string complete log messages, including files, as used in printf.
+ * \param ... eventual flags we want to specify.
  */
-void destroy_file(file_t file);
+void __log(log_type_e type, char *string, ...);
 
+
+/**
+ * \fn bool logfile_exists(void)
+ * \brief Tests if the log file has been created.
+ *
+ * \return boolean specifying if logfile exists.
+*/
+bool logfile_exists(void);
+
+/**
+ * \fn void log_if_errno(int errno, char *function_name)
+ * \brief Adds a log to LOG_PATH if errno is different than 2 or 0.
+ * By default, every error triggered by this function is considered
+ * a critical error.
+ *
+ * \param errno ERRNO constant.
+ * \param function_name defining the operation you are currently doing.
+ */
+void log_if_errno(int err, char *function_name);
 
 // strings.c
 /**
@@ -434,5 +476,15 @@ char *get_next_line(int fd);
  * \return s1 + s2
  */
 char *concat_str(char *s1, char *s2);
+
+
+// key_listener.c
+/**
+  * \fn char get_pressed_key(void)
+  * \brief reads user input from terminal, in a non-blocking way.
+  *
+  * \return user-pressed key, or \0 if nothing.
+  */
+char get_pressed_key(void);
 
 #endif //TELLO_UTILS_H
