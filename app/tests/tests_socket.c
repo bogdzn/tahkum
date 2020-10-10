@@ -58,7 +58,7 @@ Test(send_command, mocksend, .init = redirect_all)
     socket_t sock;
 
     send_command(sock, "message", set);
-    cr_assert_stderr_eq_str("[INFO]: (debug) sending [message].\n");
+    cr_assert_stderr_eq_str("\033[0;36m[INFO]:\033[m (debug) sending [message].\n");
 }
 
 Test(is_drone_ok, isdroneok)
@@ -73,7 +73,7 @@ Test(create_default_socket, fakesocket, .init = redirect_all)
     settings_t set = set_test_settings();
     socket_t sock = create_default_socket(set);
 
-    cr_assert_stderr_eq_str("[INFO]: (debug) creating socket for [0.0.0.0:3000].\n");
+    cr_assert_stderr_eq_str("\033[0;36m[INFO]:\033[m (debug) creating socket for [0.0.0.0:3000].\n");
 }
 
 Test(close_socket, fakeclose, .init = redirect_all)
@@ -82,6 +82,6 @@ Test(close_socket, fakeclose, .init = redirect_all)
     socket_t sock;
 
     close_socket(sock, set);
-    cr_assert_stderr_eq_str("[INFO]: (debug) closing socket.\n");
+    cr_assert_stderr_eq_str("\033[0;36m[INFO]:\033[m (debug) closing socket.\n");
 
 }
