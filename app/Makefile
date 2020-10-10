@@ -43,7 +43,6 @@ SRC = \
 
 PARSER = 	get_instruction_queue.c \
 			input_checking.c \
-			file_handler.c \
 			initial_setup.c \
 			file_handler.c
 
@@ -56,6 +55,7 @@ UTILS =     arrays.c \
 
 EXEC  = drone_interactions.c \
 		 socket_handler.c \
+		 key_listener.c \
 		 exec_loop.c
 
 # needed for unit tests, do not include $(MAIN)

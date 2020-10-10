@@ -25,7 +25,7 @@ char **get_user_commands(struct input_event *evts, int status)
         return NULL;
     else if (evts == NULL)
         return tabgen("time?", '\n');
-    for (int i = 0; i < (status / sizeof(struct input_event)); i++) {
+    for (unsigned int i = 0; i < (status / sizeof(struct input_event)); i++) {
         for (int j = 0; API_COMMANDS[j].command != NULL; j++) {
             cmds = (evts[i].code == API_COMMANDS[j].code)
                 ? append_line_to_tab(cmds, API_COMMANDS[j].command)

@@ -20,6 +20,7 @@
 #include <sys/ioctl.h>
 #include <linux/kd.h>
 #include <termios.h>
+#include "exec.h"
 #include <linux/input.h>
 
 static int set_keyboard_mode(void)
@@ -59,7 +60,7 @@ static int set_keyboard_mode(void)
     return 0;
 }
 
-char get_pressed_key(void)
+int loop_wrapper(socket_t ryze, settings_t settings)
 {
     int status = 0;
     struct input_event inputs[64];
@@ -69,10 +70,13 @@ char get_pressed_key(void)
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
     }
+    send_command(ryze, "command", settings);
+    if (!is_same_string(get_response(ryze, settings), "ok"))
+        return 0;
     do {
         status = read(STDIN_FILENO, &inputs, sizeof(inputs));
         commands = get_user_commands(inputs, status);
-        status = execute_user_commands(commands);
+        status = (status == -1) ? status : exec_loop(ryze, settings, commands);
     } while (status != -1);
     return set_keyboard_mode();
 }

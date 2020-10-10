@@ -124,8 +124,10 @@ void send_command(socket_t sock, char const *data, settings_t settings);
  * \param ryze structure containing all relevant connection information
  * \param instructions user-specified insctructions
  * \param settings user settings
+ * \param cmds user-extracted commands
+ * \return 0 if successfull, -1 if fails
  */
-void exec_loop(socket_t ryze, settings_t settings);
+int exec_loop(socket_t ryze, settings_t settings, char **cmds);
 
 /**
  * \fn bool is_drone_ok(char const *response)
@@ -135,5 +137,16 @@ void exec_loop(socket_t ryze, settings_t settings);
  * \return true if contains "OK"
  */
 bool is_drone_ok(char *response);
+
+// key_listener.c
+/**
+  * \fn int loop_wrapper(socket_t ryze, settings_t settings)
+  * \brief wraps around exec_loop, sets the tty in raw_mode and read keyboard input
+  *
+  * \param ryze socket containing ryze data
+  * \param settings user settings
+  * \return 0 if successfull
+  */
+int loop_wrapper(socket_t ryze, settings_t settings);
 
 #endif //TELLIB_SOCKET_H
