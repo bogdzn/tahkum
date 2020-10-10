@@ -1,47 +1,36 @@
 /**
  * \file get_instruction_queue.c
- * \brief Loads instructions from file.
+ * \brief Loads instructions from key listener.
  * \author Adina C.
  * \version 0.1
- * \date 25/09/2020
+ * \date 10/10/2020
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "api_commands.h"
+#include "utils.h"
 #include <stdbool.h>
 #include <errno.h>
+#include <sys/ioctl.h>
+#include <linux/kd.h>
+#include <termios.h>
+#include <linux/input.h>
 
-static char **extract_from_file(char const *filename)
+char **get_user_commands(struct input_event *evts, int status)
 {
-    file_t file = get_file(filename);
+    char **cmds = NULL;
 
-    if (file.content == NULL) {
-        __log(ERROR, "Could not read the file %s.\n", filename);
+    if (status == -1)
         return NULL;
-    } else return tabgen(file.content, '\n');
-}
-
-static bool is_command(char *cmd)
-{
-    char **words = tabgen(cmd, ' ');
-
-    for (int i = 0; API_COMMANDS[i].command != NULL; i++)
-        if (is_same_string(words[0], API_COMMANDS[i].command))
-            return true;
-    return false;
-}
-
-char **get_instructions_queue(char *filename)
-{
-    char **extracted = extract_from_file(filename);
-    char **result = NULL;
-
-    for (int i = 0; extracted[i] != NULL; i++) {
-        if (extracted[i][0] == 0)
-            continue;
-        else if (is_command(extracted[i]))
-            result = append_line_to_tab(result, extracted[i]);
+    else if (evts == NULL)
+        return tabgen("time?", '\n');
+    for (int i = 0; i < (status / sizeof(struct input_event)); i++) {
+        for (int j = 0; API_COMMANDS[j].command != NULL; j++) {
+            cmds = (evts[i].code == API_COMMANDS[j].code)
+                ? append_line_to_tab(cmds, API_COMMANDS[j].command)
+                : cmds;
+        }
     }
-    return result;
+    return (cmds == NULL) ? tabgen("time?", '\n') : cmds;
 }

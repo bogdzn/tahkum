@@ -9,6 +9,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
+#include <linux/input.h>
 #include <stdbool.h>
 #include "utils.h"
 #include <getopt.h>
@@ -93,35 +94,14 @@ void display_usage(char const *bin_name);
 
 
 // get_instr_queue.c
-
 /**
- * \fn instr_t *get_instructions_queue(char *filename)
- * \brief loads instructions in memory.
+ * \fn char **get_user_commands(struct input_event *evts, int status);
+ * \brief interprets the user input we extracted from key_listener.c
  *
- * \param filename the path of the file you want to load.
- * \return your commands.
+ * \param evts 64 potential events.
+ * \param status read return value
+ * \return an array of instructions to execute.
  */
-char **get_instructions_queue(char *filename);
-
-// input_checking.c
-
-/**
- * \fn bool always_true(char const *s)
- * \brief inline function always returning true.
- *
- * \param s a string.
- * \return true. (duh)
- */
-bool always_true(char const *s);
-
-/**
- * \fn bool is_comment(char *string)
- * \brief checks if a line read from the file is a comment.
- *  this function also returns true if the string you sent is empty of NULL.
- *
- * \param string the string you want to test.
- * \return a boolean, depending on if it's a comment or not.
- */
-bool is_comment(char *string);
+char **get_user_commands(struct input_event *evts, int status);
 
 #endif

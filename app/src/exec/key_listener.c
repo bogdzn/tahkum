@@ -6,6 +6,7 @@
  */
 
 #include "utils.h"
+#include "parser.h"
 #include <linux/input-event-codes.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -20,14 +21,6 @@
 #include <linux/kd.h>
 #include <termios.h>
 #include <linux/input.h>
-
-#ifndef BITS_PER_LONG
-#define BITS_PER_LONG (sizeof(long) * 8)
-#endif
-
-#ifndef NBITS
-#define NBITS(x) (((x) - 1 / BITS_PER_LONG) + 1)
-#endif
 
 static int set_keyboard_mode(void)
 {
@@ -66,25 +59,20 @@ static int set_keyboard_mode(void)
     return 0;
 }
 
-int execute_events(struct input_event *evts, int status) {
-    for (int i = 0; i < (status / sizeof(struct input_event)); i++) {
-
-    }
-    return 0;
-}
-
 char get_pressed_key(void)
 {
-    int read_status = 0;
+    int status = 0;
     struct input_event inputs[64];
+    char **commands = NULL;
 
     if (set_keyboard_mode() == -1) {
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
     }
     do {
-        read_status = read(STDIN_FILENO, &inputs, sizeof(inputs));
-        read_status = execute_events(inputs, read_status);
-    } while (read_status != -1);
+        status = read(STDIN_FILENO, &inputs, sizeof(inputs));
+        commands = get_user_commands(inputs, status);
+        status = execute_user_commands(commands);
+    } while (status != -1);
     return set_keyboard_mode();
 }

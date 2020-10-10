@@ -55,6 +55,7 @@ typedef struct socket_s
 } socket_t;
 
 
+
 /**
  * \fn socket_t create_default_socket(settings_t user_settings)
  * \\brief creates the socket needed to control the drone
@@ -124,7 +125,7 @@ void send_command(socket_t sock, char const *data, settings_t settings);
  * \param instructions user-specified insctructions
  * \param settings user settings
  */
-void exec_loop(socket_t ryze, char **instructions, settings_t settings);
+void exec_loop(socket_t ryze, settings_t settings);
 
 /**
  * \fn bool is_drone_ok(char const *response)

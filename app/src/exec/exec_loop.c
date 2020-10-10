@@ -7,7 +7,7 @@
  */
 
 #include "utils.h"
-#include "socket.h"
+#include "exec.h"
 #include "parser.h"
 
 bool is_drone_ok(char *response)
@@ -23,24 +23,21 @@ bool is_drone_ok(char *response)
     return !result;
 }
 
-void exec_loop(socket_t ryze, char **ins, settings_t settings)
+void exec_loop(socket_t ryze, settings_t settings)
 {
-    char *msg = NULL;
-    char **msg_tab = NULL;
+    int status = 0;
+    char *drone_response = NULL;
 
     send_command(ryze, "command", settings);
     if (!is_same_string(get_response(ryze, settings), "ok"))
         return;
-    for (int i = 0; ins[i] != NULL; i++) {
-        for (int timeout = 0; timeout != settings.max_timeout; timeout++) {
-            send_command(ryze, ins[i], settings);
-            msg = get_response(ryze, settings);
-            msg_tab = tabgen(msg, ' ');
-            sleep(settings.sleep_time);
-            if (!is_same_string("error", set_to_lowercase(msg_tab[0])))
-                break;
+
+    while (status == 0) {
+        status = get_pressed_key();
+        for (int timeout = 0; timeout < settings.max_timeout; timeout++) {
+
         }
+        sleep(settings.sleep_time);
     }
-    free(msg);
-    free_array((void **)ins);
+
 }

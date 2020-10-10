@@ -36,12 +36,11 @@ typedef struct authorized_s
 /// You should first send "command" to the drone, before takeoff
 /// If you don't the drone doesn't interact with you.
 
-/// authorized_commands must be ordered alphabetically
 static authorized_cmd_t API_COMMANDS[] = {
         { "battery?",       KEY_B },          /*!< to get the battery level. */
         { "cw 90",          KEY_Q },          /*!< to rotate clockwise. */
         { "ccw 90",         KEY_E },          /*!< to rotate counter-clockwise. */
-        { "delay",          KEY_X },          /*!< to call sleep() for n seconds. */
+        { "delay 5",        KEY_X },          /*!< to call sleep() for n seconds. */
         { "flip front",     KEY_UP },         /*!< to execute a flip. */
         { "flip back",      KEY_DOWN },       /*!< to execute a flip. */
         { "flip left",      KEY_LEFT },       /*!< to execute a flip. */
@@ -50,8 +49,8 @@ static authorized_cmd_t API_COMMANDS[] = {
         { "land",           KEY_LEFTCTRL },   /*!< to execute landing process. */
         { "move up",        KEY_SPACE},       /*!< to move the drone. */
         { "move down",      KEY_LEFTSHIFT},   /*!< to move the drone. */
-        { "move right",     KEY_SPACE},       /*!< to move the drone. */
-        { "move left",      KEY_SPACE},       /*!< to move the drone. */
+        { "move right",     KEY_D },          /*!< to move the drone. */
+        { "move left",      KEY_A },          /*!< to move the drone. */
         { "move forward",   KEY_W },          /*!< to move the drone. */
         { "move backward",  KEY_S },          /*!< to move the drone. */
         { "takeoff",        KEY_R },          /*!< to execute takeoff process. */

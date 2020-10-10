@@ -7,7 +7,7 @@
  */
 
 #include "utils.h"
-#include "socket.h"
+#include "exec.h"
 #include "parser.h"
 #include <getopt.h>
 #include <unistd.h>
