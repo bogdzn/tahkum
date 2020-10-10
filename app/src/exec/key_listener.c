@@ -37,25 +37,26 @@ static int set_keyboard_mode(void)
         ioctl(STDIN_FILENO, KDSKBMODE, old_kb_mode);
         is_raw_mode = false;
         return 0;
+    } else if (!isatty(STDIN_FILENO)) {
+        __log(ERROR, "not in a tty.\n");
+        return -1;
     }
 
     // making stdin non blocking
     flags = fcntl(STDIN_FILENO, F_GETFL);
+    log_if_errno(errno, "fcntl: getflags");
     flags |= O_NONBLOCK;
     fcntl(STDIN_FILENO, F_SETFL, flags);
-
-    // saving old keyboard mode
-    if (ioctl(STDIN_FILENO, KDGKBMODE, &old_kb_mode) < 0)
-        return -1; // if ioctl fails here, it means the code isn't running through a terminal
+    log_if_errno(errno, "making stdin non blocking");
 
     tcgetattr(STDIN_FILENO, &tty_attr_old);
 
     //turn off buffering, echo and key processing.
     tty_attr = tty_attr_old;
     tty_attr.c_lflag &= ~(ICANON | ECHO | ISIG);
+    tty_attr.c_lflag |= (CS8);
     tty_attr.c_iflag &=~(ISTRIP | INLCR | ICRNL | IGNCR | IXON | IXOFF);
     tcsetattr(STDIN_FILENO, TCSANOW, &tty_attr);
-    ioctl(STDIN_FILENO, KDSKBMODE, K_RAW);
     is_raw_mode = true;
     return 0;
 }
@@ -63,20 +64,31 @@ static int set_keyboard_mode(void)
 int loop_wrapper(socket_t ryze, settings_t settings)
 {
     int status = 0;
-    struct input_event inputs[64];
     char **commands = NULL;
+    char buffer = 0;
 
     if (set_keyboard_mode() == -1) {
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
     }
     send_command(ryze, "command", settings);
-    if (!is_same_string(get_response(ryze, settings), "ok"))
+    if (!is_same_string(set_to_lowercase(get_response(ryze, settings)), "ok")) {
+        __log(ERROR, "drone returned an error.\n");
+        set_keyboard_mode();
         return 0;
-    do {
-        status = read(STDIN_FILENO, &inputs, sizeof(inputs));
-        commands = get_user_commands(inputs, status);
+    }
+    while (status != 1) {
+        do {
+            usleep(50000);
+            status = read(STDIN_FILENO, &buffer, 1);
+            __log(INFO, "-- read:%c [%i]\n", buffer, status);
+        } while (status < 0);
+        if (buffer == 'c') {
+            __log(WARNING, "c has been triggered. Exiting.\n");
+            break;
+        }
+        commands = get_user_commands(buffer, status);
         status = (status == -1) ? status : exec_loop(ryze, settings, commands);
-    } while (status != -1);
+    }
     return set_keyboard_mode();
 }

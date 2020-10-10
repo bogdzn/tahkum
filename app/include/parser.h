@@ -98,10 +98,10 @@ void display_usage(char const *bin_name);
  * \fn char **get_user_commands(struct input_event *evts, int status);
  * \brief interprets the user input we extracted from key_listener.c
  *
- * \param evts 64 potential events.
+ * \param extracted extracted letter
  * \param status read return value
  * \return an array of instructions to execute.
  */
-char **get_user_commands(struct input_event *evts, int status);
+char **get_user_commands(char extracted, int status);
 
 #endif

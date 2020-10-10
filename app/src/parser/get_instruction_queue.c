@@ -17,20 +17,16 @@
 #include <termios.h>
 #include <linux/input.h>
 
-char **get_user_commands(struct input_event *evts, int status)
+char **get_user_commands(char extracted, int status)
 {
-    char **cmds = NULL;
+    char **cmds = tabgen("height?", ' ');
 
     if (status == -1)
-        return NULL;
-    else if (evts == NULL)
-        return tabgen("time?", '\n');
-    for (unsigned int i = 0; i < (status / sizeof(struct input_event)); i++) {
-        for (int j = 0; API_COMMANDS[j].command != NULL; j++) {
-            cmds = (evts[i].code == API_COMMANDS[j].code)
-                ? append_line_to_tab(cmds, API_COMMANDS[j].command)
-                : cmds;
+        return cmds;
+    for (int i = 0; API_COMMANDS[i].command != NULL; i++) {
+        if (API_COMMANDS[i].code == extracted) {
+            return tabgen(API_COMMANDS->command, ' ');
         }
     }
-    return (cmds == NULL) ? tabgen("time?", '\n') : cmds;
+    return cmds;
 }
