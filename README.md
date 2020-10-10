@@ -17,13 +17,12 @@ If you just want to use the program, you can ! Please make sure to have a Tello 
 
 - can interact with a Tello Ryze, through its private API, and the use of DGRAM sockets
 - minimalistic debug mode, and log file handler.
-
+- sends commands in real time.
 
 ## In the works
 
 - better UI
 - multi-threading support
-- sending commands in real time
 
 ## How do I use it ?
 
