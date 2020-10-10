@@ -37,25 +37,25 @@ typedef struct authorized_s
 /// If you don't the drone doesn't interact with you.
 
 static authorized_cmd_t API_COMMANDS[] = {
-        { "battery?",       'b' },          /*!< to get the battery level. */
-        { "cw 90",          'q' },          /*!< to rotate clockwise. */
-        { "ccw 90",         'e' },          /*!< to rotate counter-clockwise. */
-        { "delay 5",        'x' },          /*!< to call sleep() for n seconds. */
-        { "flip front",     'o' },          /*!< to execute a flip. */
-        { "flip back",      'l' },          /*!< to execute a flip. */
-        { "flip left",      ';' },          /*!< to execute a flip. */
-        { "flip right",     'k' },          /*!< to execute a flip. */
-        { "height?",        'h' },          /*!< to get the drone's height. */
-        { "land",           'm' },          /*!< to execute landing process. */
-        { "move up",        ' ' },          /*!< to move the drone. */
-        { "move down",      'z' },          /*!< to move the drone. */
-        { "move right",     'd' },          /*!< to move the drone. */
-        { "move left",      'a' },          /*!< to move the drone. */
-        { "move forward",   'w' },          /*!< to move the drone. */
-        { "move backward",  's' },          /*!< to move the drone. */
-        { "takeoff",        'r' },          /*!< to execute takeoff process. */
-        { "time?",          't' },          /*!< get flight time. */
-        { NULL,             '\0' }
+        { "battery?",           'b' },          /*!< to get the battery level. */
+        { "cw 90",              'q' },          /*!< to rotate clockwise. */
+        { "ccw 90",             'e' },          /*!< to rotate counter-clockwise. */
+        { "delay 5",            'x' },          /*!< to call sleep() for n seconds. */
+        { "flip f",             'o' },          /*!< to execute a flip. */
+        { "flip b",             'l' },          /*!< to execute a flip. */
+        { "flip l",             ';' },          /*!< to execute a flip. */
+        { "flip r",             'k' },          /*!< to execute a flip. */
+        { "height?",            'h' },          /*!< to get the drone's height. */
+        { "land",               'm' },          /*!< to execute landing process. */
+        { "move up 20",         ' ' },          /*!< to move the drone. */
+        { "move down 20",       'z' },          /*!< to move the drone. */
+        { "move right 20",      'd' },          /*!< to move the drone. */
+        { "move left 20",       'a' },          /*!< to move the drone. */
+        { "move forward 20",    'w' },          /*!< to move the drone. */
+        { "move back 20",       's' },          /*!< to move the drone. */
+        { "takeoff",            'r' },          /*!< to execute takeoff process. */
+        { "time?",              't' },          /*!< get flight time. */
+        { NULL,                 '\0' }
 };
 
 #endif //TELLIB_AUTHORIZED_COMMANDS_H
