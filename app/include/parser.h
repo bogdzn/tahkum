@@ -38,6 +38,39 @@ struct input_s {
     char *filepath;
 };
 
+
+/**
+ * \struct file_t
+ * \brief Object handling files.
+ *
+ * Contains its name, stats and content.
+ */
+typedef struct file_s
+{
+    char *name;
+    char *content;
+    struct stat st;
+} file_t;
+
+/**
+ * \fn file_t get_file(char const *filepath)
+ * \brief loads file information into memory.
+ *
+ * \param filepath path of the file you want to read.
+ * \return filled file_t structure.
+ */
+file_t get_file(char const *filepath);
+
+/**
+ * \fn void destroy_file(file_t file)
+ * \brief destroys file_t structure.
+ *
+ * \param file structure you want to erase.
+ */
+void destroy_file(file_t file);
+
+
+
 // initial_setup.c
 
 /**

@@ -4,7 +4,6 @@
 
 #include "parser.h"
 #include "utils.h"
-#include "logger.h"
 #include "socket.h"
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>

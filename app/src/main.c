@@ -6,11 +6,10 @@
  */
 
 #include "utils.h"
-#include "logger.h"
 #include "socket.h"
 #include "parser.h"
 #include <stdio.h>
-/*
+
 int main(int ac, char **av)
 {
     settings_t settings = initial_setup(ac, av);
@@ -22,8 +21,8 @@ int main(int ac, char **av)
     close_socket(ryze, settings);
     return 0;
 }
-*/
 
+/*
 int main(void)
 {
     if (create_logfile() != 0)
@@ -36,4 +35,4 @@ int main(void)
          break;
     }
     return 0;
-}
+}*/

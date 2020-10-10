@@ -6,7 +6,6 @@
  */
 
 #include "socket.h"
-#include "logger.h"
 #include "utils.h"
 #include <stdlib.h>
 #include <errno.h>

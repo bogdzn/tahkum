@@ -6,7 +6,6 @@
  */
 
 #include "utils.h"
-#include "logger.h"
 #include <linux/input-event-codes.h>
 #include <stdlib.h>
 #include <fcntl.h>

@@ -6,7 +6,6 @@
  */
 
 #include "socket.h"
-#include "logger.h"
 #include "utils.h"
 #include <string.h>
 #include "parser.h"

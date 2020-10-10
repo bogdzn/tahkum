@@ -8,7 +8,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "logger.h"
 #include "api_commands.h"
 #include <stdbool.h>
 #include <errno.h>

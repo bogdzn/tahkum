@@ -1,11 +1,10 @@
 /**
- * \file update_logs.c
- * \brief Handles logs updates.
+ * \file logs.c
+ * \brief Handles logifle creation and updating.
  * \author Bogdan G.
- * \date 27/09/2020
+ * \date 10/10/2020
  */
 
-#include "logger.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
@@ -13,6 +12,9 @@
 #include <errno.h>
 #include "utils.h"
 #include <stdio.h>
+#include <stdarg.h>
+#include <fcntl.h>
+#include <errno.h>
 
 static char *switch_case(char flag, va_list ap)
 {
@@ -100,4 +102,20 @@ void log_if_errno(int err, char *function_name)
         return;
     close(fd);
     free(err_msg);
+}
+
+bool logfile_exists(void)
+{
+    int fd = open(LOG_PATH, O_RDWR);
+    bool result = (fd != -1);
+
+    close(fd);
+    return result;
+}
+
+int create_logfile(void)
+{
+    int fd = CREATE_LOGFILE;
+    close(fd);
+    return (fd == -1) ? 1 : 0;
 }

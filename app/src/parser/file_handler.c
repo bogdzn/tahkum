@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <string.h>
-
+#include "parser.h"
 #include "utils.h"
 
 file_t get_file(char const *filepath)

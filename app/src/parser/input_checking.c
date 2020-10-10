@@ -10,7 +10,6 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "logger.h"
 #include "parser.h"
 #include "utils.h"
 
