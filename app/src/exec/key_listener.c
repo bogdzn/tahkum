@@ -71,6 +71,7 @@ int loop_wrapper(socket_t ryze, settings_t settings)
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
     }
+    // initialising connexion
     send_command(ryze, "command", settings);
     send_command(ryze, "speed 27", settings);
     if (!is_same_string(set_to_lowercase(get_response(ryze, settings)), "ok")) {
@@ -83,6 +84,7 @@ int loop_wrapper(socket_t ryze, settings_t settings)
             usleep(75000);
             status = read(STDIN_FILENO, &buffer, 1);
         } while (status < 0);
+        buffer = (buffer >= 'A' && buffer <= 'Z') ? buffer + 32 : buffer;
         if (buffer == 'c') {
             __log(WARNING, "c has been triggered. Exiting.\n");
             break;

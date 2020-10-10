@@ -45,12 +45,12 @@ static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
             __log(INFO, "setting fake_socket to TRUE.\n");
             break;
         case 't':
-            data.max_timeout = my_getnbr(arg);
-            __log(INFO, "setting max_timeout to [%i]\n", data.max_timeout);
+            data.max_retries = my_getnbr(arg);
+            __log(INFO, "setting max_retries to [%i]\n", data.max_retries);
             break;
         case 's':
-            data.sleep_time = my_getnbr(arg);
-            __log(INFO, "setting max_timeout to [%i]\n", data.sleep_time);
+            data.wait = my_getnbr(arg);
+            __log(INFO, "setting wait to [%i]\n", data.wait);
             break;
         case 'h':
             display_usage("tahkum");
@@ -66,8 +66,8 @@ settings_t initial_setup(int ac, char **av)
     int opt_idx = 0;
     char opt_flag = 0;
     settings_t data = {
-            .max_timeout = 10,
-            .sleep_time = 2,
+            .max_retries = 10,
+            .wait = 2,
             .filepath = (ac == 2) ? my_strdup(av[1]) : NULL,
             .fake_socket = false
     };

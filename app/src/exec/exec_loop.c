@@ -30,19 +30,19 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds)
 
 
     for (int i = 0; cmds[i] && status == 0; i++) {
-        for (int timeout = 0; timeout < settings.max_timeout; timeout++) {
+        for (int retry = 0; retry < settings.max_retries; retry++) {
             send_command(ryze, cmds[i], settings);
             drone_response = get_response(ryze, settings);
             if (is_drone_ok(drone_response))
                 break;
-            __log(WARNING, "command %[s] failed...Retrying [%i/%i]\n",
-            cmds[i], timeout, settings.max_timeout);
-            if (timeout + 1 == settings.max_timeout) {
+            __log(WARNING, "command %[s] failed...Retrying [%i/%i]\n", cmds[i],
+                    retry, settings.max_retries);
+            if (retry + 1 == settings.max_retries) {
                 __log(ERROR, "command [%s] timed out, exiting...");
                 return -1;
             }
         }
-        sleep(settings.sleep_time);
+        sleep(settings.wait);
     }
     free_array((void **)cmds);
     return 0;

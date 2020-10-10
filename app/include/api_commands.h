@@ -17,7 +17,7 @@
 #include "parser.h"
 #include "utils.h"
 
-/// this file should only be refecterenced in get_instructions_queue.c
+/// this file should only be referenced in get_instructions_queue.c
 
 /**
  * \struct authorized_t
@@ -29,7 +29,7 @@
 typedef struct authorized_s
 {
     char *command;
-    char code;
+    char keycode;
 } authorized_cmd_t;
 
 /// If you want to re-implement this on your own, please note:

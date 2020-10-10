@@ -1,9 +1,9 @@
 /**
  * \file parser.h
  * \brief Handles initial parsing.
- * \author Adina C.
+ * \author Bogdan G.
  * \version 0.1
- * \date 02/10/2020
+ * \date 10/10/2020
  */
 
 #ifndef PARSER_H
@@ -27,15 +27,15 @@ typedef bool (*check_t)(char const *);
  * \typedef struct input_s settings_t
  * \brief user-defined settings
  *
- * \param max_timeout defines the number of the time a command will be retied if it fails.
- * \param sleep_time defines the amout of time we wait before sending another command.
+ * \param max_retries defines the number of the time a command will be retied if it fails.
+ * \param wait defines the amout of time we wait before sending another command.
  * \param fake_socket allows program to pretend it sends information to a drone.
  * \param filepath path of the file full of commands.
  */
 typedef struct input_s settings_t;
 struct input_s {
-    int max_timeout;
-    unsigned int sleep_time;
+    int max_retries;
+    unsigned int wait;
     bool fake_socket;
     char *filepath;
 };

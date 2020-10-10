@@ -11,8 +11,8 @@ Test(initial_setup, basicparser)
     char **av = tabgen("tahkum file", ' ');
     settings_t settings = initial_setup(ac, av);
 
-    cr_assert_eq(settings.max_timeout, 10);
-    cr_assert_eq(settings.sleep_time, 2);
+    cr_assert_eq(settings.max_retries, 10);
+    cr_assert_eq(settings.wait, 2);
     cr_assert_eq(settings.fake_socket, false);
     cr_assert_str_eq(settings.filepath, "file");
 }
@@ -23,8 +23,8 @@ Test(initial_setup, oneoption)
     char **av = tabgen("tahkum --file filename -d --sleep_time 5", ' ');
     settings_t settings = initial_setup(ac, av);
 
-    cr_assert_eq(settings.max_timeout, 10);
-    cr_assert_eq(settings.sleep_time, 5);
+    cr_assert_eq(settings.max_retries, 10);
+    cr_assert_eq(settings.wait, 5);
     cr_assert_eq(settings.fake_socket, true);
     cr_assert_str_eq(settings.filepath, "filename");
 }

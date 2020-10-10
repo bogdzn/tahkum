@@ -13,8 +13,8 @@ void redirect_all(void);
 settings_t set_test_settings(void)
 {
     settings_t settings = {
-        .max_timeout = 2,
-        .sleep_time = 2,
+        .max_retries = 2,
+        .wait = 2,
         .fake_socket = true,
         .filepath = NULL
     };

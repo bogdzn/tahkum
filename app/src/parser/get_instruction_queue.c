@@ -23,7 +23,7 @@ char **get_user_commands(char extracted, int status)
 
     (void)status;
     for (int i = 0; API_COMMANDS[i].command != NULL; i++) {
-        if (API_COMMANDS[i].code == extracted) {
+        if (API_COMMANDS[i].keycode == extracted) {
             return tabgen(API_COMMANDS[i].command, '\n');
         }
     }
