@@ -74,6 +74,7 @@ TEST_SRC 	= ./tests/tests_parser.c \
 			  ./tests/tests_arrays.c \
 			  ./tests/tests_strings.c \
 			  ./tests/tests_file_handler.c \
+			  ./tests/tests_exec.c \
 			  ./tests/tests_get_next_line.c \
 			  ./tests/tests_socket.c \
 			  ./tests/tests_logger.c
