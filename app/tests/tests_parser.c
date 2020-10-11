@@ -28,3 +28,18 @@ Test(initial_setup, oneoption)
     cr_assert_eq(settings.fake_socket, true);
     cr_assert_str_eq(settings.filepath, "filename");
 }
+
+Test(get_user_commands, getusrcmd)
+{
+    char **first = get_user_commands('a', 0);
+    char **second = get_user_commands('z', 0);
+    char **third = get_user_commands(' ', 0);
+    char **fourth = get_user_commands('g', 0);
+    char **fifth = get_user_commands('m', 0);
+
+    cr_assert_str_eq(*first, "move left 20");
+    cr_assert_str_eq(*second, "move down 20");
+    cr_assert_str_eq(*third, "move up 20");
+    cr_assert_str_eq(*fourth, "height?");
+    cr_assert_str_eq(*fifth, "land");
+}
