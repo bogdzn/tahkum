@@ -160,4 +160,13 @@ bool is_drone_ok(char *response);
   */
 int loop_wrapper(socket_t ryze, settings_t settings);
 
+
+/**
+  * \fn int set_keyboard_mode(void)
+  * \brief sets STDIN_FILENO in raw mode, or reset it to normal.
+  *
+  *\return 0 if successfull
+ */
+int set_keyboard_mode();
+
 #endif //TELLIB_SOCKET_H

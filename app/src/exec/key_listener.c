@@ -23,7 +23,7 @@
 #include "exec.h"
 #include <linux/input.h>
 
-static int set_keyboard_mode(void)
+int set_keyboard_mode(void)
 {
     static int old_kb_mode = 0;
     static struct termios tty_attr_old;
@@ -73,7 +73,7 @@ int loop_wrapper(socket_t ryze, settings_t settings)
     }
     // initialising connexion
     send_command(ryze, "command", settings);
-    send_command(ryze, "speed 27", settings);
+    //send_command(ryze, "speed 27", settings);
     if (!is_same_string(set_to_lowercase(get_response(ryze, settings)), "ok")) {
         __log(ERROR, "drone returned an error.\n");
         set_keyboard_mode();
