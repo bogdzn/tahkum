@@ -66,7 +66,7 @@ settings_t initial_setup(int ac, char **av)
     int opt_idx = 0;
     char opt_flag = 0;
     settings_t data = {
-            .max_retries = 10,
+            .max_retries = 5,
             .wait = 2,
             .filepath = (ac == 2) ? my_strdup(av[1]) : NULL,
             .fake_socket = false

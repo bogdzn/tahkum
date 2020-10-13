@@ -41,18 +41,18 @@ static authorized_cmd_t API_COMMANDS[] = {
         { "cw 90",              'q' },          /*!< to rotate clockwise. */
         { "ccw 90",             'e' },          /*!< to rotate counter-clockwise. */
         { "delay 5",            'x' },          /*!< to call sleep() for n seconds. */
-        { "flip f",             'o' },          /*!< to execute a flip. */
-        { "flip b",             'l' },          /*!< to execute a flip. */
-        { "flip l",             ';' },          /*!< to execute a flip. */
-        { "flip r",             'k' },          /*!< to execute a flip. */
+        { "flip front",         'o' },          /*!< to execute a flip. */
+        { "flip backward",      'l' },          /*!< to execute a flip. */
+        { "flip left",          ';' },          /*!< to execute a flip. */
+        { "flip right",         'k' },          /*!< to execute a flip. */
         { "height?",            'h' },          /*!< to get the drone's height. */
         { "land",               'm' },          /*!< to execute landing process. */
-        { "move up 20",         ' ' },          /*!< to move the drone. */
-        { "move down 20",       'z' },          /*!< to move the drone. */
-        { "move right 20",      'd' },          /*!< to move the drone. */
-        { "move left 20",       'a' },          /*!< to move the drone. */
-        { "move forward 20",    'w' },          /*!< to move the drone. */
-        { "move back 20",       's' },          /*!< to move the drone. */
+        { "up 20",              ' ' },          /*!< to move the drone. */
+        { "down 20",            'z' },          /*!< to move the drone. */
+        { "right 20",           'd' },          /*!< to move the drone. */
+        { "left 20",            'a' },          /*!< to move the drone. */
+        { "forward 20",         'w' },          /*!< to move the drone. */
+        { "back 20",            's' },          /*!< to move the drone. */
         { "takeoff",            'r' },          /*!< to execute takeoff process. */
         { "time?",              't' },          /*!< get flight time. */
         { NULL,                 '\0' }

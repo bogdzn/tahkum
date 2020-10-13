@@ -35,7 +35,7 @@ typedef bool (*check_t)(char const *);
 typedef struct input_s settings_t;
 struct input_s {
     int max_retries;
-    unsigned int wait;
+    int wait;
     bool fake_socket;
     char *filepath;
 };

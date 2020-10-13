@@ -37,7 +37,7 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds)
                 break;
             __log(WARNING, "command %[s] failed...Retrying [%i/%i]\n", cmds[i],
                     retry, settings.max_retries);
-            if (retry + 1 == settings.max_retries) {
+            if (retry + 1 >= settings.max_retries) {
                 __log(ERROR, "command [%s] timed out, exiting...");
                 return -1;
             }

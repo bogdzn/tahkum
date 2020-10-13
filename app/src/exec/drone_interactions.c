@@ -21,10 +21,7 @@ void send_command(socket_t sock, char const *data, settings_t settings)
     }
     socklen = sizeof(sock.drone_addr);
     __log(INFO, "sending \"%s\"\n", data);
-    set_keyboard_mode();
     sendto(sock.socket, data, my_strlen(data),0, (struct sockaddr *) &sock.drone_addr, socklen);
-    log_if_errno(errno, "sendto");
-    set_keyboard_mode();
 }
 
 char *get_response(socket_t sock, settings_t settings)
@@ -39,11 +36,8 @@ char *get_response(socket_t sock, settings_t settings)
     }
     __log(INFO, "waiting for a message ...\n");
     reply = malloc(sizeof(char) * (REPLY_SIZE + 1));
-    set_keyboard_mode();
     msg_size = recvfrom(sock.socket, reply, REPLY_SIZE, 0,
             (struct sockaddr *) &sock.drone_addr,&socklen);
-    log_if_errno(errno, "recvfrom");
-    set_keyboard_mode();
     if (msg_size == -1 || reply == NULL) {
         __log(ERROR, "empty message.\n");
         return NULL;
