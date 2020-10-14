@@ -149,6 +149,16 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds);
  */
 bool is_drone_ok(char *response);
 
+/**
+ * \fn void send_startup_commands(socket_t ryze, settings_t settings)
+ * \\brief sends basic commands needed before takeoff.
+ *
+ * Sends 'command', 'sdk?' and 'sn?'. Refer to official documentation for more info.
+ * \param ryze socket containing ryze information.
+ * \param settings user settings
+ */
+void send_startup_commands(socket_t ryze, settings_t settings);
+
 // key_listener.c
 /**
   * \fn int loop_wrapper(socket_t ryze, settings_t settings)

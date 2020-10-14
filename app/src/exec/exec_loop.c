@@ -10,6 +10,20 @@
 #include "exec.h"
 #include "parser.h"
 
+void send_startup_commands(socket_t ryze, settings_t settings)
+{
+    send_command(ryze, "command", settings);
+    if (!is_same_string(set_to_lowercase(get_response(ryze, settings)), "ok")) {
+        __log(ERROR, "drone returned an error.\n");
+        set_keyboard_mode();
+        exit(1);
+    }
+    send_command(ryze, "sdk?", settings);
+    __log(INFO, "SDK VERSION: %s.\n", get_response(ryze, settings));
+    send_command(ryze, "sn?" , settings);
+    __log(INFO, "SERIAL NUMBER: %s\n", get_response(ryze, settings));
+}
+
 bool is_drone_ok(char *response)
 {
     char **tab = NULL;

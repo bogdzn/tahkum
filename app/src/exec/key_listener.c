@@ -71,14 +71,7 @@ int loop_wrapper(socket_t ryze, settings_t settings)
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
     }
-    // initialising connexion
-    send_command(ryze, "command", settings);
-    //send_command(ryze, "speed 27", settings);
-    if (!is_same_string(set_to_lowercase(get_response(ryze, settings)), "ok")) {
-        __log(ERROR, "drone returned an error.\n");
-        set_keyboard_mode();
-        return 0;
-    }
+    send_startup_commands(ryze, settings);
     while (status != 1) {
         do {
             usleep(75000);
@@ -86,6 +79,7 @@ int loop_wrapper(socket_t ryze, settings_t settings)
         } while (status < 0);
         buffer = (buffer >= 'A' && buffer <= 'Z') ? buffer + 32 : buffer;
         if (buffer == 'c') {
+            send_command(ryze, "land", settings);
             __log(WARNING, "c has been triggered. Exiting.\n");
             break;
         }
