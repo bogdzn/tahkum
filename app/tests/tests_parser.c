@@ -11,7 +11,7 @@ Test(initial_setup, basicparser)
     char **av = tabgen("tahkum file", ' ');
     settings_t settings = initial_setup(ac, av);
 
-    cr_assert_eq(settings.max_retries, 10);
+    cr_assert_eq(settings.max_retries, 5);
     cr_assert_eq(settings.wait, 2);
     cr_assert_eq(settings.fake_socket, false);
     cr_assert_str_eq(settings.filepath, "file");
@@ -23,7 +23,7 @@ Test(initial_setup, oneoption)
     char **av = tabgen("tahkum --file filename -d --sleep_time 5", ' ');
     settings_t settings = initial_setup(ac, av);
 
-    cr_assert_eq(settings.max_retries, 10);
+    cr_assert_eq(settings.max_retries, 5);
     cr_assert_eq(settings.wait, 5);
     cr_assert_eq(settings.fake_socket, true);
     cr_assert_str_eq(settings.filepath, "filename");
@@ -37,9 +37,9 @@ Test(get_user_commands, getusrcmd)
     char **fourth = get_user_commands('g', 0);
     char **fifth = get_user_commands('m', 0);
 
-    cr_assert_str_eq(*first, "move left 20");
-    cr_assert_str_eq(*second, "move down 20");
-    cr_assert_str_eq(*third, "move up 20");
+    cr_assert_str_eq(*first, "left 20");
+    cr_assert_str_eq(*second, "down 20");
+    cr_assert_str_eq(*third, "up 20");
     cr_assert_str_eq(*fourth, "height?");
     cr_assert_str_eq(*fifth, "land");
 }
