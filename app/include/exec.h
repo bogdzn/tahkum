@@ -150,14 +150,26 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds);
 bool is_drone_ok(char *response);
 
 /**
- * \fn void send_startup_commands(socket_t ryze, settings_t settings)
+ * \fn settings_t check_supported_api(socket_t ryze, settings_t settings);
+ * \\brief checks wether the drone supports the newer Tello SDK or not.
+ *
+ * \param ryze socket containing ryze information.
+ * \param settings user settings
+ * \return user settings (boolean is_newer_api set to true or false)
+ */
+
+settings_t check_supported_api(socket_t ryze, settings_t settings);
+
+/**
+ * \fn settings_t  send_startup_commands(socket_t ryze, settings_t settings)
  * \\brief sends basic commands needed before takeoff.
  *
  * Sends 'command', 'sdk?' and 'sn?'. Refer to official documentation for more info.
  * \param ryze socket containing ryze information.
  * \param settings user settings
+ * \return call to check_supported_api()
  */
-void send_startup_commands(socket_t ryze, settings_t settings);
+settings_t send_startup_commands(socket_t ryze, settings_t settings);
 
 // key_listener.c
 /**

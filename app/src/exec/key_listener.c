@@ -71,7 +71,7 @@ int loop_wrapper(socket_t ryze, settings_t settings)
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
     }
-    send_startup_commands(ryze, settings);
+    settings = send_startup_commands(ryze, settings);
     while (status != 1) {
         do {
             usleep(75000);

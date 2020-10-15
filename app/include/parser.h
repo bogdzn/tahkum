@@ -31,6 +31,7 @@ typedef bool (*check_t)(char const *);
  * \param wait defines the amout of time we wait before sending another command.
  * \param fake_socket allows program to pretend it sends information to a drone.
  * \param filepath path of the file full of commands.
+ * \param is_newer_api specifies firmware API version
  */
 typedef struct input_s settings_t;
 struct input_s {
@@ -38,6 +39,7 @@ struct input_s {
     int wait;
     bool fake_socket;
     char *filepath;
+    bool is_newer_api;
 };
 
 

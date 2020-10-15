@@ -10,18 +10,34 @@
 #include "exec.h"
 #include "parser.h"
 
-void send_startup_commands(socket_t ryze, settings_t settings)
+settings_t check_supported_api(socket_t ryze, settings_t settings)
+{
+    char *drone_answer = NULL;
+
+    send_command(ryze, "sdk?", settings);
+    drone_answer = get_response(ryze, settings);
+    if (!is_drone_ok(drone_answer)) {
+        free(drone_answer);
+        settings.is_newer_api = false;
+        __log(WARNING, "THIS DRONE ONLY SUPPORTS AN OLDER SDK VERSION.\n");
+        __log(WARNING, "Please check for a firmware update if you want to enjoy all features.\n");
+        return settings;
+    } else __log(INFO, "SDK VERSION: %s.\n", drone_answer);
+    send_command(ryze, "sn?", settings);
+    free(drone_answer);
+    __log(INFO, "SERIAL NUMBER:%S\n", get_response(ryze, settings));
+    settings.is_newer_api = true;
+    return settings;
+}
+
+settings_t send_startup_commands(socket_t ryze, settings_t settings)
 {
     send_command(ryze, "command", settings);
     if (!is_same_string(set_to_lowercase(get_response(ryze, settings)), "ok")) {
         __log(ERROR, "drone returned an error.\n");
         set_keyboard_mode();
         exit(1);
-    }
-    send_command(ryze, "sdk?", settings);
-    __log(INFO, "SDK VERSION: %s.\n", get_response(ryze, settings));
-    send_command(ryze, "sn?" , settings);
-    __log(INFO, "SERIAL NUMBER: %s\n", get_response(ryze, settings));
+    } else return check_supported_api(ryze, settings);
 }
 
 bool is_drone_ok(char *response)
