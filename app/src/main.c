@@ -7,6 +7,7 @@
 
 #include "utils.h"
 #include "parser.h"
+#include <string.h>
 #include <stdio.h>
 #include "exec.h"
 

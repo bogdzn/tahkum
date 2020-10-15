@@ -59,7 +59,6 @@ char *concat_str(char *s1, char *s2)
     for (int j = 0; s2[j] != '\0'; j++, i++)
         result[i] = s2[j];
     result[i] = '\0';
-    free(s1);
     return (result);
 }
 

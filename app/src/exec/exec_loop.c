@@ -9,6 +9,7 @@
 #include "utils.h"
 #include "exec.h"
 #include "parser.h"
+#include <string.h>
 
 settings_t check_supported_api(socket_t ryze, settings_t settings)
 {
@@ -33,7 +34,7 @@ settings_t check_supported_api(socket_t ryze, settings_t settings)
 settings_t send_startup_commands(socket_t ryze, settings_t settings)
 {
     send_command(ryze, "command", settings);
-    if (!is_same_string(set_to_lowercase(get_response(ryze, settings)), "ok")) {
+    if (strcmp(str_to_lower(get_response(ryze, settings)), "ok") != 0) {
         __log(ERROR, "drone returned an error.\n");
         set_keyboard_mode();
         exit(1);
@@ -48,7 +49,7 @@ bool is_drone_ok(char *response)
     if (response == NULL)
         return false;
     tab = tabgen(response, ' ');
-    result = is_same_string("error", set_to_lowercase(tab[0]));
+    result = (strcmp("error", str_to_lower(tab[0])) == 0);
     free_array((void **)tab);
     return !result;
 }

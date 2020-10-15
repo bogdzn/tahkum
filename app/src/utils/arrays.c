@@ -71,7 +71,8 @@ char **tabgen(const char *str, char separator)
         res[i] = malloc(sizeof(char) * (mem_size + 1));
         if (res[i] == NULL)
             return NULL;
-        res[i] = my_strncpy(res[i], &str[index_str], mem_size);
+        res[i] = strncpy(res[i], &str[index_str], mem_size);
+        res[i][mem_size] = 0;
         index_str = index_str + mem_size + 1;
     }
     res[i] = NULL;
@@ -95,15 +96,15 @@ char **append_line_to_tab(char **tab, char *line)
         if (line == NULL)
             return NULL;
         new_tab = malloc(sizeof(char *) * 2);
-        new_tab[0] = my_strdup(line);
+        new_tab[0] = strdup(line);
         new_tab[1] = NULL;
         return new_tab;
     } else if (line == NULL)
         return tab;
     new_tab = malloc(sizeof(char *) * (my_tablen((char const **) tab) + 1));
     for (; tab[i] != NULL; i++)
-        new_tab[i] = my_strdup(tab[i]);
-    new_tab[i] = my_strdup(line);
+        new_tab[i] = strdup(tab[i]);
+    new_tab[i] = strdup(line);
     new_tab[i + 1] = NULL;
     return new_tab;
 }

@@ -26,9 +26,9 @@ static socket_t load_initial_data(char **ip, int *port)
 
     __log(INFO, "creating socket for address %s:%i\n", ip[0], port[0]);
     sock.local_port = port[0];
-    sock.local_ip = my_strdup(ip[0]);
+    sock.local_ip = strdup(ip[0]);
     sock.drone_port = port[1];
-    sock.drone_ip = my_strdup(ip[1]);
+    sock.drone_ip = strdup(ip[1]);
     return sock;
 }
 
@@ -36,7 +36,7 @@ static struct sockaddr_in create_addr(char *ip, int port)
 {
     struct sockaddr_in s;
 
-    if (is_same_string(LOCAL_IP_ADDR, ip)) {
+    if (strcmp(LOCAL_IP_ADDR, ip) == 0) {
         s.sin_addr.s_addr = htonl(INADDR_ANY);
     } else s.sin_addr.s_addr = inet_addr(ip);
     s.sin_port = htons(port);

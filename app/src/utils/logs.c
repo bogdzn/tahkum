@@ -15,6 +15,7 @@
 #include <stdarg.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <string.h>
 
 static char *switch_case(char flag, va_list ap)
 {
@@ -30,7 +31,7 @@ static char *switch_case(char flag, va_list ap)
             result = my_itoa(va_arg(ap, int));
             break;
         case 's' :
-            result = my_strdup(va_arg(ap,char *));
+            result = strdup(va_arg(ap,char *));
             break;
         case 'f':
             result = fcvt(va_arg(ap, double), float_max_len, &decimal, &sign);
@@ -44,10 +45,10 @@ static char *switch_case(char flag, va_list ap)
 static char *get_start_of_msg(log_type_e type)
 {
     if (type == INFO)
-        return my_strdup("\033[0;36m[INFO]:\033[m ");
+        return strdup("\033[0;36m[INFO]:\033[m ");
     else if (type == WARNING)
-        return my_strdup("\033[0;33m[WARNING]: \033[m");
-    else return my_strdup("\033[0;31m[ERROR]: \033[m");
+        return strdup("\033[0;33m[WARNING]: \033[m");
+    else return strdup("\033[0;31m[ERROR]: \033[m");
 }
 
 static void write_logfile(log_type_e type, char *log)
@@ -57,8 +58,8 @@ static void write_logfile(log_type_e type, char *log)
 
     if (fd == -1 || !logfile_exists())
         return;
-    log = my_strcat(start_of_msg, log);
-    if (!write(fd, log, my_strlen(log)) || !write(2, log, my_strlen(log)))
+    log = concat_str(start_of_msg, log);
+    if (!write(fd, log, strlen(log)) || !write(2, log, strlen(log)))
         return;
     close(fd);
 }
@@ -73,7 +74,7 @@ void __log(log_type_e type, char *string, ...)
     va_start(ap, string);
     for (int i = 0; string[i] != 0; i++) {
         if (string[i] == '%' && string[i + 1] != 0) {
-            msg = my_strcat(msg, switch_case(string[i + 1], ap));
+            msg = concat_str(msg, switch_case(string[i + 1], ap));
             i++;
         } else msg = append_char(msg, string[i]);
     }
@@ -93,12 +94,12 @@ void log_if_errno(int err, char *function_name)
         __log(INFO, "\033[0;32msuccess for [\033[0;33m%s\033[0;32m].\033[m\n", function_name);
         return;
     }
-    err_msg = my_strcat("\033[0;31m[ERROR ON ", function_name);
-    err_msg = my_strcat(err_msg, "]\033[m: ");
-    err_msg = my_strcat(err_msg, strerror(err));
-    err_msg = my_strcat(err_msg, "\n");
+    err_msg = concat_str("\033[0;31m[ERROR ON ", function_name);
+    err_msg = concat_str(err_msg, "]\033[m: ");
+    err_msg = concat_str(err_msg, strerror(err));
+    err_msg = concat_str(err_msg, "\n");
     fd = OPEN_LOGFILE;
-    if (!write(fd, err_msg, my_strlen(err_msg)) || !write(2, err_msg, my_strlen(err_msg)))
+    if (!write(fd, err_msg, strlen(err_msg)) || !write(2, err_msg, strlen(err_msg)))
         return;
     close(fd);
     free(err_msg);
