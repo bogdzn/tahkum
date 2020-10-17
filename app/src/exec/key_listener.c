@@ -23,11 +23,13 @@
 #include "exec.h"
 #include <linux/input.h>
 
-static struct termios set_raw(int *flags, struct termios tty_attr, struct termios old)
+static struct termios set_raw(struct termios tty_attr, struct termios old)
 {
-    *flags = fcntl(STDIN_FILENO, F_GETFL);
+    int flags = 0;
+
+    flags = fcntl(STDIN_FILENO, F_GETFL);
     log_if_errno(errno, "fcntl: getflags");
-    *flags |= O_NONBLOCK;
+    flags |= O_NONBLOCK;
     fcntl(STDIN_FILENO, F_SETFL, flags);
     log_if_errno(errno, "making stdin non blocking");
 
@@ -42,15 +44,12 @@ static struct termios set_raw(int *flags, struct termios tty_attr, struct termio
 
 int set_keyboard_mode(void)
 {
-    static int old_kb_mode = 0;
     static struct termios tty_attr_old;
     static bool is_raw_mode = false;
     struct termios tty_attr;
-    int flags = 0;
 
     if (is_raw_mode) {
         tcsetattr(STDIN_FILENO, TCSAFLUSH, &tty_attr_old);
-        ioctl(STDIN_FILENO, KDSKBMODE, old_kb_mode);
         log_if_errno(errno, "reseting keyboard mode.");
         is_raw_mode = false;
         return 0;
@@ -59,7 +58,7 @@ int set_keyboard_mode(void)
         return -1;
     }
     tcgetattr(STDERR_FILENO, &tty_attr_old);
-    tty_attr = set_raw(&flags, tty_attr, tty_attr_old);
+    tty_attr = set_raw(tty_attr, tty_attr_old);
     is_raw_mode = true;
     return 0;
 }

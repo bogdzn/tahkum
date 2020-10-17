@@ -36,6 +36,7 @@ settings_t check_supported_api(socket_t ryze, settings_t settings)
 settings_t send_startup_commands(socket_t ryze, settings_t settings)
 {
     send_command(ryze, "command", settings);
+    send_command(ryze, "speed 50", settings);
     if (strcmp(str_to_lower(get_response(ryze, settings)), "ok") != 0) {
         __log(ERROR, "drone returned an error.\n");
         set_keyboard_mode();

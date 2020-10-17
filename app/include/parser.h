@@ -14,6 +14,15 @@
 #include "utils.h"
 #include <getopt.h>
 
+
+#ifndef DEFAULT_WAIT_TIME
+#define DEFAULT_WAIT_TIME (1)
+#endif
+
+#ifndef DEFAULT_MAX_RETRIES
+#define DEFAULT_MAX_RETRIES (5)
+#endif
+
 /**
  * \typedef bool (*check_t)(char const *);
  * \brief function pointer containing input check.
