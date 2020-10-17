@@ -102,7 +102,6 @@ char *append_char(char *s, char c)
         result = malloc(sizeof(char) * 2);
         result[0] = c;
         result[1] = '\0';
-        return (result);
     } else {
         len = strlen(s);
         result = malloc(sizeof(char) * (len + 2));

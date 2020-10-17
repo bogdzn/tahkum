@@ -56,11 +56,18 @@ static void write_logfile(log_type_e type, char *log)
     char *start_of_msg = get_start_of_msg(type);
     int fd = OPEN_LOGFILE;
 
-    if (fd == -1 || !logfile_exists())
+    if (fd == -1 || !logfile_exists()) {
+        free(log);
+        free(start_of_msg);
         return;
+    }
     log = concat_str(start_of_msg, log);
-    if (!write(fd, log, strlen(log)) || !write(2, log, strlen(log)))
+    free(start_of_msg);
+    if (!write(fd, log, strlen(log)) || !write(2, log, strlen(log))) {
+        free(log);
         return;
+    }
+    free(log);
     close(fd);
 }
 
@@ -80,7 +87,6 @@ void __log(log_type_e type, char *string, ...)
     }
     va_end(ap);
     write_logfile(type, msg);
-    free(msg);
 }
 
 void log_if_errno(int err, char *function_name)
