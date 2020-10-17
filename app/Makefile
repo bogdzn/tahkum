@@ -120,7 +120,7 @@ fclean: clean
 re: fclean all
 
 vlgd: re
-	@valgrind $(VALGRIND_FLAGS) ./$(NAME) -d
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
 ########################
 ###### DOXYGEN  ########
