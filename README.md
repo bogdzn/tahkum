@@ -16,9 +16,11 @@ If you just want to use the program, you can ! Please make sure to have a Tello 
 - can interact with a Tello Ryze, through its private API, and the use of DGRAM sockets
 - minimalistic debug mode, and log file handler.
 - sends commands in real time.
+- multiple Ryze APIs (SDK version 1.0 and 2.0)
 
 ## In the works
 
+- a unique DSL to script drone behaviour
 - better UI
 - multi-threading support
 
