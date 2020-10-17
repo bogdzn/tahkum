@@ -23,7 +23,7 @@ static char **load_drone_command(char keycode, authorized_cmd_t *commands)
         if (keycode == commands[i].keycode)
             return tabgen(commands[i].command, '\t');
     }
-    return tabgen("height?", ' ');
+    return tabgen("rc 0 0 0 0", '\n');
 }
 
 char **get_user_commands(char keycode, bool is_newer_api)

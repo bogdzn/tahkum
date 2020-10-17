@@ -35,13 +35,20 @@ settings_t check_supported_api(socket_t ryze, settings_t settings)
 
 settings_t send_startup_commands(socket_t ryze, settings_t settings)
 {
+    char **startup_commands = tabgen("speed 50\nrc 0 0 0 0", '\n');
+    char *answer = NULL;
+
     send_command(ryze, "command", settings);
-    send_command(ryze, "speed 50", settings);
-    if (strcmp(str_to_lower(get_response(ryze, settings)), "ok") != 0) {
+    answer = get_response(ryze, settings);
+    if (strcmp(str_to_lower(answer), "ok") != 0) {
         __log(ERROR, "drone returned an error.\n");
         set_keyboard_mode();
+        free(answer);
         exit(1);
-    } else return check_supported_api(ryze, settings);
+    }
+    free(answer);
+    return exec_loop(ryze, settings, startup_commands) == -1 ?
+    settings : check_supported_api(ryze, settings);
 }
 
 bool is_drone_ok(char *response)
@@ -62,15 +69,14 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds)
     int status = 0;
     char *drone_response = NULL;
 
-
+    settings.max_retries = DEFAULT_MAX_RETRIES;
     for (int i = 0; cmds[i] && status == 0; i++) {
         for (int retry = 0; retry < settings.max_retries; retry++) {
             send_command(ryze, cmds[i], settings);
             drone_response = get_response(ryze, settings);
             if (is_drone_ok(drone_response))
                 break;
-            __log(WARNING, "command %[s] failed...Retrying [%i/%i]\n", cmds[i],
-                    retry, settings.max_retries);
+            __log(WARNING, "command %[s] failed...\n", cmds[i]);
             if (retry + 1 >= settings.max_retries) {
                 __log(ERROR, "command [%s] timed out, Exiting...");
                 return -1;
