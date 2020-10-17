@@ -41,16 +41,6 @@ Test(do_op, doop)
     cr_assert_eq(do_op(12, 5, '%'), 2);
 }
 
-Test(my_getnbr, getnbr)
-{
-    cr_assert_eq(my_getnbr("127"), 127);
-    cr_assert_eq(my_getnbr("-12"), -12);
-    cr_assert_eq(my_getnbr("     5"), 5);
-    cr_assert_eq(my_getnbr("65asd12"), 65);
-    cr_assert_eq(my_getnbr("0"), 0);
-    cr_assert_eq(my_getnbr("whatever"), 0);
-}
-
 Test(my_putnbr, putnbr, .init = redirect_all)
 {
     my_putnbr(-127);

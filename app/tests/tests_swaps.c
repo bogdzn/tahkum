@@ -27,8 +27,8 @@ Test(swap, testswap, .init = redirect_all)
 
 Test(swap_array, testswaparray)
 {
-    char *asd = my_strdup("asd");
-    char *lol = my_strdup("lol");
+    char *asd = strdup("asd");
+    char *lol = strdup("lol");
 
     swap_array((void **)&asd, (void **)&lol);
     cr_assert_str_eq(asd, "lol");
