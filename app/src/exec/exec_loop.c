@@ -35,7 +35,6 @@ settings_t check_supported_api(socket_t ryze, settings_t settings)
 
 settings_t send_startup_commands(socket_t ryze, settings_t settings)
 {
-    char **startup_commands = tabgen("speed 50\nrc 0 0 0 0", '\n');
     char *answer = NULL;
 
     send_command(ryze, "command", settings);
@@ -47,8 +46,9 @@ settings_t send_startup_commands(socket_t ryze, settings_t settings)
         exit(1);
     }
     free(answer);
-    return exec_loop(ryze, settings, startup_commands) == -1 ?
-    settings : check_supported_api(ryze, settings);
+    send_command(ryze, "speed 50", settings);
+    send_command(ryze, "rc 0 0 0 0", settings);
+    return check_supported_api(ryze, settings);
 }
 
 bool is_drone_ok(char *response)
