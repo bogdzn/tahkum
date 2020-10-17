@@ -50,7 +50,7 @@ int set_keyboard_mode(void)
 
     if (is_raw_mode) {
         tcsetattr(STDIN_FILENO, TCSAFLUSH, &tty_attr_old);
-        log_if_errno(errno, "reseting keyboard mode.");
+        ioctl(STDIN_FILENO, KDSKBMODE, 0);
         is_raw_mode = false;
         return 0;
     } else if (!isatty(STDIN_FILENO)) {
