@@ -38,44 +38,53 @@ typedef struct authorized_s
 
 static authorized_cmd_t OLD_API[] = {
         { "battery?",           'b' },          /*!< to get the battery level. */
-        { "cw 90",              'q' },          /*!< to rotate clockwise. */
-        { "ccw 90",             'e' },          /*!< to rotate counter-clockwise. */
-        { "flip front",         'o' },          /*!< to execute a flip. */
-        { "flip backward",      'l' },          /*!< to execute a flip. */
-        { "flip left",          ';' },          /*!< to execute a flip. */
-        { "flip right",         'k' },          /*!< to execute a flip. */
+        { "streamon",           'x' },          /*!< turns stream on. */
+        { "streamoff",          'v' },          /*!< turns stream off. */
+        { "emergency",          'n' },          /*!< turns off motors. */
+        { "cw 200",             'q' },          /*!< to rotate clockwise. */
+        { "ccw 200",            'e' },          /*!< to rotate counter-clockwise. */
+        { "flip f",             'o' },          /*!< to execute a flip. */
+        { "flip b",             'l' },          /*!< to execute a flip. */
+        { "flip l",             ';' },          /*!< to execute a flip. */
+        { "flip r",             'k' },          /*!< to execute a flip. */
         { "height?",            'h' },          /*!< to get the drone's height. */
         { "land",               'm' },          /*!< to execute landing process. */
-        { "up 20",              ' ' },          /*!< to move the drone. */
-        { "down 20",            'z' },          /*!< to move the drone. */
-        { "right 20",           'd' },          /*!< to move the drone. */
-        { "left 20",            'a' },          /*!< to move the drone. */
-        { "forward 20",         'w' },          /*!< to move the drone. */
-        { "back 20",            's' },          /*!< to move the drone. */
+        { "up 50",              ' ' },          /*!< to move the drone. */
+        { "down 50",            'z' },          /*!< to move the drone. */
+        { "right 50",           'd' },          /*!< to move the drone. */
+        { "left 50",            'a' },          /*!< to move the drone. */
+        { "forward 50",         'w' },          /*!< to move the drone. */
+        { "back 50",            's' },          /*!< to move the drone. */
         { "takeoff",            'r' },          /*!< to execute takeoff process. */
         { "time?",              't' },          /*!< get flight time. */
+        { "temp?",              'y' },          /*!< get temp. */
         { NULL,                 '\0' }
 };
 
 
 static authorized_cmd_t NEW_API[] = {
         { "battery?",           'b' },          /*!< to get the battery level. */
-        { "cw 90",              'q' },          /*!< to rotate clockwise. */
-        { "ccw 90",             'e' },          /*!< to rotate counter-clockwise. */
-        { "flip front",         'o' },          /*!< to execute a flip. */
-        { "flip backward",      'l' },          /*!< to execute a flip. */
-        { "flip left",          ';' },          /*!< to execute a flip. */
-        { "flip right",         'k' },          /*!< to execute a flip. */
+        { "streamon",           'x' },          /*!< turns stream on. */
+        { "streamoff",          'v' },          /*!< turns stream off. */
+        { "emergency",          'n' },          /*!< turns off motors. */
+        { "stop",               'f' },          /*!< hovers in the air. */
+        { "cw 200",             'q' },          /*!< to rotate clockwise. */
+        { "ccw 200",            'e' },          /*!< to rotate counter-clockwise. */
+        { "flip f",             'o' },          /*!< to execute a flip. */
+        { "flip b",             'l' },          /*!< to execute a flip. */
+        { "flip l",             ';' },          /*!< to execute a flip. */
+        { "flip r",             'k' },          /*!< to execute a flip. */
         { "height?",            'h' },          /*!< to get the drone's height. */
         { "land",               'm' },          /*!< to execute landing process. */
-        { "up 20",              ' ' },          /*!< to move the drone. */
-        { "down 20",            'z' },          /*!< to move the drone. */
-        { "right 20",           'd' },          /*!< to move the drone. */
-        { "left 20",            'a' },          /*!< to move the drone. */
-        { "forward 20",         'w' },          /*!< to move the drone. */
-        { "back 20",            's' },          /*!< to move the drone. */
+        { "up 50",              ' ' },          /*!< to move the drone. */
+        { "down 50",            'z' },          /*!< to move the drone. */
+        { "right 50",           'd' },          /*!< to move the drone. */
+        { "left 50",            'a' },          /*!< to move the drone. */
+        { "forward 50",         'w' },          /*!< to move the drone. */
+        { "back 50",            's' },          /*!< to move the drone. */
         { "takeoff",            'r' },          /*!< to execute takeoff process. */
         { "time?",              't' },          /*!< get flight time. */
+        { "temp?",              'y' },          /*!< get temp. */
         { NULL,                 '\0' }
 };
 
