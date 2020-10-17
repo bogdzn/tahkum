@@ -28,7 +28,7 @@ settings_t check_supported_api(socket_t ryze, settings_t settings)
     } else __log(INFO, "SDK VERSION: %s.\n", drone_answer);
     send_command(ryze, "sn?", settings);
     free(drone_answer);
-    __log(INFO, "SERIAL NUMBER:%S\n", get_response(ryze, settings));
+    __log(INFO, "SERIAL NUMBER:%s\n", get_response(ryze, settings));
     settings.is_newer_api = true;
     return settings;
 }
