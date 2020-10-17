@@ -92,22 +92,18 @@ static char get_keycode(void)
 
 int loop_wrapper(socket_t ryze, settings_t settings)
 {
-    int status = 0;
-    char **commands = NULL;
-
     if (set_keyboard_mode() == -1) {
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
-    }
-    settings = send_startup_commands(ryze, settings);
+    } else settings = send_startup_commands(ryze, settings);
+
     for (char buffer = 0 ;; buffer = tolower(get_keycode())) {
         if (buffer == 'c') {
             send_command(ryze, "land", settings);
             __log(WARNING, "c has been triggered. Exiting.\n");
             break;
         }
-        commands = get_user_commands(buffer, settings.is_newer_api);
-        status = (status == -1) ? status : exec_loop(ryze, settings, commands);
+        exec_loop(ryze, settings, get_user_commands(buffer, settings.is_newer_api));
     }
     return set_keyboard_mode();
 }
