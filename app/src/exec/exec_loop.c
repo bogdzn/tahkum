@@ -10,6 +10,8 @@
 #include "exec.h"
 #include "parser.h"
 #include <string.h>
+#include <unistd.h>
+#include <ctype.h>
 
 settings_t check_supported_api(socket_t ryze, settings_t settings)
 {
@@ -69,7 +71,7 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds)
             __log(WARNING, "command %[s] failed...Retrying [%i/%i]\n", cmds[i],
                     retry, settings.max_retries);
             if (retry + 1 >= settings.max_retries) {
-                __log(ERROR, "command [%s] timed out, exiting...");
+                __log(ERROR, "command [%s] timed out, Exiting...");
                 return -1;
             }
         }
@@ -77,4 +79,35 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds)
     }
     free_array((void **)cmds);
     return 0;
+}
+
+static char get_keycode(void)
+{
+    char result = 0;
+    int status = read(STDIN_FILENO, &result, 1);
+
+    usleep(50000);
+    return (status == -1) ? get_keycode() : result;
+}
+
+int loop_wrapper(socket_t ryze, settings_t settings)
+{
+    int status = 0;
+    char **commands = NULL;
+
+    if (set_keyboard_mode() == -1) {
+        __log(ERROR, "Couldn't set terminal in raw mode.\n");
+        return 0;
+    }
+    settings = send_startup_commands(ryze, settings);
+    for (char buffer = 0 ;; buffer = tolower(get_keycode())) {
+        if (buffer == 'c') {
+            send_command(ryze, "land", settings);
+            __log(WARNING, "c has been triggered. Exiting.\n");
+            break;
+        }
+        commands = get_user_commands(buffer, settings.is_newer_api);
+        status = (status == -1) ? status : exec_loop(ryze, settings, commands);
+    }
+    return set_keyboard_mode();
 }

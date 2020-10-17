@@ -96,15 +96,15 @@ settings_t initial_setup(int ac, char **av);
 void display_usage(char const *bin_name);
 
 
-// get_instr_queue.c
+// get_instruction_queue.c
 /**
  * \fn char **get_user_commands(char extracted, int status);
  * \brief interprets the user input we extracted from key_listener.c
  *
  * \param extracted extracted letter
- * \param status read return value
+ * \param is_newer_api specifies which API is compatible.
  * \return an array of instructions to execute.
  */
-char **get_user_commands(char extracted, int status);
+char **get_user_commands(char extracted, bool is_newer_api);
 
 #endif

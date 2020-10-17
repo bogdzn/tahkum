@@ -36,11 +36,32 @@ typedef struct authorized_s
 /// You should first send "command" to the drone, before takeoff
 /// If you don't the drone doesn't interact with you.
 
-static authorized_cmd_t API_COMMANDS[] = {
+static authorized_cmd_t OLD_API[] = {
         { "battery?",           'b' },          /*!< to get the battery level. */
         { "cw 90",              'q' },          /*!< to rotate clockwise. */
         { "ccw 90",             'e' },          /*!< to rotate counter-clockwise. */
-        { "delay 5",            'x' },          /*!< to call sleep() for n seconds. */
+        { "flip front",         'o' },          /*!< to execute a flip. */
+        { "flip backward",      'l' },          /*!< to execute a flip. */
+        { "flip left",          ';' },          /*!< to execute a flip. */
+        { "flip right",         'k' },          /*!< to execute a flip. */
+        { "height?",            'h' },          /*!< to get the drone's height. */
+        { "land",               'm' },          /*!< to execute landing process. */
+        { "up 20",              ' ' },          /*!< to move the drone. */
+        { "down 20",            'z' },          /*!< to move the drone. */
+        { "right 20",           'd' },          /*!< to move the drone. */
+        { "left 20",            'a' },          /*!< to move the drone. */
+        { "forward 20",         'w' },          /*!< to move the drone. */
+        { "back 20",            's' },          /*!< to move the drone. */
+        { "takeoff",            'r' },          /*!< to execute takeoff process. */
+        { "time?",              't' },          /*!< get flight time. */
+        { NULL,                 '\0' }
+};
+
+
+static authorized_cmd_t NEW_API[] = {
+        { "battery?",           'b' },          /*!< to get the battery level. */
+        { "cw 90",              'q' },          /*!< to rotate clockwise. */
+        { "ccw 90",             'e' },          /*!< to rotate counter-clockwise. */
         { "flip front",         'o' },          /*!< to execute a flip. */
         { "flip backward",      'l' },          /*!< to execute a flip. */
         { "flip left",          ';' },          /*!< to execute a flip. */

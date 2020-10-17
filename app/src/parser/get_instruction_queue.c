@@ -17,15 +17,16 @@
 #include <termios.h>
 #include <linux/input.h>
 
-char **get_user_commands(char extracted, int status)
+static char **load_drone_command(char keycode, authorized_cmd_t *commands)
 {
-    char **cmds = tabgen("height?", ' ');
-
-    (void)status;
-    for (int i = 0; API_COMMANDS[i].command != NULL; i++) {
-        if (API_COMMANDS[i].keycode == extracted) {
-            return tabgen(API_COMMANDS[i].command, '\n');
-        }
+    for (int i = 0; commands[i].command != NULL; i++) {
+        if (keycode == commands[i].keycode)
+            return tabgen(commands[i].command, '\t');
     }
-    return cmds;
+    return tabgen("height?", ' ');
+}
+
+char **get_user_commands(char keycode, bool is_newer_api)
+{
+  return load_drone_command(keycode, is_newer_api ? NEW_API : OLD_API);
 }

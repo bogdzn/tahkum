@@ -69,7 +69,8 @@ settings_t initial_setup(int ac, char **av)
             .max_retries = 5,
             .wait = 2,
             .filepath = (ac == 2) ? strdup(av[1]) : NULL,
-            .fake_socket = false
+            .fake_socket = false,
+            .is_newer_api = true
     };
 
     setup_logfile();
