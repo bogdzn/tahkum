@@ -2,7 +2,7 @@
  * \file key_listener.c
  * \brief implements getch from ncurses without using initscr() !
  * \author Bogdan G.
- * \date 09/10/2020
+ * \date 17/10/2020
  */
 
 #include "utils.h"

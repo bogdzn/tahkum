@@ -2,7 +2,7 @@
  * \file main.c
  * \brief main file of the project.
  * \author Bogdan G.
- * \date 27/09/2020
+ * \date 10/10/2020
  */
 
 #include "utils.h"

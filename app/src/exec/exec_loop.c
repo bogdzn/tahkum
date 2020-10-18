@@ -2,8 +2,8 @@
  * \file exec_loop.c
  * \brief handles command execution.
  * \author Bogdan G.
- * \version 0.1
- * \date 02/10/2020
+ * \version 0.2
+ * \date 18/10/2020
  */
 
 #include "utils.h"
@@ -28,7 +28,9 @@ settings_t check_supported_api(socket_t ryze, settings_t settings)
     } else __log(INFO, "SDK VERSION: %s.\n", drone_answer);
     send_command(ryze, "sn?", settings);
     free(drone_answer);
-    __log(INFO, "SERIAL NUMBER:%s\n", get_response(ryze, settings));
+    drone_answer = get_response(ryze, settings);
+    __log(INFO, "SERIAL NUMBER:%s\n", drone_answer);
+    free(drone_answer);
     settings.is_newer_api = true;
     return settings;
 }
@@ -47,7 +49,6 @@ settings_t send_startup_commands(socket_t ryze, settings_t settings)
     }
     free(answer);
     send_command(ryze, "speed 50", settings);
-    send_command(ryze, "rc 0 0 0 0", settings);
     return check_supported_api(ryze, settings);
 }
 
@@ -66,51 +67,49 @@ bool is_drone_ok(char *response)
 
 int exec_loop(socket_t ryze, settings_t settings, char **cmds)
 {
-    int status = 0;
-    char *drone_response = NULL;
+    char *answer = NULL;
 
-    settings.max_retries = DEFAULT_MAX_RETRIES;
-    for (int i = 0; cmds[i] && status == 0; i++) {
-        for (int retry = 0; retry < settings.max_retries; retry++) {
-            send_command(ryze, cmds[i], settings);
-            drone_response = get_response(ryze, settings);
-            if (is_drone_ok(drone_response))
-                break;
-            __log(WARNING, "command %[s] failed...\n", cmds[i]);
-            if (retry + 1 >= settings.max_retries) {
-                __log(ERROR, "command [%s] timed out, Exiting...");
-                return -1;
-            }
+    for (int retry = 0; retry < settings.max_retries; retry++) {
+        send_command(ryze, cmds[0], settings);
+        answer = get_response(ryze, settings);
+        if (is_drone_ok(answer))
+            break;
+        else {
+            __log(WARNING, "command %[s] failed...\n", cmds[0]);
+            sleep(settings.wait);
         }
-        sleep(settings.wait);
     }
+    free(answer);
     free_array((void **)cmds);
     return 0;
 }
 
-static char get_keycode(void)
+static char get_keycode(int recursive_count)
 {
     char result = 0;
     int status = read(STDIN_FILENO, &result, 1);
 
+    // tello times out after 15 seconds and land,
+    // we send a status command every 7.5 seconds.
+    if (recursive_count == 15)
+        return 'h';
     usleep(50000);
-    return (status == -1) ? get_keycode() : result;
+    return (status == -1) ? get_keycode(recursive_count + 1) : result;
 }
 
-int loop_wrapper(socket_t ryze, settings_t settings)
+int loop_wrapper(socket_t ryze, settings_t s)
 {
     if (set_keyboard_mode() == -1) {
         __log(ERROR, "Couldn't set terminal in raw mode.\n");
         return 0;
-    } else settings = send_startup_commands(ryze, settings);
+    } else s = send_startup_commands(ryze, s);
 
-    for (char buffer = 0 ;; buffer = tolower(get_keycode())) {
+    for (char buffer = 0;; buffer = tolower(get_keycode(0))) {
         if (buffer == 'c') {
-            send_command(ryze, "land", settings);
+            send_command(ryze, "land", s);
             __log(WARNING, "c has been triggered. Exiting.\n");
             break;
-        }
-        exec_loop(ryze, settings, get_user_commands(buffer, settings.is_newer_api));
+        } else exec_loop(ryze, s, get_user_commands(buffer, s.is_newer_api));
     }
     return set_keyboard_mode();
 }

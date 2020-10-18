@@ -2,7 +2,7 @@
  * \\file messages.c
  * \brief reads and writes messages.
  * \author Bogdan G.
- * \date 28/09/2020
+ * \date 17/10/2020
  */
 
 #include "exec.h"
