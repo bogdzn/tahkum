@@ -3,7 +3,7 @@
  * \brief Loads user settings and log file.
  * \author Bogdan G.
  * \version 0.1
- * \date 02/10/2020
+ * \date 17/10/2020
  */
 
 #include "utils.h"

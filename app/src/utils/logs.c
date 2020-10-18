@@ -2,7 +2,7 @@
  * \file logs.c
  * \brief Handles logifle creation and updating.
  * \author Bogdan G.
- * \date 10/10/2020
+ * \date 17/10/2020
  */
 
 #include <stdlib.h>

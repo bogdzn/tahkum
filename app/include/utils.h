@@ -3,7 +3,7 @@
  * \brief Header for utils internal librairy..
  * \author Bogdan G.
  * \version 0.1
- * \date 21/09/2020
+ * \date 17/10/2020
  */
 
 #ifndef TELLO_UTILS_H

@@ -3,7 +3,7 @@
  * \brief Handles initial parsing.
  * \author Bogdan G.
  * \version 0.1
- * \date 10/10/2020
+ * \date 17/10/2020
  */
 
 #ifndef PARSER_H

@@ -2,7 +2,7 @@
  * \file strings.c
  * \brief everything related to strings !
  * \author Bogdan G.
- * \date 21/09/2020
+ * \date 17/10/2020
  */
 
 #include "utils.h"

@@ -1,9 +1,9 @@
 /**
  * \file get_instruction_queue.c
  * \brief Loads instructions from key listener.
- * \author Adina C.
- * \version 0.1
- * \date 10/10/2020
+ * \author Bogdan G..
+ * \version 0.2
+ * \date 17/10/2020
  */
 
 #include <stdio.h>

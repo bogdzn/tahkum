@@ -2,7 +2,7 @@
  * \file get_next_line.c
  * \brief reads a file's next line.
  * \author Bogdan G.
- * \date 21/09/2020
+ * \date 17/10/2020
  */
 
 #include <stdlib.h>
