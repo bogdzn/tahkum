@@ -58,6 +58,7 @@ static authorized_cmd_t OLD_API[] = {
         { "takeoff",            'r' },          /*!< to execute takeoff process. */
         { "time?",              't' },          /*!< get flight time. */
         { "temp?",              'y' },          /*!< get temp. */
+        { "rc 0 0 0 0",         'g' },
         { NULL,                 '\0' }
 };
 

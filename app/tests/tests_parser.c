@@ -34,7 +34,7 @@ Test(get_user_commands, getusrcmd)
     char **first = get_user_commands('a', 0);
     char **second = get_user_commands('z', 0);
     char **third = get_user_commands(' ', 0);
-    char **fourth = get_user_commands('g', 0);
+    char **fourth = get_user_commands(']', 0);
     char **fifth = get_user_commands('m', 0);
 
     cr_assert_str_eq(*first, "left 50");
