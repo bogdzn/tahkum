@@ -38,19 +38,19 @@ static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
             _exit(1);
         case 'f':
             data.filepath = strdup(optarg);
-            __log(INFO, "setting filepath to [%s]\n", data.filepath);
+            __log(WARNING, "setting filepath to [%s]\n", data.filepath);
             break;
         case 'd':
             data.fake_socket = true;
-            __log(INFO, "setting fake_socket to TRUE.\n");
+            __log(WARNING, "setting fake_socket to TRUE.\n");
             break;
         case 't':
             data.max_retries = atoi(arg);
-            __log(INFO, "setting max_retries to [%i]\n", data.max_retries);
+            __log(WARNING, "setting max_retries to [%i]\n", data.max_retries);
             break;
         case 's':
             data.wait = atoi(arg);
-            __log(INFO, "setting wait to [%i]\n", data.wait);
+            __log(WARNING, "setting wait to [%i]\n", data.wait);
             break;
         case 'h':
             display_usage("tahkum");
