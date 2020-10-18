@@ -5,6 +5,8 @@
  * \date 21/09/2020
  */
 
+#include <string.h>
+#include <stdio.h>
 #include "utils.h"
 #include <stdlib.h>
 
@@ -90,48 +92,34 @@ static int get_length_of_new_base(int nb, int base_len)
     return (result);
 }
 
-int my_getnbr(char *nb)
-{
-    bool is_negative = false;
-    int result = 0;
-
-    if (nb == NULL || *nb == 0)
-        return 0;
-    else if (nb[0] == '-') {
-        is_negative = true;
-        nb = &nb[1];
-    }
-    for (int i = 0; nb[i] != 0; i++) {
-        if ((nb[i] >= 9 && nb[i] <= 13) || nb[i] == 32)
-            continue;
-        else if (nb[i] >= '0' && nb[i] <= '9')
-            result = result * 10 + (nb[i] - 48);
-        else break;
-    }
-    return (is_negative) ? -result : result;
-}
-
 char *my_getnbr_base(int nb, const char *base_to)
 {
     char *result = (void *) 0;
     bool is_negative = nb < 0 ? true : false;
-    int nb_len = get_length_of_new_base(nb, my_strlen(base_to));
-    int base_len = my_strlen(base_to);
-    int ctr = nb_len - 1;
+    int nb_len = 0;
+    int base_len = 0;
+    int ctr = 0;
 
     if (base_to == (void *) 0 || base_to[0] == '\0')
         return ((void *) 0);
     else if (nb == 0)
-        return (my_strdup("0"));
+        return (strdup("0"));
+
+    base_len = strlen(base_to);
+    nb_len = get_length_of_new_base(nb, strlen(base_to));
+    ctr = nb_len - 1;
+
     nb = nb < 0 ? nb * -1 : nb;
     result = malloc(sizeof(char) * (nb_len + 1));
+
     for (int tmp = 0; ctr >= 0; ctr--) {
         tmp = nb % base_len;
         result[ctr] = base_to[tmp];
         nb = nb / base_len;
     }
     result[nb_len] = '\0';
-    return (is_negative == true ? my_strcat("-", result) : result);
+
+    return (is_negative == true ? concat_str("-", result) : result);
 }
 
 void my_putnbr_base(int nb, const char *base)

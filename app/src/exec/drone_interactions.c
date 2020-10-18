@@ -2,14 +2,14 @@
  * \\file messages.c
  * \brief reads and writes messages.
  * \author Bogdan G.
- * \date 28/09/2020
+ * \date 17/10/2020
  */
 
 #include "exec.h"
 #include "utils.h"
 #include <stdlib.h>
 #include <errno.h>
-#include <sys/select.h>
+#include <string.h>
 
 void send_command(socket_t sock, char const *data, settings_t settings)
 {
@@ -21,7 +21,7 @@ void send_command(socket_t sock, char const *data, settings_t settings)
     }
     socklen = sizeof(sock.drone_addr);
     __log(INFO, "sending \"%s\"\n", data);
-    sendto(sock.socket, data, my_strlen(data),0, (struct sockaddr *) &sock.drone_addr, socklen);
+    sendto(sock.socket, data, strlen(data), 0, (struct sockaddr *) &sock.drone_addr, socklen);
 }
 
 char *get_response(socket_t sock, settings_t settings)
@@ -32,7 +32,7 @@ char *get_response(socket_t sock, settings_t settings)
 
     if (settings.fake_socket) {
         __log(INFO, "(debug) received \"OK\".\n");
-        return my_strdup("OK");
+        return strdup("OK");
     }
     __log(INFO, "waiting for a message ...\n");
     reply = malloc(sizeof(char) * (REPLY_SIZE + 1));

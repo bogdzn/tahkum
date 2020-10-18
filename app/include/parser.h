@@ -3,7 +3,7 @@
  * \brief Handles initial parsing.
  * \author Bogdan G.
  * \version 0.1
- * \date 10/10/2020
+ * \date 17/10/2020
  */
 
 #ifndef PARSER_H
@@ -13,6 +13,15 @@
 #include <stdbool.h>
 #include "utils.h"
 #include <getopt.h>
+
+
+#ifndef DEFAULT_WAIT_TIME
+#define DEFAULT_WAIT_TIME (1)
+#endif
+
+#ifndef DEFAULT_MAX_RETRIES
+#define DEFAULT_MAX_RETRIES (5)
+#endif
 
 /**
  * \typedef bool (*check_t)(char const *);
@@ -96,15 +105,15 @@ settings_t initial_setup(int ac, char **av);
 void display_usage(char const *bin_name);
 
 
-// get_instr_queue.c
+// get_instruction_queue.c
 /**
  * \fn char **get_user_commands(char extracted, int status);
  * \brief interprets the user input we extracted from key_listener.c
  *
  * \param extracted extracted letter
- * \param status read return value
+ * \param is_newer_api specifies which API is compatible.
  * \return an array of instructions to execute.
  */
-char **get_user_commands(char extracted, int status);
+char **get_user_commands(char extracted, bool is_newer_api);
 
 #endif

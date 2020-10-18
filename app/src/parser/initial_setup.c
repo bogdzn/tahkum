@@ -3,7 +3,7 @@
  * \brief Loads user settings and log file.
  * \author Bogdan G.
  * \version 0.1
- * \date 02/10/2020
+ * \date 17/10/2020
  */
 
 #include "utils.h"
@@ -37,7 +37,7 @@ static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
             __log(ERROR, "triggered error -- argv[%i]:%s\n", ind, arg);
             _exit(1);
         case 'f':
-            data.filepath = my_strdup(optarg);
+            data.filepath = strdup(optarg);
             __log(INFO, "setting filepath to [%s]\n", data.filepath);
             break;
         case 'd':
@@ -45,11 +45,11 @@ static settings_t switchcase(char *arg, char flag, settings_t data, int ind)
             __log(INFO, "setting fake_socket to TRUE.\n");
             break;
         case 't':
-            data.max_retries = my_getnbr(arg);
+            data.max_retries = atoi(arg);
             __log(INFO, "setting max_retries to [%i]\n", data.max_retries);
             break;
         case 's':
-            data.wait = my_getnbr(arg);
+            data.wait = atoi(arg);
             __log(INFO, "setting wait to [%i]\n", data.wait);
             break;
         case 'h':
@@ -66,10 +66,11 @@ settings_t initial_setup(int ac, char **av)
     int opt_idx = 0;
     char opt_flag = 0;
     settings_t data = {
-            .max_retries = 5,
-            .wait = 2,
-            .filepath = (ac == 2) ? my_strdup(av[1]) : NULL,
-            .fake_socket = false
+            .max_retries = DEFAULT_MAX_RETRIES,
+            .wait = DEFAULT_WAIT_TIME,
+            .filepath = NULL,
+            .fake_socket = false,
+            .is_newer_api = true
     };
 
     setup_logfile();

@@ -84,6 +84,11 @@ OBJECT_DIR 	= ./objects
 OBJ 	 	= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED))
 OBJTST 		= $(patsubst %.c, $(OBJECT_DIR)/%.o, $(COMBINED_NO_MAIN))
 
+VALGRIND_FLAGS = --leak-check=full \
+				--show-leak-kinds=all \
+				--verbose \
+				--log-file=valgrind.txt
+
 ########################
 #### COMPILATION #######
 ########################
@@ -114,6 +119,8 @@ fclean: clean
 
 re: fclean all
 
+vlgd: re
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
 ########################
 ###### DOXYGEN  ########
@@ -154,4 +161,4 @@ tests_clean: tests
 #### .PHONY ############
 ########################
 
-.PHONY: all clean fclean re tests tests_clean doc docre docdel
+.PHONY: all clean fclean re tests tests_clean doc docre docdel vlgd

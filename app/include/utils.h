@@ -3,7 +3,7 @@
  * \brief Header for utils internal librairy..
  * \author Bogdan G.
  * \version 0.1
- * \date 21/09/2020
+ * \date 17/10/2020
  */
 
 #ifndef TELLO_UTILS_H
@@ -15,6 +15,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <string.h>
 #include <sys/stat.h>
 
 /// path where the log file is stored.
@@ -96,34 +97,6 @@ void log_if_errno(int err, char *function_name);
 
 // strings.c
 /**
- * \fn int my_strlen(char const *s)
- * \brief gets the length of a string.
- *
- * \param s string you want to mesure.
- * \return length of the string.
- */
-int my_strlen(char const *s);
-
-/**
- * \fn char *my_strdup(char const *s)
- * \brief makes a deep copy of a string.
- *
- * \param s string you want to copy.
- * \return memory allocated copy of s.
- */
-char *my_strdup(char const *s);
-
-/**
- * \fn char *my_strcat(char const *s1, char const *s2)
- * \brief makes a deep copy of two stirngs, and concatenates them together.
- *
- * \param s1 first string you want to copy.
- * \param s2 second string you want to copy.
- * \return memory allocated s1 + s2.
- */
-char *my_strcat(char const *s1, char const *s2);
-
-/**
  * \fn char *my_itoa(int nb)
  * \brief converts an int into a string.
  *
@@ -131,77 +104,6 @@ char *my_strcat(char const *s1, char const *s2);
  * \return a string containing the number.
  */
 char *my_itoa(int nb);
-
-/**
- * \fn char *set_to_lowercase(char *s)
- * \brief sets a string to lowercase.
- *
- * \param s a string.
- * \return s but in lowercase.
- */
-char *set_to_lowercase(char *s);
-
-/**
- * \fn char *set_to_uppercase(char *s)
- * \brief sets a string to uppercase.
- *
- * \param s a string.
- * \return s but in uppercase.
- */
-char *set_to_uppercase(char *s);
-
-/**
- * \fn char *my_revstr(char *s)
- * \brief reverses a string.
- *
- * \param s a string.
- * \return s but reversed.
- */
-char *my_revstr(char *s);
-
-/**
- * \fn char *my_strcpy(char *dest, char const *src)
- * \brief copies a string into another.
- *  You will need to alloc the string.
- *
- * \param src the string you want to copy.
- * \param dest the string where you want to copy.
- * \return a copy of src.
- */
-char *my_strcpy(char *dest, char const *src);
-
-/**
- * \fn char *my_strncpy(char *dest, char const *src, int n)
- * \brief copies a string into another, for n characters.
- *  You will need to alloc the string.
- *
- * \param src the string you want to copy.
- * \param dest the string where you want to copy.
- * \param n the size of your copy.
- * \return a copy of src for n characters.
- */
-char *my_strncpy(char *dest, char const *src, int n);
-
-/**
- * \fn bool is_same_string(char const *s1, char const *s2)
- * \brief tests if 2 strings are the same.
- *
- * \param s1 your first string.
- * \param s2 the string you want to compare.
- * \return a boolean explicitly telling you if your strings are the same.
- */
-bool is_same_string(char const *s1, char const *s2);
-
-/**
- * \fn bool is_same_stringn(char const *s1, char const *s2, int n)
- * \brief tests if 2 strings are the same, for n characters.
- *
- * \param s1 your first string.
- * \param s2 the string you want to compare.
- * \param n range of how much you want to compare.
- * \return a boolean explicitly telling you if your strings are the same.
- */
-bool is_same_stringn(char const *s1, char const *s2, int n);
 
 /**
  * \fn bool is_num(const char *s)
@@ -264,6 +166,15 @@ char *get_last_occurence_of(char *s, char to_find);
 char *append_char(char *s, char c);
 
 /**
+ * \fn char *str_to_lower(char *s)
+ * \brief sets a string to lowercase
+ *
+ * \param s your string.
+ * \return s but in lowercase.
+ */
+char *str_to_lower(char *s);
+
+/**
  * \fn void my_putstr(char const *s)
  * \brief writes a string to stdout
  *
@@ -289,33 +200,6 @@ void my_puterr(char const *s);
  * \return line, stripped of leading and trailing to_strip.
  */
 char *strip(char *line, char to_strip);
-
-/**
- * \fn char *clean_line(char *line)
- * \brief removes double-spaces, trailing and leading spaces from a string.
- *
- * \param line your string.
- * \return line, stripped of leading and trailing spaces.
- */
-char *clean_line(char *line);
-
-/**
- * \fn char *remove_tabs(char *line)
- * \brief transforms tabs into spaces.
- *
- * \param line your string.
- * \return line, but with spaces instead of tabs.
- */
-char *remove_tabs(char *line);
-
-/**
- * \fn bool is_float(char const *s)
- * \brief tests if a string can be converted to a float.
- *
- * \param s your string.
- * \return a boolean telling you if your string can be converted to a float.
- */
-bool is_float(char const *s);
 
 
 // swaps.c
@@ -424,16 +308,6 @@ void my_putnbr(int nb);
  * \return the length of your number.
  */
 int my_nblen(int nb);
-
-/**
- * \fn int my_getnbr(char *nb)
- * \brief Extracts a number from a string.
- * Will only bypass whitespaces.
- *
- * \param nb the number you want to convert.
- * \return you converted number, in an int.
- */
-int my_getnbr(char *nb);
 
 /**
  * \fn char *my_getnbr_base(int nb, const char *base_to)
