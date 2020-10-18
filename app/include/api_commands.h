@@ -2,8 +2,8 @@
  * \file api_commands.h
  * \brief a static char ** holding all the commands handled by the Ryze Tello..
  * \author Bogdan G.
- * \version 0.1
- * \date 05/10/2020
+ * \version 0.2
+ * \date 17/10/2020
  */
 
 #ifndef TELLIB_API_COMMANDS_H
