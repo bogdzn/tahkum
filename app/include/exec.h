@@ -69,7 +69,7 @@ typedef struct socket_s
 
 /**
  * \fn socket_t create_default_socket(settings_t user_settings)
- * \\brief creates the socket needed to control the drone
+ * \brief creates the socket needed to control the drone
  *
  * \param user_settings settings, used to check if we are in debug mode
  * \return a structure with a socket and relevant information
@@ -172,17 +172,6 @@ settings_t check_supported_api(socket_t ryze, settings_t settings);
 settings_t send_startup_commands(socket_t ryze, settings_t settings);
 
 // key_listener.c
-/**
-  * \fn int loop_wrapper(socket_t ryze, settings_t settings)
-  * \brief wraps around exec_loop, sets the tty in raw_mode and read keyboard input
-  *
-  * \param ryze socket containing ryze data
-  * \param settings user settings
-  * \return 0 if successfull
-  */
-int loop_wrapper(socket_t ryze, settings_t settings);
-
-
 /**
   * \fn int set_keyboard_mode(void)
   * \brief sets STDIN_FILENO in raw mode, or reset it to normal.

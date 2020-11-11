@@ -29,7 +29,8 @@ CFLAGS 	= -g3 \
 		  -Wall -Werror -Wextra \
 		  --pedantic \
 		  -fprofile-arcs \
-		  -fPIC
+		  -fPIC \
+		  - lglfw
 
 LINK_FLAG =
 

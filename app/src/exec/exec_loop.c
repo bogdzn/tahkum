@@ -6,9 +6,9 @@
  * \date 18/10/2020
  */
 
-#include "utils.h"
-#include "exec.h"
-#include "parser.h"
+#include "../../include/utils.h"
+#include "../../include/exec.h"
+#include "../../include/parser.h"
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
@@ -84,32 +84,3 @@ int exec_loop(socket_t ryze, settings_t settings, char **cmds)
     return 0;
 }
 
-static char get_keycode(int recursive_count)
-{
-    char result = 0;
-    int status = read(STDIN_FILENO, &result, 1);
-
-    // tello times out after 15 seconds and land,
-    // we send a status command every 7.5 seconds.
-    if (recursive_count == 15)
-        return 'h';
-    usleep(50000);
-    return (status == -1) ? get_keycode(recursive_count + 1) : result;
-}
-
-int loop_wrapper(socket_t ryze, settings_t s)
-{
-    if (set_keyboard_mode() == -1) {
-        __log(ERROR, "Couldn't set terminal in raw mode.\n");
-        return 0;
-    } else s = send_startup_commands(ryze, s);
-
-    for (char buffer = 0;; buffer = tolower(get_keycode(0))) {
-        if (buffer == 'c') {
-            send_command(ryze, "land", s);
-            __log(WARNING, "c has been triggered. Exiting.\n");
-            break;
-        } else exec_loop(ryze, s, get_user_commands(buffer, s.is_newer_api));
-    }
-    return set_keyboard_mode();
-}

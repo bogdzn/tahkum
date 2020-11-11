@@ -1,9 +1,9 @@
 /**
- * \file key_listener.c
- * \brief implements getch from ncurses without using initscr() !
- * \author Bogdan G.
- * \date 17/10/2020
- */
+* \file key_listener.c
+* \brief implements getch from ncurses without using initscr() !
+* \author Bogdan G.
+* \date 17/10/2020
+*/
 
 #include "utils.h"
 #include "parser.h"
@@ -23,9 +23,13 @@
 #include "exec.h"
 #include <linux/input.h>
 
-static struct termios set_raw(struct termios tty_attr, struct termios old)
+// NOTE: this code is currently unused, but kept here just
+// in case.
+
+static struct termios set_raw(struct termios old)
 {
     int flags = 0;
+    struct termios tty_attr;
 
     flags = fcntl(STDIN_FILENO, F_GETFL);
     log_if_errno(errno, "fcntl: getflags");
@@ -56,9 +60,10 @@ int set_keyboard_mode(void)
     } else if (!isatty(STDIN_FILENO)) {
         __log(ERROR, "not in a tty.\n");
         return -1;
+    } else {
+        tcgetattr(STDERR_FILENO, &tty_attr_old);
+        tty_attr = set_raw(tty_attr_old);
+        is_raw_mode = true;
     }
-    tcgetattr(STDERR_FILENO, &tty_attr_old);
-    tty_attr = set_raw(tty_attr, tty_attr_old);
-    is_raw_mode = true;
     return 0;
 }

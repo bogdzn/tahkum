@@ -10,13 +10,16 @@
 #include <string.h>
 #include <stdio.h>
 #include "exec.h"
+#include "ui.h"
 
 int main(int ac, char **av)
 {
-    settings_t settings = initial_setup(ac, av);
-    socket_t ryze = create_default_socket(settings);
-    int status = loop_wrapper(ryze, settings);
+    ctx_t context;
 
-    close_socket(ryze, settings);
-    return status;
+    if (init_ctx(&context, ac, av) != 0)
+        return 1;
+
+    // main loop
+    destroy_ctx(context);
+    return 0;
 }
