@@ -15,9 +15,17 @@ NC="\[\e[m\]"               # Color Reset
 # needed for read -a
 IFS=' '
 #packages to install
-packages="graphviz doxygen gcovr"
+packages="graphviz doxygen gcovr cmake make gcc"
 
 # functions
+install_glfw_lib () {
+
+    printf "${Green}Installing graphical librairy${NC}\n"
+
+    git clone https://github.com/glfw/glfw && cd glfw
+    cmake . && sudo make install
+}
+
 install_package () {
   printf "Installing ${Yellow}"$package_name"${NC} ..."
   package_name="$1"
@@ -41,3 +49,5 @@ install_loop () {
 
 # script
 install_loop
+
+install_glfw_lib
