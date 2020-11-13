@@ -20,7 +20,7 @@
 #endif
 
 #ifndef DEFAULT_MAX_RETRIES
-#define DEFAULT_MAX_RETRIES (5)
+#define DEFAULT_MAX_RETRIES (3)
 #endif
 
 /**

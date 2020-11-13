@@ -46,4 +46,7 @@ int init_ctx(ctx_t *user_context, int ac, char **av);
   */
 void destroy_ctx(ctx_t user_context);
 
+// events.c
+
+// loops.c
 #endif /* TAHKUM_UI */
